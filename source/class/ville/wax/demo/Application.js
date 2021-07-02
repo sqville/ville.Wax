@@ -11,7 +11,14 @@
 /**
  * This is the main application class of "ville.Wax"
  * @asset(ville/wax/wireframe-image-sm.png)
- * @asset(ville/wax/Wax_demo_logo.png)
+ * @asset(ville/wax/Wax_demo_logo.png) 
+ * @asset(ville/wax/round-menu-24px.svg)
+ * @asset(ville/wax/round-account_circle-24px.svg)
+ * @asset(ville/wax/chevron_right-24px.svg)
+ * @asset(ville/wax/Wax_demo_logo.svg)
+ * @asset(ville/wax/ville_Wax.png)
+ * @asset(ville/wax/close-24px.svg)
+ * @asset(ville/wax/close-red-24px.svg)
  */
 qx.Class.define("ville.wax.demo.Application",
 {
@@ -67,18 +74,18 @@ qx.Class.define("ville.wax.demo.Application",
         qx.log.appender.Console;
       }
 
-      // >>> START of Base Scaffolding >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      // >>> Base Scaffolding are objects common to all Wax - Franklin based apps  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      // *** START of Base Scaffolding *******************************************************
+      // *** Base Scaffolding are objects common to all Wax - Franklin based apps  ***********
 
       // App's Root
       var approot = this.getRoot();
+      approot.setBackgroundColor("black");
 
       // Add a Blocker to the application's root for the Main Menu Popup
       this._blocker = new qx.ui.core.Blocker(approot).set({color: "black", opacity: .08});
       
       // App's main Container (Composite) with Dock Layout 
-      var appcompdock = new qx.ui.container.Composite(new qx.ui.layout.Dock(0, 0)).set({backgroundColor: "transparent"});
+      var appcompdock = new qx.ui.container.Composite(new qx.ui.layout.Dock(0, 0)).set({backgroundColor: "white"});
       
       // Dock's North section (Canvas)
       var northhbox = this._northBox = new qx.ui.container.Composite(new qx.ui.layout.Canvas()).set({backgroundColor: "white", decorator : "topheader"});
@@ -91,14 +98,14 @@ qx.Class.define("ville.wax.demo.Application",
 
       // phone/phonegap
       //if (qx.core.Environment.get("phonegap")) {
-      var southbox = new qx.ui.container.Composite(new qx.ui.layout.HBox(4)).set({alignY: "middle", padding: [0,4,0,4], decorator: "bottombar"});
+      var southbox = new qx.ui.container.Composite(new qx.ui.layout.HBox(4)).set({alignY: "middle", padding: [8,4,34,4], decorator: "bottombar"});
       //}
 
       // West Scroll area to fit all menu items
-      var scrollwest = new qx.ui.container.Scroll().set({scrollbarX: "off", minWidth: 230, padding: 0, margin: 0, contentPadding: [0,0,0,0]});
+      var scrollwestbox = new qx.ui.container.Scroll().set({scrollbarX: "off", minWidth: 230, padding: 0, margin: 0, contentPadding: [0,0,0,0]});
 
       // Center Scroll area to fit all content
-      var scroll = new qx.ui.container.Scroll().set({padding: 0, margin: 0, contentPadding: [0,0,0,0]});
+      var scrollcenterbox = new qx.ui.container.Scroll().set({padding: 0, margin: 0, contentPadding: [0,0,0,0]});
 
       // === North Toolbar, Parts and Buttons ===
       var northtoolbar = new qx.ui.toolbar.ToolBar().set({backgroundColor: "white"});
@@ -106,9 +113,8 @@ qx.Class.define("ville.wax.demo.Application",
       var profilepart = new qx.ui.toolbar.Part(); // Top-Right of the screen
 
       // Icon Images
-      var menuimage = "ville/wax/demo/round-menu-24px.svg";
-      var roundacct = "ville/wax/demo/round-account_circle-24px.svg";
-      var testimage = "ville/wax/demo/test-image.svg";
+      var menuimage = "ville/wax/round-menu-24px.svg";
+      var roundacct = "ville/wax/round-account_circle-24px.svg";
 
       // Top-Left Button
       var mainmenubtnbutton = new qx.ui.toolbar.Button("MainMenu", menuimage).set({show: "icon"});
@@ -122,10 +128,10 @@ qx.Class.define("ville.wax.demo.Application",
 
       // Profile and Settings Menu and Menu Buttons
       var profilemenu = new qx.ui.menu.Menu().set({spacingX: 12});
-      var switchmenubutton1 = new qx.ui.menu.Button("Switch to Mobile", "ville/wax/demo/mobile_friendly-24px.svg").set({padding: 10});
-      switchmenubutton1.getChildControl("icon").set({ width: 24, height: 24 });
-      var aboutmenubutton1 = new qx.ui.menu.Button("About Wax", "ville/wax/demo/info-24px.svg").set({padding: 10});
-      aboutmenubutton1.getChildControl("icon").set({ width: 24, height: 24 });
+      var switchmenubutton1 = new qx.ui.menu.Button("Switch to Mobile", "ville/wax/wireframe-image-sm.png").set({padding: 10});
+      //switchmenubutton1.getChildControl("icon").set({ width: 24, height: 24 });
+      var aboutmenubutton1 = new qx.ui.menu.Button("About Wax", "ville/wax/wireframe-image-sm.png").set({padding: 10});
+      //aboutmenubutton1.getChildControl("icon").set({ width: 24, height: 24 });
 
       //create About Wax popup window
       var winAboutWax = this.__createDetailWindow();
@@ -143,7 +149,7 @@ qx.Class.define("ville.wax.demo.Application",
       txtaboutwax += "Skeletons and the demo browser are not new concepts to Qooxdoo. These features have been around since the beginning. The purpose of this writeup is to convey good-intent, thoughts and ideas on how to improve peoples work lives, and not meant to be critical or take credit for anything in anyway. The past and current qooxdoo core team have done, and are doing, phenomenal work. My thanks go out to them for making me look better than I really am - Cheers.";
       //var aboutbox = new qx.ui.container.Composite(new qx.ui.layout.VBox(10));
       var aboutscroll = new qx.ui.container.Scroll().set({ allowStretchY: true, padding: 0, margin: 0, contentPadding: [0,24,0,24]});
-      var waxatom = new qx.ui.basic.Atom(txtaboutwax,"wax/demo/ville_Wax.png").set({rich: true, iconPosition: "top", gap: 30, paddingTop: 30});
+      var waxatom = new qx.ui.basic.Atom(txtaboutwax,"ville/wax/ville_Wax.png").set({rich: true, iconPosition: "top", gap: 30, paddingTop: 30});
       waxatom.getChildControl("icon").set({scale: true, width: 300, height: 106});
       waxatom.getChildControl("label").set({wrap: true});
       aboutscroll.add(waxatom);
@@ -187,18 +193,19 @@ qx.Class.define("ville.wax.demo.Application",
       }, this);
 
       // Assemble all base pieces  
-      scrollwest.add(westbox);
-      scroll.add(centerbox);
+      scrollwestbox.add(westbox);
+      scrollcenterbox.add(centerbox);
       appcompdock.add(northhbox, {edge:"north"});
-      appcompdock.add(scrollwest, {edge:"west"});
-      appcompdock.add(scroll, {edge:"center"});
+      appcompdock.add(scrollwestbox, {edge:"west"});
+      appcompdock.add(scrollcenterbox, {edge:"center"});
       approot.add(appcompdock, {edge: 0});
       profilemenu.add(switchmenubutton1);
       profilemenu.add(aboutmenubutton1);
       profilemenubutton.setMenu(profilemenu);
 
-      var atmlogocurrentpage = new qx.ui.basic.Atom("Wax","ville/wax/demo/Wax_demo_logo.svg").set({font: "hym-app-header", gap: 10, padding: 0, visibility: "hidden"});
-      atmlogocurrentpage.getChildControl("icon").set({ scale: true, width: 48, height: 38 });
+      //var atmlogocurrentpage = new qx.ui.basic.Atom("Wax","ville/wax/Wax_demo_logo.svg").set({font: "hym-app-header", gap: 10, padding: 0, visibility: "hidden"});
+      //atmlogocurrentpage.getChildControl("icon").set({ scale: true, width: 48, height: 38 });
+      var atmlogocurrentpage = new qx.ui.basic.Atom("Wax").set({font: "hym-app-header", gap: 10, padding: 0, visibility: "hidden"});
       mainmenupart.add(mainmenubtnbutton);
       profilepart.add(profilemenubutton);
       
@@ -212,8 +219,7 @@ qx.Class.define("ville.wax.demo.Application",
 
       appcompdock.add(southbox, {edge: "south"});
 
-      // <<< END of Base Scaffolding <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-      // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      // *** END of Base Scaffolding **************************************
 
       // Add some simple ease in animation to the app's blocker
       var fadeinb = {duration: 300, timing: "ease", keyFrames : {
@@ -230,48 +236,70 @@ qx.Class.define("ville.wax.demo.Application",
 
 
 
-      // >>> Populate THE STACK >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      // *** Populate THE STACK ***********************************************
       // Four page stack EXAMPLE
-       // Dashboard Page with Flow layout
-       // Overview Page with links to a Detail Page
-       // Table to List Page - shows how the Table Widget converts to a List Widget for smaller screens
-      // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+       // First Stack Page
+       // Second Stack Page
+       // Third Stack Page
+       // Forth Stack Page (for ios and android only)
+      // **********************************************************************
       
-      // First Page
-      var dashboardpage = new qx.ui.container.Composite().set({padding: [20,30]});
-      dashboardpage.setLayout(new qx.ui.layout.VBox(10).set({alignX: "left"}));  
+      // common stack page styling
+      var stackpagepadding = [20, 30];
+      var stackpageheaderfont = "control-header";
+      var stackpagevboxspacing = 10;
 
-      // Top header
-      var lbliconicssheader = new qx.ui.basic.Label("iConicss (Pure CSS Icons)").set({font: "control-header"});
- 
-      // Assemble
-      dashboardpage.add(lbliconicssheader);
+      // First Page
+      var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: stackpagepadding});  
+      // first page header
+      var lblfirstpageheader = new qx.ui.basic.Label("First Page").set({font: stackpageheaderfont});
+      // first page - assemble
+      firststackpage.add(lblfirstpageheader);
+
+      var mcheckbox = new qx.ui.form.CheckBox("Prefer this to look different").set({appearance: "mobile-checkbox"});
+      firststackpage.add(mcheckbox);
+
+      
+      var slideright = {
+        duration: 400, 
+        timing: "ease", 
+        keyFrames : {
+          0: {"backgroundColor": "#e3e2e2", "background-position-x": "0%", "border-color": "#e3e2e2"},
+          100: {"backgroundColor": "blue", "background-position-x": "100%", "border-color": "blue"}
+        },
+        keep : 100
+      };
+
+      mcheckbox.addListener("changeValue", function(e) {
+        var cbimage = mcheckbox.getChildControl("icon").getContentElement().getDomElement();
+        if (e.getData())
+          qx.bom.element.AnimationCss.animate(cbimage, slideright);
+        else
+          qx.bom.element.AnimationCss.animateReverse(cbimage, slideright);
+      }, this); 
+      
+
 
       // Second Page 
-      var overviewpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({padding: [20,30]});
-      var lblfluentuiheader = new qx.ui.basic.Label("Fluent UI Web Icons (SVG)").set({font: "control-header"});
-      
-      overviewpage.add(lblfluentuiheader);     
+      var secondstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: stackpagepadding});
+      var lblsecondpageheader = new qx.ui.basic.Label("Second Page").set({font: stackpageheaderfont});
+      secondstackpage.add(lblsecondpageheader);     
 
       // Third Page
-      var tablelistpage = new qx.ui.container.Composite().set({padding: [20,30]});
-      var tablelistvbox = new qx.ui.layout.VBox(10);
-      tablelistpage.setLayout(tablelistvbox);
-
-      var lblmaterialheader = new qx.ui.basic.Label("Material Design Icons (SVG)").set({font: "control-header"});
-            
-      tablelistpage.add(lblmaterialheader);
+      var thirdstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: stackpagepadding});
+      var lblthirdpageheader = new qx.ui.basic.Label("Third Page").set({font: stackpageheaderfont});     
+      thirdstackpage.add(lblthirdpageheader);
 
 
 
 
-      // Menu Page for phonegap only
+      // Menu Page for mobile only
       var menupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10, null, "separator-vertical")).set({padding: [60, 0, 0, 0]});
-      var btnAbout = new qx.ui.form.Button("About Wax", "ville/wax/demo/info-24px.svg").set({appearance : "hym-page-button"});
-      var btnSwitchBack = new qx.ui.form.Button("Switch to Desktop", "ville/wax/demo/desktop_windows-24px.svg").set({appearance : "hym-page-button"});
-      var btnProfile = new qx.ui.form.Button("Profile", "ville/wax/demo/edit-24px.svg").set({appearance : "hym-page-button"});
-      var btnSettings = new qx.ui.form.Button("Settings", "ville/wax/demo/outline-settings-24px.svg").set({appearance : "hym-page-button"});
-      var btnLogout = new qx.ui.form.Button("Logout", "ville/wax/demo/exit_to_app-24px.svg").set({appearance : "hym-page-button"});
+      var btnAbout = new qx.ui.form.Button("About Wax", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
+      var btnSwitchBack = new qx.ui.form.Button("Switch to Desktop", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
+      var btnProfile = new qx.ui.form.Button("Profile", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
+      var btnSettings = new qx.ui.form.Button("Settings", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
+      var btnLogout = new qx.ui.form.Button("Logout", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
       
       menupage.add(new qx.ui.basic.Label("WAX DEMO").set({paddingLeft: 20, textColor: "gray"}));
       menupage.add(btnSwitchBack);
@@ -281,15 +309,48 @@ qx.Class.define("ville.wax.demo.Application",
       menupage.add(btnSettings);
       menupage.add(btnLogout);
 
+      // Test mobile modal window animations
+      var mobilemodalwindow = new qx.ui.window.Window("Detail Window").set({ width: 300, height: 200, appearance: "wax-window", allowMaximize : false, allowMinimize : false, modal: true, movable: true });
+      mobilemodalwindow.setLayout(new qx.ui.layout.VBox(4));
+      mobilemodalwindow.add(new qx.ui.basic.Label("I am a modal window"));
+
+      //***  CODE for applying popup fading in and out  ***//
+      var scaleback = {
+        duration: 500, 
+        timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
+        keyFrames : {
+          0: {scale: 1},
+          100: {scale: .85}
+        },
+        keep : 100
+      };
+
+      btnProfile.addListener("execute", function(e) {
+        var appdockdom = appcompdock.getContentElement().getDomElement();
+        appcompdock.setDecorator("scaledback-box");
+        qx.bom.element.AnimationCss.animate(appdockdom, scaleback);
+        mobilemodalwindow.restore();
+        mobilemodalwindow.center();
+        mobilemodalwindow.show();
+      }, this);
+
+      mobilemodalwindow.addListener("close", function(e) {
+        var appdockdom = appcompdock.getContentElement().getDomElement();
+        //appcompdock.setDecorator("scaledback-box");
+        qx.bom.element.AnimationCss.animateReverse(appdockdom, scaleback);
+      }, this);
+
+
+
     
       // Assemble - THE STACK 
-      centerbox.add(dashboardpage);
-      centerbox.add(overviewpage);
-      centerbox.add(tablelistpage);
+      centerbox.add(firststackpage);
+      centerbox.add(secondstackpage);
+      centerbox.add(thirdstackpage);
       centerbox.add(menupage);
 
       // Show the default page
-      centerbox.setSelection([dashboardpage]);
+      centerbox.setSelection([firststackpage]);
 
       btnAbout.addListener("execute", function(e) {
         winAboutWax.restore();
@@ -298,47 +359,46 @@ qx.Class.define("ville.wax.demo.Application",
         winAboutWax.show();
       }, this);
 
-      // <<< END of THE STACK <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      // *** END of THE STACK ******************************************************
       
-      // >>> Populate the Main Menu and Popup Main Menu with content >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      // Create Menu Buttons that will navigate the user through THE STACK Pages 
-      // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      // *** Populate the Main Menu and Popup Main Menu with content ***************
+      // Create Menu Buttons that will navigate the user through THE STACK Pages ***
       // Populate westBox with content
       var atmleftnavheader = new qx.ui.basic.Atom("Wax Demo", "ville/wax/Wax_demo_logo.png").set({appearance: "header-atom", anonymous: true, focusable: false, selectable: false });
       atmleftnavheader.getChildControl("icon").set({ scale : true });
       westbox.add(atmleftnavheader);
-      var tbtndashboardpage = new ville.wax.demo.MenuButton("iConicss", "ville/wax/wireframe-image-sm.png", false );
-      westbox.add(tbtndashboardpage);
+      var tbtnfirststackpage = new ville.wax.demo.MenuButton("First Page", "ville/wax/wireframe-image-sm.png", false );
+      westbox.add(tbtnfirststackpage);
 
-      var tbtnSecondPage = new ville.wax.demo.MenuButton("Fluent UI (SVG)", "ville/wax/wireframe-image-sm.png", false);
+      var tbtnSecondPage = new ville.wax.demo.MenuButton("Second Page", "ville/wax/wireframe-image-sm.png", false);
       westbox.add(tbtnSecondPage);
 
-      var tbtnThirdPage = new ville.wax.demo.MenuButton("Material (SVG)", "ville/wax/wireframe-image-sm.png", false);
+      var tbtnThirdPage = new ville.wax.demo.MenuButton("Third Page", "ville/wax/wireframe-image-sm.png", false);
       westbox.add(tbtnThirdPage);
 
       var westboxbuttongroup = new qx.ui.form.RadioGroup();
-      westboxbuttongroup.add(tbtndashboardpage, tbtnSecondPage, tbtnThirdPage);
+      westboxbuttongroup.add(tbtnfirststackpage, tbtnSecondPage, tbtnThirdPage);
       
       // CLONE the above controls
       var atmmenuleftnavheader = atmleftnavheader.clone();
       atmmenuleftnavheader.getChildControl("icon").set({ scale : true });
-      var tbtnmenudashboardpage = tbtndashboardpage.clone();
-      tbtnmenudashboardpage.getChildControl("icon").set({ scale : true });
+      var tbtnmenufirststackpage = tbtnfirststackpage.clone();
+      tbtnmenufirststackpage.getChildControl("icon").set({ scale : false });
       var tbtnmenuSecondPage = tbtnSecondPage.clone();
-      tbtnmenuSecondPage.getChildControl("icon").set({ scale : true });
+      tbtnmenuSecondPage.getChildControl("icon").set({ scale : false });
       var tbtnmenuThirdPage = tbtnThirdPage.clone();
-      tbtnmenuThirdPage.getChildControl("icon").set({ scale : true });
+      tbtnmenuThirdPage.getChildControl("icon").set({ scale : false });
 
       // Add the clones to the Main Menu Popup
       mainmenupopup.add(atmmenuleftnavheader);
-      mainmenupopup.add(tbtnmenudashboardpage);
+      mainmenupopup.add(tbtnmenufirststackpage);
       mainmenupopup.add(tbtnmenuSecondPage);
       mainmenupopup.add(tbtnmenuThirdPage);
 
 
       // Assign all the clones their own RadioGroup
       var mainmenubuttongroup = new qx.ui.form.RadioGroup();
-      mainmenubuttongroup.add(tbtnmenudashboardpage, tbtnmenuSecondPage, tbtnmenuThirdPage);
+      mainmenubuttongroup.add(tbtnmenufirststackpage, tbtnmenuSecondPage, tbtnmenuThirdPage);
       
       //***  CODE for applying popup fading in and out  ***//
       var fadeinleft = {duration: 300, timing: "ease-out", origin: "left top", keyFrames : {
@@ -351,68 +411,69 @@ qx.Class.define("ville.wax.demo.Application",
         qx.bom.element.Animation.animate(domtable, fadeinleft);
       }, this);
 
-      // <<< END of Main Menu and Main Menu Popup <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      // *** END of Main Menu and Main Menu Popup **********************************
     
-      // >>> Populate the Hybrid Mobile (hym) Main Menu  content >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      // Create Menu Buttons that will navigate the user through THE STACK Pages 
-      // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      // *** Populate the Hybrid Mobile (hym) Main Menu  content *******************
+      // Create Menu Buttons that will navigate the user through THE STACK Pages ***
+
       // Populate southbox with content
-      var tbtndashboardpagehym = new ville.wax.demo.MenuButton("iConicss", "ville/wax/demo/Css3_logo.svg", true ).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
-      var tbtnoverviewpagehym = new ville.wax.demo.MenuButton("Fluent UI", "ville/wax/demo/fluent_globe.svg", true).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
-      var tbtnlistofitemspagehym = new ville.wax.demo.MenuButton("Material", "ville/wax/demo/material_logo.svg", true).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
+      var tbtnfirststackpagehym = new ville.wax.demo.MenuButton("First Page", "ville/wax/wireframe-image-sm.png", true ).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
+      var tbtnsecondstackpagehym = new ville.wax.demo.MenuButton("Second Page", "ville/wax/wireframe-image-sm.png", true).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
+      var tbtnthirdpagehym = new ville.wax.demo.MenuButton("Third Page", "ville/wax/wireframe-image-sm.png", true).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
       var tbtnmenuhym = new ville.wax.demo.MenuButton("Menu", menuimage, true).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
-      southbox.add(tbtndashboardpagehym, {flex: 1});
-      southbox.add(tbtnoverviewpagehym, {flex: 1});
-      southbox.add(tbtnlistofitemspagehym, {flex: 1});
+      
+      southbox.add(tbtnfirststackpagehym, {flex: 1});
+      southbox.add(tbtnsecondstackpagehym, {flex: 1});
+      southbox.add(tbtnthirdpagehym, {flex: 1});
       southbox.add(tbtnmenuhym, {flex: 1});
 
       southbox.setVisibility("excluded");
 
       // Assign all the clones their own RadioGroup
       var mainmenubuttongrouphym = new qx.ui.form.RadioGroup();
-      mainmenubuttongrouphym.add(tbtndashboardpagehym, tbtnoverviewpagehym, tbtnlistofitemspagehym, tbtnmenuhym);
+      mainmenubuttongrouphym.add(tbtnfirststackpagehym, tbtnsecondstackpagehym, tbtnthirdpagehym, tbtnmenuhym);
 
       // <<< END of Hybrid Mobil (hym) Main Menu and Main Menu Popup <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
       // >>> Wire all the Main Menu Buttons to THE STACK Pages (via Listeners) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       // Turn on all wax.demo.MenuButton listeners
-      tbtndashboardpage.addListener("changeValue", function(e) {
+      tbtnfirststackpage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([dashboardpage]);
-          mainmenubuttongroup.setSelection([tbtnmenudashboardpage]);
+          centerbox.setSelection([firststackpage]);
+          mainmenubuttongroup.setSelection([tbtnmenufirststackpage]);
         }
       }, this);
 
       tbtnSecondPage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([overviewpage]);
+          centerbox.setSelection([secondstackpage]);
           mainmenubuttongroup.setSelection([tbtnmenuSecondPage]);
         }
       }, this);
 
       tbtnThirdPage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([tablelistpage]);
+          centerbox.setSelection([thirdstackpage]);
           mainmenubuttongroup.setSelection([tbtnmenuThirdPage]);
         }
       }, this);
 
       // Popup menu buttons
-      tbtnmenudashboardpage.addListener("changeValue", function(e) {
+      tbtnmenufirststackpage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([dashboardpage]);
-          westboxbuttongroup.setSelection([tbtndashboardpage]);
+          centerbox.setSelection([firststackpage]);
+          westboxbuttongroup.setSelection([tbtnfirststackpage]);
           mainmenupopup.hide();
         }
       }, this);
 
       tbtnmenuSecondPage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([overviewpage]);
+          centerbox.setSelection([secondstackpage]);
           westboxbuttongroup.setSelection([tbtnSecondPage]);
 
-          dashboardpage.setVisibility("excluded");
+          firststackpage.setVisibility("excluded");
 
           mainmenupopup.hide();
         }
@@ -420,34 +481,34 @@ qx.Class.define("ville.wax.demo.Application",
 
       tbtnmenuThirdPage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([tablelistpage]);
+          centerbox.setSelection([thirdstackpage]);
           westboxbuttongroup.setSelection([tbtnThirdPage]);
 
-          dashboardpage.setVisibility("excluded");
+          firststackpage.setVisibility("excluded");
 
           mainmenupopup.hide();
         }
       }, this);
 
       // if Hybrid Mobile
-      tbtndashboardpagehym.addListener("changeValue", function(e) {
+      tbtnfirststackpagehym.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([dashboardpage]);
-          atmlogocurrentpage.set({show: "both", label:"iConicss"});
+          centerbox.setSelection([firststackpage]);
+          atmlogocurrentpage.set({show: "both", label:"First Page"});
         }
       }, this);
 
-      tbtnoverviewpagehym.addListener("changeValue", function(e) {
+      tbtnsecondstackpagehym.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([overviewpage]);
-          atmlogocurrentpage.set({show: "both", label:"Fluent UI"});
+          centerbox.setSelection([secondstackpage]);
+          atmlogocurrentpage.set({show: "both", label:"Second Page"});
         }
       }, this);
 
-      tbtnlistofitemspagehym.addListener("changeValue", function(e) {
+      tbtnthirdpagehym.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([tablelistpage]);
-          atmlogocurrentpage.set({show: "both", label:"Material"});
+          centerbox.setSelection([thirdstackpage]);
+          atmlogocurrentpage.set({show: "both", label:"Third Page"});
         }
       }, this);
 
@@ -462,7 +523,7 @@ qx.Class.define("ville.wax.demo.Application",
       switchmenubutton1.addListener("execute", function(e){
         this.setDemoMode("mobile");
         southbox.setVisibility("visible");
-        scrollwest.setVisibility("excluded");
+        scrollwestbox.setVisibility("excluded");
         profilemenubutton.setVisibility("hidden");
         mainmenupart.setVisibility("hidden");
         centerbox.setSelection([menupage]);
@@ -477,9 +538,9 @@ qx.Class.define("ville.wax.demo.Application",
         profilemenubutton.setVisibility("visible");
         atmlogocurrentpage.setVisibility("hidden");
         mainmenupart.setVisibility("visible");
-        centerbox.setSelection([dashboardpage]);
-        mainmenubuttongroup.setSelection([tbtnmenudashboardpage]);
-        westboxbuttongroup.setSelection([tbtndashboardpage]);
+        centerbox.setSelection([firststackpage]);
+        mainmenubuttongroup.setSelection([tbtnmenufirststackpage]);
+        westboxbuttongroup.setSelection([tbtnfirststackpage]);
       }, this);
 
 
@@ -494,29 +555,29 @@ qx.Class.define("ville.wax.demo.Application",
 
       mq1.on("change", function(e){
         if(mq1.isMatching() && this.getDemoMode()=="desktop"){
-          scrollwest.setVisibility("visible"); 
+          scrollwestbox.setVisibility("visible"); 
           mainmenupart.setVisibility("excluded");
         }
         else {
-          scrollwest.addListener("appear", function(e) {
-            var domtable = scrollwest.getContentElement().getDomElement();
+          scrollwestbox.addListener("appear", function(e) {
+            var domtable = scrollwestbox.getContentElement().getDomElement();
             qx.bom.element.Animation.animate(domtable, fadeinleft);
           }, this); 
-          scrollwest.setVisibility("excluded");
+          scrollwestbox.setVisibility("excluded");
           if (this.getDemoMode() == "desktop")
             mainmenupart.setVisibility("visible");
         }
       }, this);
       if (mq1.isMatching()) {
-        scrollwest.setVisibility("visible"); 
+        scrollwestbox.setVisibility("visible"); 
         mainmenupart.setVisibility("excluded");
       }
       else {
-        scrollwest.addListener("appear", function(e) {
-          var domtable = scrollwest.getContentElement().getDomElement();
+        scrollwestbox.addListener("appear", function(e) {
+          var domtable = scrollwestbox.getContentElement().getDomElement();
           qx.bom.element.Animation.animate(domtable, fadeinleft);
         }, this); 
-        scrollwest.setVisibility("excluded"); 
+        scrollwestbox.setVisibility("excluded"); 
         mainmenupart.setVisibility("visible");
       }
 

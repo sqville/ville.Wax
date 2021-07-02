@@ -7,6 +7,12 @@
    Authors: Chris Eskew (sqville) chris.eskew@sqville.com
 
 ************************************************************************ */
+/**
+ * @asset(ville/wax/mcheckbox-knob.png)
+ * @asset(ville/wax/mcheckbox-knob.svg)
+ */
+
+
 
 qx.Theme.define("ville.wax.theme.Decoration",
 {
@@ -15,6 +21,14 @@ qx.Theme.define("ville.wax.theme.Decoration",
   decorations :
   {
 
+    "scaledback-box" :
+    {
+      style :
+      {
+        radius: 3
+      }
+    },
+    
     "nobgimg" :
     {
       style :
@@ -61,7 +75,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
     {
       style :
       {
-        backgroundImage: "wax/demo/chevron_right-24px.svg",
+        backgroundImage: "ville/wax/chevron_right-24px.svg",
         backgroundRepeat: "no-repeat",
         backgroundPositionX: "right",
         backgroundPositionY: "center"
@@ -243,6 +257,60 @@ qx.Theme.define("ville.wax.theme.Decoration",
        style : "solid",
        color : "orange"
      }
-   }
+   },
+
+   /*
+    ---------------------------------------------------------------------------
+      CHECK BOX
+    ---------------------------------------------------------------------------
+    */
+
+    "mcheckbox" :
+    {
+      style :
+      {
+        radius: 70,
+        width : [1,2],
+        color: "#e3e2e2",
+        //shadowBlurRadius: 2,
+        //shadowVerticalLength: 1,
+        //shadowColor: ['rgba(0, 0, 0, 0.2)', 'rgba(255, 255, 255, 0.4)'],
+        //inset: [true, false],
+        backgroundImage: "ville/wax/mcheckbox-knob.svg",
+        backgroundPositionX: "left",
+        backgroundPositionY: "center"
+      }
+    },
+
+    "mcheckbox-checked" :
+    {
+      style :
+      {
+        radius: 70,
+        width : [1,2],
+        color: "blue",
+        backgroundImage: "ville/wax/mcheckbox-knob.svg",
+        backgroundPositionX: "right",
+        backgroundPositionY: "center"
+      }
+    },
+
+    "mcheckbox-focused" :
+    {
+      include : "mcheckbox",
+      style :
+      {
+        color : "background-selected"
+      }
+    },
+
+    "mcheckbox-invalid" :
+    {
+      include : "mcheckbox",
+      style :
+      {
+        color : "invalid"
+      }
+    }
   }
 });

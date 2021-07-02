@@ -266,7 +266,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
      {
        return {
          center : true,
-         gap : 2
+         gap : 4
        };
      }
    },
@@ -290,10 +290,88 @@ qx.Theme.define("ville.wax.theme.Appearance",
         center : false,
         gap : 12,
         padding : [8,20,8,20],
+        marginRight : 30,
         decorator : "page-button-right"
       };
     }
    },
+
+   /*
+    ---------------------------------------------------------------------------
+      CHECK BOX
+    ---------------------------------------------------------------------------
+    */
+    "mobile-checkbox":
+    {
+      alias : "atom",
+
+      style : function(states)
+      {
+        // The "disabled" icon is set to an icon **without** the -disabled
+        // suffix on purpose. This is because the Image widget handles this
+        // already by replacing the current image with a disabled version
+        // (if available). If no disabled image is found, the opacity style
+        // is used.
+        var icon;
+
+        /*
+        // Checked
+        if (states.checked) {
+          icon = qx.theme.simple.Image.URLS["checkbox-checked"];
+        // Undetermined
+        } else if (states.undetermined) {
+          icon = qx.theme.simple.Image.URLS["checkbox-undetermined"];
+        // Unchecked
+        } else {
+          // empty icon
+          icon = qx.theme.simple.Image.URLS["blank"];
+        }
+        */
+
+        return {
+          icon: qx.theme.simple.Image.URLS["blank"],
+          //icon: "ville/wax/mcheckbox-knob.svg",
+          gap: 6
+        };
+      }
+    },
+
+
+    "mobile-checkbox/icon" : {
+      style : function(states)
+      {
+        var decorator = "mcheckbox";
+        var bgcolor = "#e3e2e2";
+
+        /*
+        if (states.focused && !states.invalid) {
+          decorator = "checkbox-focused";
+        }*/
+
+        decorator += states.invalid && !states.disabled ? "-invalid" : "";
+
+        var padding;
+        // Checked
+        if (states.checked) {
+          //padding = 2;
+          bgcolor = "blue";
+          decorator = "mcheckbox-checked"
+        // Undetermin
+        } 
+        /*else if (states.undetermined) {
+          padding = [4, 2];
+        }*/
+
+        return {
+          decorator : decorator,
+          scale : true,
+          width: 48,
+          height: 30,
+          backgroundColor : bgcolor
+        };
+      }
+    },
+
 
 
     /*
@@ -347,7 +425,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
       {
         return {
           marginLeft : 2,
-          icon : states.hovered ? "wax/demo/close-red-24px.svg" : "wax/demo/close-24px.svg",
+          icon : states.hovered ? "ville/wax/close-red-24px.svg" : "ville/wax/close-24px.svg",
           padding : [ 1, 2 ],
           cursor : states.disabled ? undefined : "pointer"
         };

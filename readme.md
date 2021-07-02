@@ -16,9 +16,11 @@
 ## About The Project
 
 **ville.Wax**
+I'm hooked on a feel'in that a single project (codebase) can be used to build apps for multiple the platforms (the ones that matter). Let's see where this goes.
 
-**Benefits**
-* Skeleton based
+**Goals**
+* Multiple projects that fit various UI/UX scenarios
+* Skeleton (template) based - all projects have an associated qooxdoo application skeleton
 
 **Screen Shots**
 
@@ -42,7 +44,7 @@ $ qx package install sqville/ville.Wax
 <!-- ROADMAP -->
 ## Roadmap
 
-TBD
+**First Milestone**
 
 
 <!-- LICENSE -->
