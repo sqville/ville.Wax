@@ -15,7 +15,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-**ville.Wax**
 I'm hooked on a feel'in that a single project (codebase) can be used to build apps for multiple the platforms (the ones that matter). Let's see where this goes.
 
 **Goals**
