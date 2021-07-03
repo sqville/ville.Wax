@@ -15,43 +15,34 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-I'm hooked on a feel'in that a single project (codebase) can be used to build apps for multiple the platforms (the ones that matter). Let's see where this goes.
+Hooked on a feeling that a single qooxdoo project (codebase) can be used to build applications for multiple platforms (the ones that matter). Let's see where this goes.
 
 **Goals**
-* Multiple projects that fit various UI/UX scenarios
+* Multiple projects/demos/examples that fit various UI UX scenarios
 * Skeleton (template) based - all projects have an associated qooxdoo application skeleton
 
 **Screen Shots**
-
+In progress
 
 <!-- GETTING STARTED -->
-## Using Wax
-To use:
-```sh
-$ qx package update
-$ qx package list
-$ qx package install sqville/ville.Wax
-```
 **Getting started:**
-
-
+In progress
 
 <!-- DEMO -->
 ## Demo
-[Wax Demo App](http://qooxdoo.org/qxl.packagebrowser/qxl.packagebrowser/demos/sqville/ville.Wax/waxdemo/)
+In progress
 
 <!-- ROADMAP -->
 ## Roadmap
 
 **First Milestone**
-
+* A single project, and corresponding skeleton, that builds to multiple platforms
+* No addons. All code is contained within the Application.js file and project's local theme files (which extends the Indigo theme)  
 
 <!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
-
 
 <!-- CONTACT -->
 ## Contact
