@@ -261,7 +261,7 @@ qx.Class.define("ville.wax.demo.Application",
 
       
       var slideright = {
-        duration: 400, 
+        duration: 300, 
         timing: "ease", 
         keyFrames : {
           0: {"backgroundColor": "#e3e2e2", "background-position-x": "0%", "border-color": "#e3e2e2"},
