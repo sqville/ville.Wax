@@ -104,24 +104,27 @@ qx.Theme.define("ville.wax.theme.Appearance",
      style : function(states)
      {
        var decorator = "mainmenubutton-box";
-       var padding = [14, 3, 14, 22];
-       //var textcolor = "#606060";
+       var padding = [14, 3, 14, 18];
+       //vartextcolor = "#606060";
        var textcolor = "black";
        var opacity = .85;
+       var font = "mainmenubutton";
+       //var iconimg = "ville/wax/wireframe-image-sm.png"
+       var iconimg = "ville/wax/wax-28-comb.png";
 
        if (!states.disabled) {
          if (states.hovered && !states.pressed && !states.checked) {
            decorator = "mainmenubutton-box-hovered";
-           padding = [14,3,14,17];
-           textcolor = "black";
+           //padding = [14,3,14,20];
            opacity = 1;
-         } /*else if (states.hovered && (states.pressed || states.checked)) {
-           decorator = "mainmenubutton-box-pressed-hovered";
-         }*/ else if (states.pressed || states.checked) {
+         } 
+         else if (states.pressed || states.checked) {
            decorator = "mainmenubutton-box-pressed";
-           padding = [14,3,14,17];
-           textcolor = "black";
+           //padding = [14,3,14,20];
            opacity = 1;
+           font = "mainmenubutton-bold";
+           textcolor = "blue";
+           iconimg = "ville/wax/wax-28-comb-blue.png";
          }
        }
 
@@ -133,7 +136,9 @@ qx.Theme.define("ville.wax.theme.Appearance",
          minHeight: 5,
          textColor: textcolor,
          font : "mainmenubutton",
-         opacity : opacity
+         opacity : 1,
+         textColor : textcolor,
+         icon : iconimg
        };
      }
    },
@@ -164,7 +169,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
      }
    },
 
-   "mainmenubutton/icon" : {
+   /*"mainmenubutton/icon" : {
 
     style : function() {
         return {
@@ -173,7 +178,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
           height: 32
         };
       }
-    },
+    },*/
 
     "mainmenuindicator" : {
       style : function() {

@@ -35,9 +35,10 @@ In progress
 <!-- ROADMAP -->
 ## Roadmap
 
-**First Milestone**
-* A single project, and corresponding skeleton, that builds to multiple platforms
-* No addons. All code is contained within the Application.js file and project's local theme files (which extends the Indigo theme)  
+**First Milestone - Pre 1.0 releases**
+* A single project and corresponding skeleton that successfully builds to multiple platforms
+* Function over look and feel
+* No addons. All code is contained within the Application.js file and project's local theme files (which extends the Indigo theme)
 
 <!-- LICENSE -->
 ## License
@@ -47,4 +48,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Chris Eskew - [@SQville](https://twitter.com/SQville) - email: chris.eskew@sqville.com
+Chris Eskew - [@SQville](https://twitter.com/SQville) - email: sqville@gmail.com

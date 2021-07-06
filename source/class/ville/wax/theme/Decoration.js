@@ -153,8 +153,21 @@ qx.Theme.define("ville.wax.theme.Decoration",
      style :
      {
        radius : 0,
-       width : 0,
-       backgroundColor : "white"
+       width : [0,0,0,5],
+       color : "white",
+       transitionProperty: ["border-left-color"],
+       transitionDuration: "0s"
+     }
+   },
+
+   "mainmenubutton-box-hovered" :
+   {
+     include : "mainmenubutton-box",
+
+     style :
+     {
+      color : "#cccccc",
+      transitionDuration: ".4s"
      }
    },
 
@@ -164,14 +177,12 @@ qx.Theme.define("ville.wax.theme.Decoration",
 
      style :
      {
-      width : [0,0,0,5],
-      radius : [1,0,0,1],
-      color : ["button-box-bright-pressed","button-box-bright-pressed","button-box-bright-pressed","blue"],
-      backgroundColor : "white" 
+      color : "blue",
+      transitionDuration: ".4s"
      }
    },
 
-   "mainmenubutton-box-pressed-hovered" : 
+   /*"mainmenubutton-box-pressed-hovered" : 
    {
      include : "mainmenubutton-box-pressed",
 
@@ -179,18 +190,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
      {
        color : "button-border-hovered"
      }
-   },
-
-   "mainmenubutton-box-hovered" :
-   {
-     include : "mainmenubutton-box-pressed",
-
-     style :
-     {
-      color : ["button-box-bright-pressed","button-box-bright-pressed","button-box-bright-pressed","#cccccc"],
-      backgroundColor : "white"
-     }
-   },
+   },*/
 
    "mainmenuindicator" :
    {

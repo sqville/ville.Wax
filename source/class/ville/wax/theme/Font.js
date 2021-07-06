@@ -18,8 +18,7 @@ qx.Theme.define("ville.wax.theme.Font",
     {
       size : 14,
       family : ["Lato", "Helvetica Neue", "arial", "Helvetica", "sans-serif"],
-      color : "text",
-      lineHeight: 1.5
+      color : "black"
     },
 
     "default-bold" :
@@ -41,6 +40,12 @@ qx.Theme.define("ville.wax.theme.Font",
     {
       include : "default",
       size : 16
+    },
+
+    "mainmenubutton-bold" :
+    {
+      include : "mainmenubutton",
+      bold : true
     },
 
     "mainmenubutton-hym" :
