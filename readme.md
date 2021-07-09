@@ -8,18 +8,18 @@
   <h3 align="center"></h3>
 
   <p align="center">
-    One code base, all platforms for the Qooxdoo JavaScript Framework
+    One code base, multiple platforms
   </p>
 </p>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Hooked on a feeling that a single qooxdoo project (codebase) can be used to build applications for multiple platforms (the ones that matter). Let's see where this goes.
+Hooked on a feeling that a single project (codebase) can be used to build applications for multiple platforms (the ones that matter).
 
 **Goals**
 * Multiple projects/demos/examples that fit various UI UX scenarios
-* Skeleton (template) based - all projects have an associated qooxdoo application skeleton
+* Skeleton (template) based - all projects have an associated application skeleton
 
 **Screen Shots**
 In progress
@@ -38,7 +38,7 @@ In progress
 **First Milestone - Pre 1.0 releases**
 * A single project and corresponding skeleton that successfully builds to multiple platforms
 * Function over look and feel
-* No addons. All code is contained within the Application.js file and project's local theme files (which extends the Indigo theme)
+* No addons. All code is contained within the project's files
 
 <!-- LICENSE -->
 ## License
