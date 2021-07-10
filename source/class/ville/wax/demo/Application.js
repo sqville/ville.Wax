@@ -24,6 +24,8 @@
  * @asset(ville/wax/ville_Wax.png)
  * @asset(ville/wax/close-24px.svg)
  * @asset(ville/wax/close-red-24px.svg)
+ * @asset(ville/wax/wax-icon-24-outline.svg)
+ * @asset(ville/wax/wax-icon-24-filled.svg)
  */
 qx.Class.define("ville.wax.demo.Application",
 {
@@ -425,57 +427,68 @@ qx.Class.define("ville.wax.demo.Application",
       atmleftnavheader.getChildControl("icon").set({ scale : true });
       westbox.add(atmleftnavheader);
       var tbtnfirststackpage = new ville.wax.demo.MenuButton("First Page");
+      tbtnfirststackpage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
       westbox.add(tbtnfirststackpage);
 
       var tbtnSecondPage = new ville.wax.demo.MenuButton("Second Page");
+      tbtnSecondPage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
       westbox.add(tbtnSecondPage);
 
       var tbtnThirdPage = new ville.wax.demo.MenuButton("Third Page");
+      tbtnThirdPage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
       westbox.add(tbtnThirdPage);
 
       var westboxbuttongroup = new qx.ui.form.RadioGroup();
       westboxbuttongroup.add(tbtnfirststackpage, tbtnSecondPage, tbtnThirdPage);
 
+      //--START--// Animate westbox nav //--//--//
+      var westboxmark = new qx.ui.core.Widget();
+      westbox.add(westboxmark);
+      westboxbuttongroup.addListener("changeSelection", function(e) {
+        if (e.getOldData()[0].getBounds() && e.getData()[0].getBounds()){
+          var oldbounds = e.getOldData()[0].getBounds();
+          var newbounds = e.getData()[0].getBounds();
+          westboxmark.set({opacity : .08, backgroundColor : "blue"});
+          //grab the marks dom element
+          var westboxmarkdom = westboxmark.getContentElement().getDomElement();
+          // build and adjust the animation each time since tabview buttons vary in size and location
+          var westboxmarkmove = {
+            duration: 300, 
+            timing: "ease", 
+            keyFrames : {
+              0: {"left": oldbounds.left + "px", "top": oldbounds.top + "px", "width": oldbounds.width + "px", "height": oldbounds.height + "px"},
+              100: {"left": newbounds.left + "px", "top": newbounds.top + "px", "width": newbounds.width + "px", "height": newbounds.height + "px"}
+            },
+            keep : 100
+          };
+          //run the animation on the marks dom element
+          qx.bom.element.AnimationCss.animate(westboxmarkdom, westboxmarkmove);
+        }
+        else {
+          //console.log(e.getOldData()[0]);
+        }
+      }); 
+      //--//--// Animate westbox nav //--END--//
 
-      /*
-      tbtnfirststackpage.addListener("mouseover",function(e) {
-        var menubtnmarkmove = {
-          duration: 300, 
-          timing: "ease", 
-          keyFrames : {
-            0: {height: tbtnfirststackpage.getHeight()},
-            100: {height: tbtnfirststackpage.getHeight()-20}
-          },
-          keep : 100
-        };
-        var mbtndom = tbtnfirststackpage.getContentElement().getDomElement();
-        qx.bom.element.AnimationCss.animate(mbtndom, menubtnmarkmove, undefined);
-      });      
-      tbtnfirststackpage.addListener("mouseout",function(e) {
-        var menubtnmarkmove = {
-          duration: 300, 
-          timing: "ease", 
-          keyFrames : {
-            0: {height: tbtnfirststackpage.getHeight()},
-            100: {height: tbtnfirststackpage.getHeight()-20}
-          },
-          keep : 100
-        };
-        var mbtndom = tbtnfirststackpage.getContentElement().getDomElement();
-        qx.bom.element.AnimationCss.animateReverse(mbtndom, menubtnmarkmove, undefined);
-      });
-      */
+      /*tbtnfirststackpage.addListener("appear", function(e) {
+        westboxmark.set({opacity : .08, backgroundColor : "blue"});
+        this.setBackgroundColor("yellow");
+        westboxmark.setDomPosition(0, 0);
+      });*/
+      
+     
+      
 
       
       // CLONE the above controls
       var atmmenuleftnavheader = atmleftnavheader.clone();
       atmmenuleftnavheader.getChildControl("icon").set({ scale : true });
       var tbtnmenufirststackpage = tbtnfirststackpage.clone();
-      tbtnmenufirststackpage.getChildControl("icon").set({ scale : false });
+      tbtnmenufirststackpage.getChildControl("icon").set({ scale : true });
       var tbtnmenuSecondPage = tbtnSecondPage.clone();
-      tbtnmenuSecondPage.getChildControl("icon").set({ scale : false });
+      tbtnmenuSecondPage.getChildControl("icon").set({ scale : true });
       var tbtnmenuThirdPage = tbtnThirdPage.clone();
-      tbtnmenuThirdPage.getChildControl("icon").set({ scale : false });
+      tbtnmenuThirdPage.getChildControl("icon").set({ scale : true });
 
       // Add the clones to the Main Menu Popup
       mainmenupopup.add(atmmenuleftnavheader);
@@ -505,11 +518,15 @@ qx.Class.define("ville.wax.demo.Application",
       // Create Menu Buttons that will navigate the user through THE STACK Pages ***
 
       // Populate southbox with content
-      var tbtnfirststackpagehym = new ville.wax.demo.MenuButton("First Page", "ville/wax/wireframe-image-sm.png", true ).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
-      var tbtnsecondstackpagehym = new ville.wax.demo.MenuButton("Second Page", "ville/wax/wireframe-image-sm.png", true).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
-      var tbtnthirdpagehym = new ville.wax.demo.MenuButton("Third Page", "ville/wax/wireframe-image-sm.png", true).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
-      var tbtnmenuhym = new ville.wax.demo.MenuButton("Menu", menuimage, true).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
-      
+      var tbtnfirststackpagehym = new ville.wax.demo.MenuButton("First").set({appearance: "mainmenubutton-hym", iconPosition: "top"});
+      tbtnfirststackpagehym.getChildControl("icon").set({ scale : true, width: 28, height: 28 });
+      var tbtnsecondstackpagehym = new ville.wax.demo.MenuButton("Second").set({appearance: "mainmenubutton-hym", iconPosition: "top"});
+      tbtnsecondstackpagehym.getChildControl("icon").set({ scale : true, width: 28, height: 28 });
+      var tbtnthirdpagehym = new ville.wax.demo.MenuButton("Third").set({appearance: "mainmenubutton-hym", iconPosition: "top"});
+      tbtnthirdpagehym.getChildControl("icon").set({ scale : true, width: 28, height: 28 });
+      var tbtnmenuhym = new ville.wax.demo.MenuButton("Menu", menuimage).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
+      tbtnmenuhym.getChildControl("icon").set({ scale : true, width: 28, height: 28 });
+
       southbox.add(tbtnfirststackpagehym, {flex: 1});
       southbox.add(tbtnsecondstackpagehym, {flex: 1});
       southbox.add(tbtnthirdpagehym, {flex: 1});
@@ -521,7 +538,7 @@ qx.Class.define("ville.wax.demo.Application",
       var mainmenubuttongrouphym = new qx.ui.form.RadioGroup();
       mainmenubuttongrouphym.add(tbtnfirststackpagehym, tbtnsecondstackpagehym, tbtnthirdpagehym, tbtnmenuhym);
 
-      // <<< END of Hybrid Mobil (hym) Main Menu and Main Menu Popup <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+      // *** END of Hybrid Mobil (hym) Main Menu and Main Menu Popup ******************************
 
 
       // >>> Wire all the Main Menu Buttons to THE STACK Pages (via Listeners) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -630,6 +647,8 @@ qx.Class.define("ville.wax.demo.Application",
         mainmenubuttongroup.setSelection([tbtnmenufirststackpage]);
         westboxbuttongroup.setSelection([tbtnfirststackpage]);
       }, this);
+
+      //westboxbuttongroup.setSelection([tbtnSecondPage]);
 
 
       // *** END of Wiring *************************************************************************

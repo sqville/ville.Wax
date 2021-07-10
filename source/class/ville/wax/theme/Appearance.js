@@ -109,8 +109,8 @@ qx.Theme.define("ville.wax.theme.Appearance",
        var textcolor = "black";
        var opacity = .85;
        var font = "mainmenubutton";
-       //var iconimg = "ville/wax/wireframe-image-sm.png"
-       var iconimg = "ville/wax/wax-28-comb.png";
+       var iconimg = "ville/wax/wax-icon-24-outline.svg";
+       //var iconimg = "ville/wax/wax-28-comb.png";
 
        if (!states.disabled) {
          if (states.hovered && !states.pressed && !states.checked) {
@@ -124,7 +124,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
            opacity = 1;
            font = "mainmenubutton-bold";
            textcolor = "blue";
-           iconimg = "ville/wax/wax-28-comb-blue.png";
+           iconimg = "ville/wax/wax-icon-24-filled.svg";
          }
        }
 
@@ -174,8 +174,8 @@ qx.Theme.define("ville.wax.theme.Appearance",
     style : function() {
         return {
           scale: true,
-          width: 32,
-          height: 32
+          width: 28,
+          height: 28
         };
       }
     },*/
@@ -219,14 +219,15 @@ qx.Theme.define("ville.wax.theme.Appearance",
      {
        var decorator = "mainmenubutton-box";
        var padding = [4,2,4,2];
-       var textcolor = "black";
-       var opacity = .55;
+       var textcolor = "gray";
+       var opacity = .85;
+       var icon = "ville/wax/wax-icon-24-outline.svg";
 
        if (!states.disabled) {
          if (states.hovered && !states.pressed && !states.checked) {
            //decorator = "mainmenubutton-box-hovered";
            //padding = [12,6,12,14];
-           textcolor = "black";
+           textcolor = "gray";
            opacity = 1;
          } /*else if (states.hovered && (states.pressed || states.checked)) {
            decorator = "mainmenubutton-box-pressed-hovered";
@@ -235,18 +236,19 @@ qx.Theme.define("ville.wax.theme.Appearance",
            //padding = [12,6,12,14];
            textcolor = "blue";
            opacity = 1;
+           var icon = "ville/wax/wax-icon-24-filled.svg";
          }
        }
 
        return {
-         decorator : decorator,
-         padding : padding,
-         cursor: states.disabled ? undefined : "pointer",
-         minWidth: 5,
-         minHeight: 5,
-         textColor: textcolor,
-         font : "mainmenubutton-hym",
-         opacity : opacity
+        icon : icon, 
+        decorator : decorator,
+        padding : padding,
+        cursor: states.disabled ? undefined : "pointer",
+        minWidth: 5,
+        minHeight: 5,
+        textColor: textcolor,
+        font : "mainmenubutton-hym"
        };
      }
    },
@@ -276,16 +278,17 @@ qx.Theme.define("ville.wax.theme.Appearance",
      }
    },
 
-   "mainmenubutton-hym/icon" : {
+   /*"mainmenubutton-hym/icon" : {
 
     style : function() {
         return {
+          decorator : "mmenubutton-hym",
           scale: true,
           width: 28,
           height: 28
         };
       }
-    },
+    },*/
 
    "hym-page-button" :
    {

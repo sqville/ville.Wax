@@ -148,6 +148,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
       BUTTON
     ---------------------------------------------------------------------------
     */
+    
    "mainmenubutton-box" :
    {
      style :
@@ -156,7 +157,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
        width : [0,0,0,5],
        color : "white",
        transitionProperty: ["border-left-color"],
-       transitionDuration: "0s"
+       transitionDuration: ".35s"
      }
    },
 
@@ -166,8 +167,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
 
      style :
      {
-      color : "#cccccc",
-      transitionDuration: ".4s"
+      color : "#cccccc"
      }
    },
 
@@ -177,8 +177,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
 
      style :
      {
-      color : "blue",
-      transitionDuration: ".4s"
+      color : "blue"
      }
    },
 
@@ -311,6 +310,17 @@ qx.Theme.define("ville.wax.theme.Decoration",
       {
         color : "invalid"
       }
+    },
+
+    "mmenubutton-hym" :
+    {
+      include : "image",
+      style :
+      {
+        backgroundImage: ""
+      }
     }
+
+    
   }
 });

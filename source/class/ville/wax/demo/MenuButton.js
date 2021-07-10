@@ -46,7 +46,7 @@ qx.Class.define("ville.wax.demo.MenuButton",
       this._add(new qx.ui.core.Spacer(30, 1));
       this._add(control);
     }
-    
+
   },
 
 

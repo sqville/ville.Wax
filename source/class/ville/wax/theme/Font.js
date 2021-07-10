@@ -50,9 +50,8 @@ qx.Theme.define("ville.wax.theme.Font",
 
     "mainmenubutton-hym" :
     {
-      include : "default-bold",
-      size : 10,
-      lineHeight: 1.2
+      include : "default",
+      size : 11
     },
 
     "mainmenuindicator" :
