@@ -181,15 +181,25 @@ qx.Theme.define("ville.wax.theme.Decoration",
      }
    },
 
-   /*"mainmenubutton-box-pressed-hovered" : 
+   "mainmenubutton-box-mark" : 
    {
-     include : "mainmenubutton-box-pressed",
-
      style :
      {
-       color : "button-border-hovered"
+      radius : 0,
+      width : [0,0,0,5], 
+      color : "blue"
      }
-   },*/
+   },
+
+   "mainmenubutton-box-new" : 
+   {
+     style :
+     {
+      radius : 0,
+      width : [0,0,0,5], 
+      color : "transparent"
+     }
+   },
 
    "mainmenuindicator" :
    {

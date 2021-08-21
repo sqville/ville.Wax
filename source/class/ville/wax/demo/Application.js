@@ -84,6 +84,9 @@ qx.Class.define("ville.wax.demo.Application",
       // *** START of Base Scaffolding *******************************************************
       // *** Base Scaffolding are objects common to all Wax - Franklin based apps  ***********
 
+      // Change Widget to enable touch action for native scrolling
+      qx.Class.include(qx.ui.core.Widget, ville.wax.demo.MWidget); 
+
       // App's Root
       var approot = this.getRoot();
       approot.setBackgroundColor("black");
@@ -311,7 +314,7 @@ qx.Class.define("ville.wax.demo.Application",
 
       secondstackpage.add(mtabView);
 
-      //mtabView.setSelection([page2]);
+      mtabView.setSelection([page2]);
 
       //--START--// Animate tabview //--//--//
       var tabviewbarmark = new qx.ui.core.Widget(); //the widget that slides across the tabview's bar
@@ -341,8 +344,6 @@ qx.Class.define("ville.wax.demo.Application",
       }, this); 
       //--//--// Animate tabview //--END--//
 
-
-  
 
       // Third Page
       var thirdstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: stackpagepadding});
@@ -448,7 +449,8 @@ qx.Class.define("ville.wax.demo.Application",
         if (e.getOldData()[0].getBounds() && e.getData()[0].getBounds()){
           var oldbounds = e.getOldData()[0].getBounds();
           var newbounds = e.getData()[0].getBounds();
-          westboxmark.set({opacity : .08, backgroundColor : "blue"});
+          westboxmark.set({decorator : "mainmenubutton-box-mark"});
+          e.getData()[0].setDecorator("mainmenubutton-box-new");
           //grab the marks dom element
           var westboxmarkdom = westboxmark.getContentElement().getDomElement();
           // build and adjust the animation each time since tabview buttons vary in size and location
@@ -464,9 +466,9 @@ qx.Class.define("ville.wax.demo.Application",
           //run the animation on the marks dom element
           qx.bom.element.AnimationCss.animate(westboxmarkdom, westboxmarkmove);
         }
-        else {
-          //console.log(e.getOldData()[0]);
-        }
+        /*else {
+          console.log(e.getOldData()[0]);
+        }*/
       }); 
       //--//--// Animate westbox nav //--END--//
 
@@ -510,7 +512,8 @@ qx.Class.define("ville.wax.demo.Application",
       mainmenupopup.addListener("appear", function(e) {
         var domtable = mainmenupopup.getContentElement().getDomElement();
         qx.bom.element.Animation.animate(domtable, fadeinleft);
-      }, this);
+      });
+
 
       // *** END of Main Menu and Main Menu Popup **********************************
     
@@ -541,7 +544,7 @@ qx.Class.define("ville.wax.demo.Application",
       // *** END of Hybrid Mobil (hym) Main Menu and Main Menu Popup ******************************
 
 
-      // >>> Wire all the Main Menu Buttons to THE STACK Pages (via Listeners) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      // *** Wire all the Main Menu Buttons to THE STACK Pages (via Listeners) ********************
       // Turn on all wax.demo.MenuButton listeners
       tbtnfirststackpage.addListener("changeValue", function(e) {
         if (e.getData()) {

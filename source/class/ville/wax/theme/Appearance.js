@@ -137,8 +137,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
          textColor: textcolor,
          font : "mainmenubutton",
          opacity : 1,
-         textColor : textcolor,
-         icon : iconimg
+         textColor : textcolor
        };
      }
    },
@@ -161,11 +160,12 @@ qx.Theme.define("ville.wax.theme.Appearance",
 
      style : function(states)
      {
-       return {
-         center : false,
-         minWidth : 220,
-         gap : 14
-       };
+      return {
+        center : false,
+        minWidth : 220,
+        gap : 14,
+        icon : states.checked ? "ville/wax/wax-icon-24-filled.svg" : "ville/wax/wax-icon-24-outline.svg"
+      };
      }
    },
 
