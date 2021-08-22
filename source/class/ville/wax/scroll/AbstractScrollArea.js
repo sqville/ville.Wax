@@ -21,10 +21,10 @@
  * The ScrollArea provides a container widget with on demand scroll bars
  * if the content size exceeds the size of the container.
  *
- * @childControl pane {qx.ui.core.scroll.ScrollPane} pane which holds the content to scroll
+ * @childControl pane {ville.wax.scroll.ScrollPane} pane which holds the content to scroll
  * @childControl corner {qx.ui.core.Widget} corner where no scrollbar is shown
  */
- qx.Class.define("ville.wax.demo.AbsScrollArea",
+ qx.Class.define("ville.wax.scroll.AbstractScrollArea",
  {
    extend : qx.ui.core.Widget,
    type : "abstract",
@@ -71,26 +71,10 @@
      // since the scroll container disregards the min size of the scrollbars
      // we have to set the min size of the scroll area to ensure that the
      // scrollbars always have an usable size.
-     var size = qx.ui.core.scroll.AbstractScrollArea.DEFAULT_SCROLLBAR_WIDTH * 2 + 14;
+     var size = ville.wax.scroll.AbstractScrollArea.DEFAULT_SCROLLBAR_WIDTH * 2 + 14;
      this.set({minHeight: size, minWidth: size});
  
-     // Roll listener for scrolling
-     //this._addRollHandling();
-
-    // this.getContentElement().setStyle("WebkitOverflowScrolling", "touch");
-    //this.getContentElement().setStyle("touch-action", "auto");
-   },
- 
- /*
-   events : {
-     /** Fired as soon as the scroll animation in X direction ends. 
-     scrollAnimationXEnd: 'qx.event.type.Event',
- 
-     /** Fired as soon as the scroll animation in Y direction ends. 
-     scrollAnimationYEnd: 'qx.event.type.Event'
-   },
- */
- 
+   }, 
  
    /*
    *****************************************************************************
@@ -105,7 +89,34 @@
      {
        refine : true,
        init : "scrollarea"
-     }
+     },
+
+    /**
+    * Whether the widget should have horizontal scrollbars.
+    */
+    overflowX :
+    {
+      check : ["hidden", "visible", "scroll", "auto"],
+      nullable : true,
+      apply : "_applyOverflowX"
+    },
+
+    /**
+    * Whether the widget should have vertical scrollbars.
+    */
+    overflowY :
+    {
+      check : ["hidden", "visible", "scroll", "auto"],
+      nullable : true,
+      apply : "_applyOverflowY"
+    },
+
+    /**
+    * Overflow group property
+    */
+    overflow : {
+      group : [ "overflowX", "overflowY" ]
+    }
 
    },
  
@@ -134,11 +145,7 @@
        {
          case "pane":
            //control = new qx.ui.core.scroll.ScrollPane();
-           control = new ville.wax.demo.ScrollPane();
- 
-           //control.addListener("update", this._computeScrollbars, this);
-           //control.addListener("scrollX", this._onScrollPaneX, this);
-           //control.addListener("scrollY", this._onScrollPaneY, this);
+           control = new ville.wax.scroll.ScrollPane();
  
            if (qx.core.Environment.get("os.scrollBarOverlayed")) {
              this._add(control, {edge: 0});
@@ -146,43 +153,6 @@
              this._add(control, {row: 0, column: 0});
            }
            break;
- 
- /*
-         case "scrollbar-x":
-           control = this._createScrollBar("horizontal");
-           control.setMinWidth(0);
- 
-           control.exclude();
-           control.addListener("scroll", this._onScrollBarX, this);
-           control.addListener("changeVisibility", this._onChangeScrollbarXVisibility, this);
-           control.addListener("scrollAnimationEnd", this._onScrollAnimationEnd.bind(this, "X"));
- 
-           if (qx.core.Environment.get("os.scrollBarOverlayed")) {
-             control.setMinHeight(qx.ui.core.scroll.AbstractScrollArea.DEFAULT_SCROLLBAR_WIDTH);
-             this._add(control, {bottom: 0, right: 0, left: 0});
-           } else {
-             this._add(control, {row: 1, column: 0});
-           }
-           break;
- 
- 
-         case "scrollbar-y":
-           control = this._createScrollBar("vertical");
-           control.setMinHeight(0);
- 
-           control.exclude();
-           control.addListener("scroll", this._onScrollBarY, this);
-           control.addListener("changeVisibility", this._onChangeScrollbarYVisibility, this);
-           control.addListener("scrollAnimationEnd", this._onScrollAnimationEnd.bind(this, "Y"));
- 
-           if (qx.core.Environment.get("os.scrollBarOverlayed")) {
-             control.setMinWidth(qx.ui.core.scroll.AbstractScrollArea.DEFAULT_SCROLLBAR_WIDTH);
-             this._add(control, {right: 0, bottom: 0, top: 0});
-           } else {
-             this._add(control, {row: 0, column: 1});
-           }
-           break;
- */
  
          case "corner":
            control = new qx.ui.core.Widget();
@@ -199,8 +169,6 @@
  
        return control || this.base(arguments, id);
      },
- 
- 
  
  
      /*
@@ -278,20 +246,17 @@
        SCROLL SUPPORT
      ---------------------------------------------------------------------------
      */
+    
+     // property apply
+     _applyOverflowX : function(value) {
+      this.getChildControl("pane").setOverflowX(value);
+    },
 
- 
-     /*
-     ---------------------------------------------------------------------------
-       EVENT LISTENERS
-     ---------------------------------------------------------------------------
-     */
- 
- 
-     /*
-     ---------------------------------------------------------------------------
-       HELPER METHODS
-     ---------------------------------------------------------------------------
-     */
+
+    // property apply
+    _applyOverflowY : function(value) {
+      this.getChildControl("pane").setOverflowY(value);
+    }
  
    }
  });

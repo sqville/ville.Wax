@@ -85,7 +85,7 @@ qx.Class.define("ville.wax.demo.Application",
       // *** Base Scaffolding are objects common to all Wax - Franklin based apps  ***********
 
       // Change Widget to enable touch action for native scrolling
-      qx.Class.include(qx.ui.core.Widget, ville.wax.demo.MWidget); 
+      qx.Class.include(qx.ui.core.Widget, ville.wax.MWidget); 
 
       // App's Root
       var approot = this.getRoot();
@@ -115,7 +115,8 @@ qx.Class.define("ville.wax.demo.Application",
       var scrollwestbox = new qx.ui.container.Scroll().set({scrollbarX: "off", minWidth: 231, padding: 0, margin: 0, contentPadding: [0,0,0,0]});
 
       // Center Scroll area to fit all content
-      var scrollcenterbox = new qx.ui.container.Scroll().set({padding: 0, margin: 0, contentPadding: [0,0,0,0]});
+      //var scrollcenterbox = new qx.ui.container.Scroll().set({padding: 0, margin: 0, contentPadding: [0,0,0,0]});
+      var scrollcenterbox = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
 
       // === North Toolbar, Parts and Buttons ===
       var northtoolbar = new qx.ui.toolbar.ToolBar().set({backgroundColor: "white"});

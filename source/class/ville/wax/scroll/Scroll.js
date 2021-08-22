@@ -55,9 +55,9 @@
  * <a href='http://qooxdoo.org/docs/#desktop/widget/scroll.md' target='_blank'>
  * Documentation of this widget in the qooxdoo manual.</a>
  */
- qx.Class.define("ville.wax.demo.Scroll",
+ qx.Class.define("ville.wax.scroll.Scroll",
  {
-   extend : ville.wax.demo.AbstractScrollArea,
+   extend : ville.wax.scroll.AbstractScrollArea,
    include : [qx.ui.core.MContentPadding],
  
  
@@ -80,9 +80,7 @@
       this.add(content);
      }
    },
- 
- 
- 
+
  
    /*
    *****************************************************************************

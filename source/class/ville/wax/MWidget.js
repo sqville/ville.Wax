@@ -1,4 +1,4 @@
-qx.Mixin.define("ville.wax.demo.MWidget",
+qx.Mixin.define("ville.wax.MWidget",
 {
   construct : function()
   {
