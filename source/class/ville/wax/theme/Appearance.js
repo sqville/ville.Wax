@@ -273,7 +273,33 @@ qx.Theme.define("ville.wax.theme.Appearance",
      {
        return {
          center : true,
-         gap : 4
+         gap : 2
+       };
+     }
+   },
+
+   "mainmenubutton-hym-home" :
+   {
+     alias : "mainmenubutton-hym",
+     include : "mainmenubutton-hym",
+
+     style : function(states)
+     {
+       return {
+        icon : states.checked ? "ville/wax/Blue_House.svg" : "ville/wax/Gray_House.svg"
+       };
+     }
+   },
+
+   "mainmenubutton-hym-menu" :
+   {
+     alias : "mainmenubutton-hym",
+     include : "mainmenubutton-hym",
+
+     style : function(states)
+     {
+       return {
+        icon : states.checked ? "ville/wax/wax_menu_blue.svg" : "ville/wax/wax_menu_gray.svg"
        };
      }
    },

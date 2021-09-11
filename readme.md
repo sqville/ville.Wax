@@ -14,10 +14,10 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
 Hooked on a feeling that a single project (codebase) can be used to build applications for multiple platforms (the ones that matter).
 
 **Goals**
+* Desktop based controls that fit and work well in the mobile UI UX paradigm
 * Multiple projects/demos/examples that fit various UI UX scenarios
 * Skeleton (template) based - all projects have an associated application skeleton
 
@@ -36,6 +36,7 @@ In progress
 ## Roadmap
 
 **First Milestone - Pre 1.0 releases**
+* Desktop controls (widgets) that function well on mobile platforms
 * A single project and corresponding skeleton that successfully builds to multiple platforms
 * Function over look and feel
 * No addons. All code is contained within the project's files

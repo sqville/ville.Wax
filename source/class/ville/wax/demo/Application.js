@@ -26,6 +26,10 @@
  * @asset(ville/wax/close-red-24px.svg)
  * @asset(ville/wax/wax-icon-24-outline.svg)
  * @asset(ville/wax/wax-icon-24-filled.svg)
+ * @asset(ville/wax/Blue_House.svg)
+ * @asset(ville/wax/Gray_House.svg)
+ * @asset(ville/wax/wax_menu_gray.svg)
+ * @asset(ville/wax/wax_menu_blue.svg)
  */
 qx.Class.define("ville.wax.demo.Application",
 {
@@ -123,7 +127,7 @@ qx.Class.define("ville.wax.demo.Application",
       var mainmenupart = new qx.ui.toolbar.Part(); //Top-Left of the screen 
       var profilepart = new qx.ui.toolbar.Part(); // Top-Right of the screen
 
-      // Icon Images
+      // Icon Images dsfdf
       var menuimage = "ville/wax/round-menu-24px.svg";
       var roundacct = "ville/wax/round-account_circle-24px.svg";
 
@@ -159,7 +163,8 @@ qx.Class.define("ville.wax.demo.Application",
       txtaboutwax += "<span style='font-size: 16px;'>SPECIAL NOTE:</span><br><br>";
       txtaboutwax += "Skeletons and the demo browser are not new concepts to Qooxdoo. These features have been around since the beginning. The purpose of this writeup is to convey good-intent, thoughts and ideas on how to improve peoples work lives, and not meant to be critical or take credit for anything in anyway. The past and current qooxdoo core team have done, and are doing, phenomenal work. My thanks go out to them for making me look better than I really am - Cheers.";
       //var aboutbox = new qx.ui.container.Composite(new qx.ui.layout.VBox(10));
-      var aboutscroll = new qx.ui.container.Scroll().set({ allowStretchY: true, padding: 0, margin: 0, contentPadding: [0,24,0,24]});
+      //var aboutscroll = new qx.ui.container.Scroll().set({ allowStretchY: true, padding: 0, margin: 0, contentPadding: [0,24,0,24]});
+      var aboutscroll = new ville.wax.scroll.Scroll().set({ allowStretchY: true, padding: 0, margin: 0, contentPadding: [0,24,0,24]});
       var waxatom = new qx.ui.basic.Atom(txtaboutwax,"ville/wax/ville_Wax.png").set({rich: true, iconPosition: "top", gap: 30, paddingTop: 30});
       waxatom.getChildControl("icon").set({scale: true, width: 300, height: 106});
       waxatom.getChildControl("label").set({wrap: true});
@@ -260,10 +265,10 @@ qx.Class.define("ville.wax.demo.Application",
       var stackpageheaderfont = "control-header";
       var stackpagevboxspacing = 10;
 
-      // First Page
+      // First/Home Page
       var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: stackpagepadding});  
       // first page header
-      var lblfirstpageheader = new qx.ui.basic.Label("First Page").set({font: stackpageheaderfont});
+      var lblfirstpageheader = new qx.ui.basic.Label("Home").set({font: stackpageheaderfont});
       // first page - assemble
       firststackpage.add(lblfirstpageheader);
 
@@ -428,7 +433,7 @@ qx.Class.define("ville.wax.demo.Application",
       var atmleftnavheader = new qx.ui.basic.Atom("Wax Demo", "ville/wax/Wax_demo_logo.png").set({appearance: "header-atom", anonymous: true, focusable: false, selectable: false });
       atmleftnavheader.getChildControl("icon").set({ scale : true });
       westbox.add(atmleftnavheader);
-      var tbtnfirststackpage = new ville.wax.demo.MenuButton("First Page");
+      var tbtnfirststackpage = new ville.wax.demo.MenuButton("Home");
       tbtnfirststackpage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
       westbox.add(tbtnfirststackpage);
 
@@ -522,13 +527,13 @@ qx.Class.define("ville.wax.demo.Application",
       // Create Menu Buttons that will navigate the user through THE STACK Pages ***
 
       // Populate southbox with content
-      var tbtnfirststackpagehym = new ville.wax.demo.MenuButton("First").set({appearance: "mainmenubutton-hym", iconPosition: "top"});
+      var tbtnfirststackpagehym = new ville.wax.demo.MenuButton("Home").set({appearance: "mainmenubutton-hym-home", iconPosition: "top"});
       tbtnfirststackpagehym.getChildControl("icon").set({ scale : true, width: 28, height: 28 });
       var tbtnsecondstackpagehym = new ville.wax.demo.MenuButton("Second").set({appearance: "mainmenubutton-hym", iconPosition: "top"});
       tbtnsecondstackpagehym.getChildControl("icon").set({ scale : true, width: 28, height: 28 });
       var tbtnthirdpagehym = new ville.wax.demo.MenuButton("Third").set({appearance: "mainmenubutton-hym", iconPosition: "top"});
       tbtnthirdpagehym.getChildControl("icon").set({ scale : true, width: 28, height: 28 });
-      var tbtnmenuhym = new ville.wax.demo.MenuButton("Menu", menuimage).set({appearance: "mainmenubutton-hym", iconPosition: "top"});
+      var tbtnmenuhym = new ville.wax.demo.MenuButton("Menu").set({appearance: "mainmenubutton-hym-menu", iconPosition: "top"});
       tbtnmenuhym.getChildControl("icon").set({ scale : true, width: 28, height: 28 });
 
       southbox.add(tbtnfirststackpagehym, {flex: 1});
@@ -603,7 +608,7 @@ qx.Class.define("ville.wax.demo.Application",
       tbtnfirststackpagehym.addListener("changeValue", function(e) {
         if (e.getData()) {
           centerbox.setSelection([firststackpage]);
-          atmlogocurrentpage.set({show: "both", label:"First Page"});
+          atmlogocurrentpage.set({show: "both", label:"Home"});
         }
       }, this);
 

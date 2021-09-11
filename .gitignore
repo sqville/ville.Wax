@@ -1,4 +1,7 @@
 # .gitignore template for skeleton-based apps
 /compiled
 /qx_packages
+/android
+/node_modules
+/www
 .package-cache.json
