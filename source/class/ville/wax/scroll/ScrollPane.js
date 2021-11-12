@@ -50,6 +50,15 @@
      // Add resize listener to "translate" event
      this.addListener("resize", this._onUpdate);
 
+     //var contentEl = this.getContentElement();
+
+     // scroll position test
+     //contentEl.addListener("scroll", function(){
+     // console.log(contentEl.getScrollX());
+      //this.setScrollX(contentEl.getScrollX());
+      //this.setScrollY(contentEl.getScrollY());
+     //});
+
      this.setOverflow("auto", "auto");
    },
  

@@ -367,7 +367,8 @@ qx.Class.define("ville.wax.demo.Application",
       var btnSettings = new qx.ui.form.Button("Settings", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
       var btnLogout = new qx.ui.form.Button("Logout", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
       
-      menupage.add(new qx.ui.basic.Label("WAX DEMO").set({paddingLeft: 20, textColor: "gray"}));
+      var lblwaxdemo = new qx.ui.basic.Label("WAX DEMO").set({paddingLeft: 20, textColor: "gray"});
+      menupage.add(lblwaxdemo);
       menupage.add(btnSwitchBack);
       menupage.add(btnAbout);
       menupage.add(new qx.ui.basic.Label("ADDITIONAL FEATURES").set({paddingLeft: 20, paddingTop: 38, textColor: "gray"}));
@@ -379,6 +380,19 @@ qx.Class.define("ville.wax.demo.Application",
       var mobilemodalwindow = new qx.ui.window.Window("Detail Window").set({ width: 300, height: 200, appearance: "wax-window", allowMaximize : false, allowMinimize : false, modal: true, movable: true });
       mobilemodalwindow.setLayout(new qx.ui.layout.VBox(4));
       mobilemodalwindow.add(new qx.ui.basic.Label("I am a modal window"));
+
+      // Scroll feature
+      var centerscrollcontentEl = scrollcenterbox.getChildControl("pane").getContentElement();
+      centerscrollcontentEl.addListener("scroll", function(){
+        //console.log(scrollcenterbox.getItemTop(lblwaxdemo));
+        //console.log(centerscrollcontentEl.getScrollY());
+        if (centerscrollcontentEl.getScrollY() > 73) {
+          atmlogocurrentpage.set({show: "both", label:"WAX DEMO"});
+        } else {
+          atmlogocurrentpage.set({show: "both", label:"Menu"});
+        }
+          
+      });
 
       //***  CODE for applying popup fading in and out  ***//
       var scaleback = {
