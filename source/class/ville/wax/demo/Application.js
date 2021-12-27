@@ -317,7 +317,7 @@ qx.Class.define("ville.wax.demo.Application",
       winmenupopup.addListener("appear", function() {
         this.setDomPosition(0,0);
         var domtable = this.getContentElement().getDomElement();  
-        qx.bom.element.Animation.animate(domtable, fadeinleft)
+        qx.bom.element.Animation.animate(domtable, fadeinleft);
       });
 
       firststackpage.add(btnOpenwin);
