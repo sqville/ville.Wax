@@ -145,6 +145,23 @@ qx.Theme.define("ville.wax.theme.Decoration",
 
     /*
     ---------------------------------------------------------------------------
+      Main Menu Popup (Drawer)
+    ---------------------------------------------------------------------------
+    */
+    
+   "mainmenupopup" :
+   {
+    include : "popup", 
+    
+    style :
+     {
+       transitionProperty: ["visibility"],
+       transitionDuration: "3s"
+     }
+   },
+
+    /*
+    ---------------------------------------------------------------------------
       BUTTON
     ---------------------------------------------------------------------------
     */
@@ -270,11 +287,11 @@ qx.Theme.define("ville.wax.theme.Decoration",
 
    /*
     ---------------------------------------------------------------------------
-      CHECK BOX
+      WAX SWITCH
     ---------------------------------------------------------------------------
     */
 
-    "mcheckbox" :
+    "wax-switch" :
     {
       style :
       {
@@ -291,7 +308,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
       }
     },
 
-    "mcheckbox-checked" :
+    "wax-switch-checked" :
     {
       style :
       {
@@ -304,18 +321,18 @@ qx.Theme.define("ville.wax.theme.Decoration",
       }
     },
 
-    "mcheckbox-focused" :
+    "wax-switch-focused" :
     {
-      include : "mcheckbox",
+      include : "wax-switch",
       style :
       {
         color : "background-selected"
       }
     },
 
-    "mcheckbox-invalid" :
+    "wax-switch-invalid" :
     {
-      include : "mcheckbox",
+      include : "wax-switch",
       style :
       {
         color : "invalid"

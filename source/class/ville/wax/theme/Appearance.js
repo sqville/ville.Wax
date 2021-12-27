@@ -207,7 +207,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
 
     /*
     ---------------------------------------------------------------------------
-      wax.MENUBUTTON - "hym" = hybrid moble (i.e. phonegap or cordova)
+      wax.MENUBUTTON - "hym" = hybrid moble (i.e. cordova/capacitor)
     ---------------------------------------------------------------------------
     */
 
@@ -332,69 +332,39 @@ qx.Theme.define("ville.wax.theme.Appearance",
 
    /*
     ---------------------------------------------------------------------------
-      CHECK BOX
+      WAX SWITCH
     ---------------------------------------------------------------------------
     */
-    "mobile-checkbox":
+    "wax-switch":
     {
       alias : "atom",
 
       style : function(states)
       {
-        // The "disabled" icon is set to an icon **without** the -disabled
-        // suffix on purpose. This is because the Image widget handles this
-        // already by replacing the current image with a disabled version
-        // (if available). If no disabled image is found, the opacity style
-        // is used.
         var icon;
-
-        /*
-        // Checked
-        if (states.checked) {
-          icon = qx.theme.simple.Image.URLS["checkbox-checked"];
-        // Undetermined
-        } else if (states.undetermined) {
-          icon = qx.theme.simple.Image.URLS["checkbox-undetermined"];
-        // Unchecked
-        } else {
-          // empty icon
-          icon = qx.theme.simple.Image.URLS["blank"];
-        }
-        */
 
         return {
           icon: qx.theme.simple.Image.URLS["blank"],
-          //icon: "ville/wax/mcheckbox-knob.svg",
           gap: 6
         };
       }
     },
 
 
-    "mobile-checkbox/icon" : {
+    "wax-switch/icon" : {
       style : function(states)
       {
-        var decorator = "mcheckbox";
+        var decorator = "wax-switch";
         var bgcolor = "#e3e2e2";
-
-        /*
-        if (states.focused && !states.invalid) {
-          decorator = "checkbox-focused";
-        }*/
 
         decorator += states.invalid && !states.disabled ? "-invalid" : "";
 
         var padding;
         // Checked
         if (states.checked) {
-          //padding = 2;
           bgcolor = "blue";
-          decorator = "mcheckbox-checked"
-        // Undetermin
+          decorator = "wax-switch-checked"
         } 
-        /*else if (states.undetermined) {
-          padding = [4, 2];
-        }*/
 
         return {
           decorator : decorator,
@@ -406,11 +376,34 @@ qx.Theme.define("ville.wax.theme.Appearance",
       }
     },
 
+    /*
+    ---------------------------------------------------------------------------
+      WAX TABVIEW
+    ---------------------------------------------------------------------------
+    */
+    "wax-tabview-page" : {
+      alias : "tabview-page"
+    },
 
+    "wax-tabview-page/button" :
+    {
+      style : function(states)
+      {
+
+        var padding = [8, 16, 8, 16];
+
+        return {
+          zIndex : states.checked ? 10 : 5,
+          textColor : states.disabled ? "text-disabled" : states.checked ? "white" : "black",
+          padding : padding,
+          cursor: "pointer"
+        };
+      }
+    },
 
     /*
     ---------------------------------------------------------------------------
-      WINDOW
+      WAX WINDOW
     ---------------------------------------------------------------------------
     */
 

@@ -138,7 +138,7 @@ qx.Class.define("ville.wax.demo.Application",
       var profilemenubutton = new qx.ui.toolbar.MenuButton("ProfileMenu", roundacct).set({show: "icon", showArrow: false});
       
       // Main Menu Popup (VBox)
-      var mainmenupopup = new qx.ui.popup.Popup().set({allowGrowY: true, padding: 10});
+      var mainmenupopup = new qx.ui.popup.Popup().set({allowStretchX: true, allowStretchY: true, padding: 10, minWidth: 300});
       mainmenupopup.setLayout(new qx.ui.layout.VBox(0));
 
       // Profile and Settings Menu and Menu Buttons
@@ -190,7 +190,7 @@ qx.Class.define("ville.wax.demo.Application",
       aboutmenubutton1.addListener("execute", function(e) {
         winAboutWax.restore();
         winAboutWax.maximize();
-        winAboutWax.center();
+        winAboutWax.center(); 
         winAboutWax.show();
       }, this);
 
@@ -201,12 +201,10 @@ qx.Class.define("ville.wax.demo.Application",
         if (qx.core.Environment.get("browser.name") != "edge"){
           this._blocker.blockContent(mainmenubtnbutton.getZIndex());
         }
+        mainmenupopup.setHeight(parseInt(this.getRoot().getContentElement().getStyle("height")));
         mainmenupopup.show();
       }, this);
-      mainmenupopup.addListener("disappear", function(e)
-      {
-        this._blocker.unblock();
-      }, this);
+      
 
       // Assemble all base pieces  
       scrollwestbox.add(westbox);
@@ -238,15 +236,22 @@ qx.Class.define("ville.wax.demo.Application",
       // *** END of Base Scaffolding **************************************
 
       // Add some simple ease in animation to the app's blocker
-      var fadeinb = {duration: 300, timing: "ease", keyFrames : {
+      var fadeinb = {duration: 300, timing: "ease-out", keyFrames : {
         0: {opacity: 0},
-        100: {opacity: .08}
+        100: {opacity: .07}
         }};
 
       this._blocker.addListener("blocked", function(e) {
         var domtable;
         if (domtable = this._blocker.getBlockerElement().getDomElement()) {
           qx.bom.element.Animation.animate(domtable, fadeinb);
+        }
+      }, this);
+
+      this._blocker.addListener("unblocked", function(e) {
+        var domtable;
+        if (domtable = this._blocker.getBlockerElement().getDomElement()) {
+          qx.bom.element.Animation.animateReverse(domtable, fadeinb);
         }
       }, this);
 
@@ -272,10 +277,58 @@ qx.Class.define("ville.wax.demo.Application",
       // first page - assemble
       firststackpage.add(lblfirstpageheader);
 
-      var mcheckbox = new qx.ui.form.CheckBox("Prefer this to look different").set({appearance: "mobile-checkbox"});
+      var mcheckbox = new qx.ui.form.CheckBox("Prefer this to look different").set({appearance: "wax-switch"});
       firststackpage.add(mcheckbox);
 
-      //--START--// Animate toggle checkbox //--//--//
+      var btnOpenwin = new qx.ui.form.Button("Open Window").set({allowGrowX: false});
+      var winDrawer = this.__createDetailWindow();
+      winDrawer.set({height: 500, width:600});
+      winDrawer.setLayout(new qx.ui.layout.Canvas());
+      var winbtndrawer = new qx.ui.form.Button("Open Window Drawer").set({allowGrowX: false});
+      winDrawer.add(winbtndrawer);
+
+            //***  CODE for applying popup fading in and out  ***//
+            var fadeinleft = {
+              duration: 300, timing: "ease-out", origin: "left top", keep: 100,
+              keyFrames : {
+                0: {opacity: 0, left: "-300px"},
+                100: {opacity: 1, left: "0px"}
+              }
+            };
+
+      // tested using popup
+      var winmenupopup = new qx.ui.popup.Popup().set({allowGrowX: false, padding: 10, minWidth: 300});
+      winmenupopup.setLayout(new qx.ui.layout.VBox(0));
+      winmenupopup.setAutoHide(false);
+      winmenupopup.add(new qx.ui.basic.Label("This is a window drawer"));
+      var btnclosewinmenupopup = new qx.ui.form.Button("Close drawer");
+      btnclosewinmenupopup.addListener("execute", function() {
+        winDrawer.remove(winmenupopup);
+      });
+      winmenupopup.add(btnclosewinmenupopup);
+
+      winbtndrawer.addListener("execute", function() {
+        winmenupopup.setHeight(parseInt(winDrawer.getChildControl("pane").getContentElement().getStyle("height")));
+        winDrawer.add(winmenupopup);
+        //winmenupopup.getContentElement().removeStyle("position");
+        winmenupopup.setVisibility("visible");
+      });
+
+      winmenupopup.addListener("appear", function() {
+        this.setDomPosition(0,0);
+        var domtable = this.getContentElement().getDomElement();  
+        qx.bom.element.Animation.animate(domtable, fadeinleft)
+      });
+
+      firststackpage.add(btnOpenwin);
+
+      btnOpenwin.addListener("execute", function() {
+        winDrawer.center();
+        winDrawer.show();
+      });
+
+
+      //--START--// Animate toggle switch //--//--//
       var slideright = {
         duration: 300, 
         timing: "ease", 
@@ -293,7 +346,7 @@ qx.Class.define("ville.wax.demo.Application",
         else
           qx.bom.element.AnimationCss.animateReverse(cbimage, slideright);
       }, this); 
-      //--//--// Animate toggle checkbox //--END--//
+      //--//--// Animate toggle switch //--END--//
 
 
       // Second Page 
@@ -303,17 +356,17 @@ qx.Class.define("ville.wax.demo.Application",
       
       var mtabView = new qx.ui.tabview.TabView();
 
-      var page1 = new qx.ui.tabview.Page("Home");
+      var page1 = new qx.ui.tabview.Page("Home").set({appearance: "wax-tabview-page"});
       page1.setLayout(new qx.ui.layout.VBox());
       page1.add(new qx.ui.basic.Label("Home Page"));
       mtabView.add(page1);
 
-      var page2 = new qx.ui.tabview.Page("Next Long");
+      var page2 = new qx.ui.tabview.Page("Next Long").set({appearance: "wax-tabview-page"});
       page2.setLayout(new qx.ui.layout.VBox());
       page2.add(new qx.ui.basic.Label("Next Long Page"));
       mtabView.add(page2);
 
-      var page3 = new qx.ui.tabview.Page("Last Very Long");
+      var page3 = new qx.ui.tabview.Page("Last Very Long").set({appearance: "wax-tabview-page"});
       page3.setLayout(new qx.ui.layout.VBox());
       page3.add(new qx.ui.basic.Label("Last Very Long Page"));
       mtabView.add(page3);
@@ -323,16 +376,16 @@ qx.Class.define("ville.wax.demo.Application",
       mtabView.setSelection([page2]);
 
       //--START--// Animate tabview //--//--//
-      var tabviewbarmark = new qx.ui.core.Widget(); //the widget that slides across the tabview's bar
-      mtabView.getChildControl("bar").add(tabviewbarmark); //add the widget to the tabview's bar
+      var tabviewbarmark = new qx.ui.core.Widget().set({backgroundColor: "blue", zIndex: 5});
+      //add the widget to the tabview's bar
+      mtabView.getChildControl("bar").add(tabviewbarmark); 
+
       //animate the widget when the tabview's selection changes
       mtabView.addListener("changeSelection", function(e) {
         //previous tabview buttons location and size details
         var oldbounds = e.getOldData()[0].getChildControl("button").getBounds();
         //the clicked tabview buttons location and size details
         var newbounds = e.getData()[0].getChildControl("button").getBounds();
-        //style the mark or set its appearance
-        tabviewbarmark.set({opacity: .2, backgroundColor: "green"});
         //grab the marks dom element
         var tbvmarkdom = tabviewbarmark.getContentElement().getDomElement();
         // build and adjust the animation each time since tabview buttons vary in size and location
@@ -349,7 +402,18 @@ qx.Class.define("ville.wax.demo.Application",
         qx.bom.element.AnimationCss.animate(tbvmarkdom, tabviewbarmarkmove);
       }, this); 
       //--//--// Animate tabview //--END--//
+      mtabView.addListenerOnce("appear", function() {
+        var movetobounds = mtabView.getSelection()[0].getChildControl("button").getBounds();
+        //tabviewbarmark.setUserBounds(movetobounds.left, movetobounds.top, movetobounds.width, movetobounds.height);
+        tabviewbarmark.getContentElement().setStyles({
+          "left": movetobounds.left + "px", 
+          "top": movetobounds.top + "px", 
+          "width": movetobounds.width + "px", 
+          "height": movetobounds.height + "px"
+        });
+      })
 
+      
 
       // Third Page
       var thirdstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: stackpagepadding});
@@ -459,11 +523,14 @@ qx.Class.define("ville.wax.demo.Application",
       tbtnThirdPage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
       westbox.add(tbtnThirdPage);
 
+      westbox.add(new qx.ui.core.Spacer(), {flex: 1});
+      westbox.add(new qx.ui.basic.Label("Bottom of area").set({textAlign: "center", allowGrowX: true, height: 40}));
+
       var westboxbuttongroup = new qx.ui.form.RadioGroup();
       westboxbuttongroup.add(tbtnfirststackpage, tbtnSecondPage, tbtnThirdPage);
 
       //--START--// Animate westbox nav //--//--//
-      var westboxmark = new qx.ui.core.Widget();
+      /*var westboxmark = new qx.ui.core.Widget();
       westbox.add(westboxmark);
       westboxbuttongroup.addListener("changeSelection", function(e) {
         if (e.getOldData()[0].getBounds() && e.getData()[0].getBounds()){
@@ -486,10 +553,7 @@ qx.Class.define("ville.wax.demo.Application",
           //run the animation on the marks dom element
           qx.bom.element.AnimationCss.animate(westboxmarkdom, westboxmarkmove);
         }
-        /*else {
-          console.log(e.getOldData()[0]);
-        }*/
-      }); 
+      }); */
       //--//--// Animate westbox nav //--END--//
 
       /*tbtnfirststackpage.addListener("appear", function(e) {
@@ -517,22 +581,64 @@ qx.Class.define("ville.wax.demo.Application",
       mainmenupopup.add(tbtnmenufirststackpage);
       mainmenupopup.add(tbtnmenuSecondPage);
       mainmenupopup.add(tbtnmenuThirdPage);
+      mainmenupopup.add(new qx.ui.core.Spacer(), {flex: 1});
+      mainmenupopup.add(new qx.ui.basic.Label("Bottom of area").set({textAlign: "center", allowGrowX: true, height: 40}));
+
 
 
       // Assign all the clones their own RadioGroup
       var mainmenubuttongroup = new qx.ui.form.RadioGroup();
       mainmenubuttongroup.add(tbtnmenufirststackpage, tbtnmenuSecondPage, tbtnmenuThirdPage);
       
-      //***  CODE for applying popup fading in and out  ***//
-      var fadeinleft = {duration: 300, timing: "ease-out", origin: "left top", keyFrames : {
-        0: {opacity: 0, left: "-300px"},
-        100: {opacity: 1, left: "0px"}
-        }};
+      
 
+
+      // --Drawer--
+      // Turn off auto hide so we can animate the closing of the main menu popup
+      mainmenupopup.setAutoHide(false);
+
+      // --Drawer--
+      if (!mainmenupopup.getAutoHide()) {
+        mainmenupopup.addListenerOnce("appear", function(e) {
+          var domtable = mainmenupopup.getContentElement().getDomElement();
+          qx.event.Registration.addListener(document.documentElement, "pointerdown",function(e){
+            var target = qx.ui.core.Widget.getWidgetByElement(e.getTarget());
+            if (mainmenupopup.isVisible() & target != mainmenupopup & !qx.ui.popup.Manager.getInstance().getContainsFunction()(mainmenupopup, target)) {
+              this._blocker.unblock();
+              qx.bom.element.Animation.animateReverse(domtable, fadeinleft).addListener("end", function() {
+                mainmenupopup.exclude();
+              });
+            }
+          }, this, true);
+          
+        }, this);
+      }
+
+      // --Drawer--
       mainmenupopup.addListener("appear", function(e) {
-        var domtable = mainmenupopup.getContentElement().getDomElement();
+        var domtable = mainmenupopup.getContentElement().getDomElement();  
         qx.bom.element.Animation.animate(domtable, fadeinleft);
-      });
+      }, this);
+
+      // Hide all popups on window blur --Drawer--
+      qx.bom.Element.addListener(window, "blur", function() {
+        if (mainmenupopup.getVisibility() == "visible"){
+          this._blocker.unblock();
+          var domtable = mainmenupopup.getContentElement().getDomElement();
+          qx.bom.element.Animation.animateReverse(domtable, fadeinleft).addListener("end", function() {
+            mainmenupopup.hide();
+          });
+        }
+      }, this);
+
+      // --Drawer--
+      approot.addListener("resize", function(e) {
+        if (mainmenupopup.getVisibility() == "visible" & !mainmenupopup.getAutoHide()){
+          mainmenupopup.setHeight(e.getData().height);
+        }
+      })
+
+
 
 
       // *** END of Main Menu and Main Menu Popup **********************************
@@ -592,7 +698,15 @@ qx.Class.define("ville.wax.demo.Application",
         if (e.getData()) {
           centerbox.setSelection([firststackpage]);
           westboxbuttongroup.setSelection([tbtnfirststackpage]);
-          mainmenupopup.hide();
+          
+          if (mainmenupopup.getVisibility() == "visible"){
+            this._blocker.unblock();
+            var domtable = mainmenupopup.getContentElement().getDomElement();
+            qx.bom.element.Animation.animateReverse(domtable, fadeinleft).addListener("end", function() {
+              mainmenupopup.hide();
+
+            });
+          }
         }
       }, this);
 
@@ -603,7 +717,13 @@ qx.Class.define("ville.wax.demo.Application",
 
           firststackpage.setVisibility("excluded");
 
-          mainmenupopup.hide();
+          if (mainmenupopup.getVisibility() == "visible"){
+            this._blocker.unblock();
+            var domtable = mainmenupopup.getContentElement().getDomElement();
+            qx.bom.element.Animation.animateReverse(domtable, fadeinleft).addListener("end", function() {
+              mainmenupopup.hide();
+            });
+          }
         }
       }, this);
 
@@ -614,7 +734,13 @@ qx.Class.define("ville.wax.demo.Application",
 
           firststackpage.setVisibility("excluded");
 
-          mainmenupopup.hide();
+          if (mainmenupopup.getVisibility() == "visible"){
+            this._blocker.unblock();
+            var domtable = mainmenupopup.getContentElement().getDomElement();
+            qx.bom.element.Animation.animateReverse(domtable, fadeinleft).addListener("end", function() {
+              mainmenupopup.hide();
+            });
+          }
         }
       }, this);
 
