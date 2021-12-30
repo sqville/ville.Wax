@@ -545,8 +545,9 @@ qx.Class.define("ville.wax.demo.Application",
 
       var btnOpenwin = new qx.ui.form.Button("Window based drawer").set({allowGrowX: false});
       var winDrawer = this.__createDetailWindow();
-      winDrawer.set({height: 500, width:600});
+      winDrawer.set({height: 500, width: 450});
       winDrawer.setLayout(new qx.ui.layout.Canvas());
+      
       var winbtndrawer = new qx.ui.form.Button("Open Window Drawer").set({allowGrowX: false});
       winDrawer.add(winbtndrawer);
 
@@ -555,16 +556,19 @@ qx.Class.define("ville.wax.demo.Application",
       winmenupopup.setLayout(new qx.ui.layout.VBox(0));
       winmenupopup.setAutoHide(false);
       winmenupopup.add(new qx.ui.basic.Label("This is a window drawer"));
+      
       var btnclosewinmenupopup = new qx.ui.form.Button("Close drawer");
       btnclosewinmenupopup.addListener("execute", function() {
-        winDrawer.remove(winmenupopup);
+        var domtable = winmenupopup.getContentElement().getDomElement();
+        qx.bom.element.Animation.animateReverse(domtable, fadeinleft).addListener("end", function() {
+          winDrawer.remove(winmenupopup);
+        });
       });
       winmenupopup.add(btnclosewinmenupopup);
 
       winbtndrawer.addListener("execute", function() {
         winmenupopup.setHeight(parseInt(winDrawer.getChildControl("pane").getContentElement().getStyle("height")));
         winDrawer.add(winmenupopup);
-        //winmenupopup.getContentElement().removeStyle("position");
         winmenupopup.setVisibility("visible");
       });
 
@@ -587,6 +591,13 @@ qx.Class.define("ville.wax.demo.Application",
         winDrawer.fadeOut(200).addListener("end", function() {
           winDrawer.exclude();
         });
+      });
+
+      // --Drawer--
+      winDrawer.addListener("resize", function(e) {
+        if (winmenupopup.getVisibility() == "visible" & !winmenupopup.getAutoHide()){
+          winmenupopup.setHeight(e.getData().height);
+        }
       });
 
 
@@ -820,7 +831,7 @@ qx.Class.define("ville.wax.demo.Application",
         if (mainmenupopup.getVisibility() == "visible" & !mainmenupopup.getAutoHide()){
           mainmenupopup.setHeight(e.getData().height);
         }
-      })
+      });
 
 
 
