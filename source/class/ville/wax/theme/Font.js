@@ -66,6 +66,12 @@ qx.Theme.define("ville.wax.theme.Font",
       size : 16
     },
 
+    "control-headeratom" :
+    {
+    	include : "default-bold",
+    	size : 32
+    },
+
     "control-header" :
     {
     	include : "default",

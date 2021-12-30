@@ -8,8 +8,7 @@
 
 ************************************************************************ */
 /**
- * @asset(ville/wax/mcheckbox-knob.png)
- * @asset(ville/wax/mcheckbox-knob.svg)
+ * @asset(ville/wax/wax-switch-knob.svg)
  */
 
 
@@ -287,6 +286,47 @@ qx.Theme.define("ville.wax.theme.Decoration",
 
    /*
     ---------------------------------------------------------------------------
+      WAX TABVIEW
+    ---------------------------------------------------------------------------
+    */
+
+    "wax-tabview-mark" : 
+    {
+      style :
+      {
+        radius : 30
+      }
+    },
+
+    "wax-tabview-line" : 
+    {
+      style :
+      {
+        radius : 2
+      }
+    },
+
+    "wax-tabview-block" : 
+    {
+      style :
+      {
+        radius : 4,
+        shadowLength : 1,
+        shadowBlurRadius : 3,
+        shadowColor : "shadow"
+      }
+    },
+
+    "wax-tabview-bar-block" : 
+    {
+      style :
+      {
+        radius : 4
+      }
+    },
+
+   /*
+    ---------------------------------------------------------------------------
       WAX SWITCH
     ---------------------------------------------------------------------------
     */
@@ -298,11 +338,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
         radius: 70,
         width : [1,2],
         color: "#e3e2e2",
-        //shadowBlurRadius: 2,
-        //shadowVerticalLength: 1,
-        //shadowColor: ['rgba(0, 0, 0, 0.2)', 'rgba(255, 255, 255, 0.4)'],
-        //inset: [true, false],
-        backgroundImage: "ville/wax/mcheckbox-knob.svg",
+        backgroundImage: "ville/wax/wax-switch-knob.svg",
         backgroundPositionX: "left",
         backgroundPositionY: "center"
       }
@@ -315,29 +351,12 @@ qx.Theme.define("ville.wax.theme.Decoration",
         radius: 70,
         width : [1,2],
         color: "blue",
-        backgroundImage: "ville/wax/mcheckbox-knob.svg",
+        backgroundImage: "ville/wax/wax-switch-knob.svg",
         backgroundPositionX: "right",
         backgroundPositionY: "center"
       }
     },
 
-    "wax-switch-focused" :
-    {
-      include : "wax-switch",
-      style :
-      {
-        color : "background-selected"
-      }
-    },
-
-    "wax-switch-invalid" :
-    {
-      include : "wax-switch",
-      style :
-      {
-        color : "invalid"
-      }
-    },
 
     "mmenubutton-hym" :
     {

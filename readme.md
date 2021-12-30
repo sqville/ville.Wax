@@ -14,7 +14,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-Hooked on a feeling that a single project (codebase) can be used to build applications for multiple platforms (the ones that matter).
+Hooked on a feeling that a single project (codebase) can be used to build applications for multiple platforms.
 
 **Goals**
 * qx.Desktop based controls that fit and work well in the web, desktop and mobile UI UX paradigms

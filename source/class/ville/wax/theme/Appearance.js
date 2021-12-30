@@ -43,6 +43,22 @@ qx.Theme.define("ville.wax.theme.Appearance",
       }
     },
 
+    "control-header-atom" :
+    {
+      alias : "atom",
+
+      style : function(states)
+      {
+        return {
+          iconPosition: "top", 
+          center: true,
+          padding: [40, 6, 20, 6],
+          marginBottom: 10,
+          font : "control-headeratom"
+        }
+      }
+    },
+
      /*
     ---------------------------------------------------------------------------
       wax.demo.Button
@@ -355,13 +371,12 @@ qx.Theme.define("ville.wax.theme.Appearance",
       style : function(states)
       {
         var decorator = "wax-switch";
+        //TODOs - grab color from color theme
         var bgcolor = "#e3e2e2";
 
-        decorator += states.invalid && !states.disabled ? "-invalid" : "";
-
-        var padding;
         // Checked
         if (states.checked) {
+          //TODOs - grab color from color theme
           bgcolor = "blue";
           decorator = "wax-switch-checked"
         } 
@@ -370,8 +385,9 @@ qx.Theme.define("ville.wax.theme.Appearance",
           decorator : decorator,
           scale : true,
           width: 48,
-          height: 30,
-          backgroundColor : bgcolor
+          height: 24,
+          backgroundColor : bgcolor,
+          cursor: "pointer"
         };
       }
     },
@@ -381,22 +397,76 @@ qx.Theme.define("ville.wax.theme.Appearance",
       WAX TABVIEW
     ---------------------------------------------------------------------------
     */
-    "wax-tabview-page" : {
-      alias : "tabview-page"
+    "tabview/bar" :
+    {
+      style : function(states)
+      {
+        return {
+          marginBottom : 4,
+          height : 40
+        };
+      }
     },
+
+    "wax-tabview-page" : {},
 
     "wax-tabview-page/button" :
     {
       style : function(states)
       {
 
-        var padding = [8, 16, 8, 16];
+        var padding = [10, 16, 4, 16];
 
         return {
           zIndex : states.checked ? 10 : 5,
           textColor : states.disabled ? "text-disabled" : states.checked ? "white" : "black",
           padding : padding,
           cursor: "pointer"
+        };
+      }
+    },
+
+    "wax-tabview-page-line" : {},
+
+    "wax-tabview-page-line/button" :
+    {
+      include: "wax-tabview-page/button",
+      
+      style : function(states)
+      {
+        return {
+          textColor : "black"
+        };
+      }
+    },
+
+    "wax-tabview-block" : "tabview",
+
+    "wax-tabview-block/bar" :
+        
+    {
+      include : "tabview/bar",
+      
+      style : function(states)
+      {
+        return {
+          backgroundColor : "#e3e2e2",
+          paddingLeft : 4,
+          decorator : "wax-tabview-bar-block"
+        };
+      }
+    },
+
+    "wax-tabview-page-block" : {},
+
+    "wax-tabview-page-block/button" :
+    {
+      include: "wax-tabview-page/button",
+      
+      style : function(states)
+      {
+        return {
+          textColor : "black"
         };
       }
     },
