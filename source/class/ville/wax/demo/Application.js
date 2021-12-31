@@ -30,6 +30,7 @@
  * @asset(ville/wax/Gray_House.svg)
  * @asset(ville/wax/wax_menu_gray.svg)
  * @asset(ville/wax/wax_menu_blue.svg)
+ * @asset(ville/wax/arrow-down-outline.svg)
  */
 qx.Class.define("ville.wax.demo.Application",
 {
@@ -102,7 +103,7 @@ qx.Class.define("ville.wax.demo.Application",
       var appcompdock = new qx.ui.container.Composite(new qx.ui.layout.Dock(0, 0)).set({backgroundColor: "white"});
       
       // Dock's North section (Canvas)
-      var northhbox = this._northBox = new qx.ui.container.Composite(new qx.ui.layout.Canvas()).set({backgroundColor: "white", decorator : "topheader"});
+      var northhbox = this._northBox = new qx.ui.container.Composite(new qx.ui.layout.Canvas()).set({visibility: "excluded", backgroundColor: "white", decorator : "topheader"});
 
       // Dock's West section (VBox)
       var westbox = this._westBox = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({backgroundColor: "white", padding: [10,0,10,10], decorator : "leftside"});
@@ -277,7 +278,7 @@ qx.Class.define("ville.wax.demo.Application",
       firstpagehbox.add(new qx.ui.core.Spacer(), {flex: 1});
 
       // First/Home Page
-      var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing).set({alignY: "middle"})).set({maxWidth: 700});  
+      var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing).set({alignY: "middle"})).set({ padding : stackpagepadding, maxWidth: 700});  
       // add the pages independent scroll area
 
       firstpagehbox.add(firststackpage, {flex: 2});
@@ -288,18 +289,44 @@ qx.Class.define("ville.wax.demo.Application",
       firstscrollstackpage.add(firstpagehbox);
       
       var atmfirstpageheader = new qx.ui.basic.Atom("Control Showcase", "ville/wax/Wax_demo_logo.png").set({appearance: "control-header-atom", anonymous: true, focusable: false, selectable: false });
-      //atmfirstpageheader.getChildControl("icon").set({ scale : true });
-      //var lblfirstpageheader = new qx.ui.basic.Label("Home").set({font: stackpageheaderfont});
-      // first page - assemble
-      firststackpage.add(atmfirstpageheader);
+      var atmscrolldownmsg = new qx.ui.basic.Atom("Scroll down", "ville/wax/arrow-down-outline.svg").set({center: true, padding: 0});
+      atmscrolldownmsg.getChildControl("icon").set({ scale : true, width: 24, height: 24 });
+      var hboxheaderstuff = new qx.ui.container.Composite(new qx.ui.layout.VBox(0));
+      hboxheaderstuff.add(atmfirstpageheader);
+      hboxheaderstuff.add(atmscrolldownmsg);
+      firststackpage.add(hboxheaderstuff);
+
+      var bounceloopanima = {duration: 3500, keep: 100, keyFrames : {
+        0 : {translate: [null, "0px"]},
+        20 : {translate: [null, "0px"]},
+        40 : {translate: [null, "0px"]},
+        50 : {translate: [null, "0px"]},
+        75 : {translate: [null, "0px"]},
+        80 : {translate: [null, "-5px"]},
+        85 : {translate: [null, "4px"]},
+        90 : {translate: [null, "-1px"]},
+        100 : {translate: [null, "0px"]}
+        },
+        delay : 1000,
+        repeat : 4
+      };
+
+      atmscrolldownmsg.addListener("appear", function(e) {
+        var icondom = this.getChildControl("icon").getContentElement().getDomElement();
+        qx.bom.element.AnimationCss.animate(icondom, bounceloopanima);
+      });
 
 
-      // WAX SWITCH
-      firststackpage.add(new qx.ui.basic.Label("Switch").set({font: stackpageheaderfont, padding: [40, 0, 0, 0]}));
-      var waxswitch = new qx.ui.form.CheckBox("Switch").set({appearance: "wax-switch"});
+
+      // SWITCH
+      firststackpage.add(new qx.ui.basic.Label("Switch").set({font: stackpageheaderfont, padding: [60, 0, 0, 0]}));
+      firststackpage.add(new qx.ui.basic.Label("Just a simple qx.ui.form.CheckBox made to look like a switch control via appearance and decorator changes (with help of an SVG file)").set({rich: true, wrap: true}));
+      var waxswitch = new qx.ui.form.CheckBox("Default switch").set({appearance: "wax-switch"});
       firststackpage.add(waxswitch);
+      var waxswitch2 = new qx.ui.form.CheckBox("Larger switch").set({appearance: "wax-switch-larger"});
+      firststackpage.add(waxswitch2);
 
-      // Wax Switch - toggle switch animation
+      // Switch - toggle switch animation
       // TODOs: Need to grab colors from Color Theme
       var slideright = {
         duration: 300, 
@@ -314,6 +341,14 @@ qx.Class.define("ville.wax.demo.Application",
       // Wax Switch - animate on change of value
       waxswitch.addListener("changeValue", function(e) {
         var cbimage = waxswitch.getChildControl("icon").getContentElement().getDomElement();
+        if (e.getData())
+          qx.bom.element.AnimationCss.animate(cbimage, slideright);
+        else
+          qx.bom.element.AnimationCss.animateReverse(cbimage, slideright);
+      }, this); 
+
+      waxswitch2.addListener("changeValue", function(e) {
+        var cbimage = waxswitch2.getChildControl("icon").getContentElement().getDomElement();
         if (e.getData())
           qx.bom.element.AnimationCss.animate(cbimage, slideright);
         else
@@ -425,20 +460,13 @@ qx.Class.define("ville.wax.demo.Application",
 
       wtabView2.setSelection([page2tbv2]);
 
-      //--START--// Animate tabview //--//--//
       var tabviewbarline = new qx.ui.core.Widget().set({height: 4, backgroundColor: "blue", zIndex: 5, decorator : "wax-tabview-line"});
-      //add the widget to the tabview's bar
       wtabView2.getChildControl("bar").add(tabviewbarline); 
 
-      //animate the widget when the tabview's selection changes
       wtabView2.addListener("changeSelection", function(e) {
-        //previous tabview buttons location and size details
         var oldbounds = e.getOldData()[0].getChildControl("button").getBounds();
-        //the clicked tabview buttons location and size details
         var newbounds = e.getData()[0].getChildControl("button").getBounds();
-        //grab the marks dom element
         var tbvmarkdom = tabviewbarline.getContentElement().getDomElement();
-        // build and adjust the animation each time since tabview buttons vary in size and location
         var oldtop = oldbounds.height - tabviewbarline.getHeight();
         var newtop = newbounds.height - tabviewbarline.getHeight();
         var tabviewbarlinemove = {
@@ -450,14 +478,11 @@ qx.Class.define("ville.wax.demo.Application",
           },
           keep : 100
         };
-        //run the animation on the marks dom element
         qx.bom.element.AnimationCss.animate(tbvmarkdom, tabviewbarlinemove);
       }, this); 
-      //--//--// Animate tabview //--END--//
+    
       wtabView2.addListenerOnce("appear", function() {
-        //console.log(tabviewbarline.getHeight());
         var movetobounds = wtabView2.getSelection()[0].getChildControl("button").getBounds();
-        //tabviewbarmark.setUserBounds(movetobounds.left, movetobounds.top, movetobounds.width, movetobounds.height);
         tabviewbarline.getContentElement().setStyles({
           "left": movetobounds.left + "px", 
           "top": movetobounds.height - tabviewbarline.getHeight() + "px", 
@@ -474,35 +499,73 @@ qx.Class.define("ville.wax.demo.Application",
       page1tbv3.add(new qx.ui.basic.Label("Day"));
       wtabView3.add(page1tbv3);
 
+      page1tbv3.addListener("appear", function() {
+        var tbvmarkdom = this.getContentElement().getDomElement();
+        qx.bom.element.AnimationCss.animate(tbvmarkdom,
+          {
+            duration: 200,
+            keyFrames : 
+            {
+              0 : {opacity: 0, top: this.getBounds().top + 6 + "px"},
+              100 : {opacity: 1, top: this.getBounds().top + "px"}
+            },
+            keep : 100,
+            timing: "ease-in"
+          });
+      });
+
       var page2tbv3 = new qx.ui.tabview.Page("Week").set({appearance: "wax-tabview-page-block"});
       page2tbv3.setLayout(new qx.ui.layout.VBox());
       page2tbv3.add(new qx.ui.basic.Label("Week"));
       wtabView3.add(page2tbv3);
+
+      page2tbv3.addListener("appear", function() {
+        var tbvmarkdom = this.getContentElement().getDomElement();
+        qx.bom.element.AnimationCss.animate(tbvmarkdom,
+          {
+            duration: 200,
+            keyFrames : 
+            {
+              0 : {opacity: 0, top: this.getBounds().top + 6 + "px"},
+              100 : {opacity: 1, top: this.getBounds().top + "px"}
+            },
+            keep : 100,
+            timing: "ease-in"
+          });
+      });
 
       var page3tbv3 = new qx.ui.tabview.Page("Month").set({appearance: "wax-tabview-page-block"});
       page3tbv3.setLayout(new qx.ui.layout.VBox());
       page3tbv3.add(new qx.ui.basic.Label("Month"));
       wtabView3.add(page3tbv3);
 
+      page3tbv3.addListener("appear", function() {
+        var tbvmarkdom = this.getContentElement().getDomElement();
+        qx.bom.element.AnimationCss.animate(tbvmarkdom,
+          {
+            duration: 200,
+            keyFrames : 
+            {
+              0 : {opacity: 0, top: this.getBounds().top + 6 + "px"},
+              100 : {opacity: 1, top: this.getBounds().top + "px"}
+            },
+            keep : 100,
+            timing: "ease-out"
+          });
+      });
+
       // secondstackpage.add(wtabView3);
       firststackpage.add(wtabView3);
 
       wtabView3.setSelection([page2tbv3]);
 
-      //--START--// Animate tabview //--//--//
       var tabviewbarblock = new qx.ui.core.Widget().set({backgroundColor: "white", zIndex: 4, decorator : "wax-tabview-block"});
-      //add the widget to the tabview's bar
       wtabView3.getChildControl("bar").add(tabviewbarblock); 
 
-      //animate the widget when the tabview's selection changes
       wtabView3.addListener("changeSelection", function(e) {
-        //previous tabview buttons location and size details
         var oldbounds = e.getOldData()[0].getChildControl("button").getBounds();
-        //the clicked tabview buttons location and size details
         var newbounds = e.getData()[0].getChildControl("button").getBounds();
-        //grab the marks dom element
         var tbvmarkdom = tabviewbarblock.getContentElement().getDomElement();
-        // build and adjust the animation each time since tabview buttons vary in size and location
         var tabviewbarblockmove = {
           duration: 300, 
           timing: "ease", 
@@ -512,14 +575,11 @@ qx.Class.define("ville.wax.demo.Application",
           },
           keep : 100
         };
-        //run the animation on the marks dom element
         qx.bom.element.AnimationCss.animate(tbvmarkdom, tabviewbarblockmove);
       }, this); 
-      //--//--// Animate tabview //--END--//
+
       wtabView3.addListenerOnce("appear", function() {
-        //console.log(tabviewbarline.getHeight());
         var movetobounds = wtabView3.getSelection()[0].getChildControl("button").getBounds();
-        //tabviewbarmark.setUserBounds(movetobounds.left, movetobounds.top, movetobounds.width, movetobounds.height);
         tabviewbarblock.getContentElement().setStyles({
           "left": movetobounds.left + "px", 
           "top": movetobounds.top + 2 + "px", 
@@ -543,7 +603,7 @@ qx.Class.define("ville.wax.demo.Application",
         mainmenupopup.show();
       }, this);
 
-      var btnOpenwin = new qx.ui.form.Button("Window based drawer").set({allowGrowX: false});
+      var btnOpenwin = new qx.ui.form.Button("Try the Window based drawer").set({allowGrowX: false});
       var winDrawer = this.__createDetailWindow();
       winDrawer.set({height: 500, width: 450});
       winDrawer.setLayout(new qx.ui.layout.Canvas());
@@ -600,8 +660,22 @@ qx.Class.define("ville.wax.demo.Application",
         }
       });
 
+      // --Mobile--
+      firststackpage.add(new qx.ui.basic.Label("Mobile").set({font: stackpageheaderfont, padding: [80, 0, 0, 0]}));
+      firststackpage.add(new qx.ui.basic.Label("Controls and features that you would expect from a mobile app, such as TabBar, modal and non-modal drawers/popups, page transitions and unimpeded scrolling").set({rich: true, wrap: true}));
+      var btnSwitchtoMobileView = new qx.ui.form.Button("Switch to Mobile View").set({allowGrowX: false});
+      firststackpage.add(btnSwitchtoMobileView);
 
-      
+      btnSwitchtoMobileView.addListener("execute", function(e){
+        this.setDemoMode("mobile");
+        northhbox.setVisibility("visible");
+        southbox.setVisibility("visible");
+        profilemenubutton.setVisibility("hidden");
+        mainmenupart.setVisibility("hidden");
+        centerbox.setSelection([menuscrollstackpage]);
+        atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
+        mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
+      }, this);
 
       // Third Page
       var thirdstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: stackpagepadding});
@@ -619,6 +693,7 @@ qx.Class.define("ville.wax.demo.Application",
 
 
       // Menu Page for mobile only
+      var menuscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
       var menupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10, null, "separator-vertical")).set({padding: [60, 0, 0, 0]});
       var btnAbout = new qx.ui.form.Button("About Wax", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
       var btnSwitchBack = new qx.ui.form.Button("Switch to Desktop", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
@@ -634,6 +709,7 @@ qx.Class.define("ville.wax.demo.Application",
       menupage.add(btnProfile);
       menupage.add(btnSettings);
       menupage.add(btnLogout);
+      menuscrollstackpage.add(menupage);
 
       // Test mobile modal window animations
       var mobilemodalwindow = new qx.ui.window.Window("Detail Window").set({ width: 300, height: 200, appearance: "wax-window", allowMaximize : false, allowMinimize : false, modal: true, movable: true });
@@ -686,7 +762,7 @@ qx.Class.define("ville.wax.demo.Application",
       centerbox.add(firstscrollstackpage);
       centerbox.add(secondstackpage);
       centerbox.add(thirdstackpage);
-      centerbox.add(menupage);
+      centerbox.add(menuscrollstackpage);
 
       // Show the default page
       centerbox.setSelection([firstscrollstackpage]);
@@ -836,6 +912,8 @@ qx.Class.define("ville.wax.demo.Application",
 
 
 
+
+
       // *** END of Main Menu and Main Menu Popup **********************************
     
       // *** Populate the Hybrid Mobile (hym) Main Menu  content *******************
@@ -963,7 +1041,7 @@ qx.Class.define("ville.wax.demo.Application",
 
       tbtnmenuhym.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([menupage]);
+          centerbox.setSelection([menuscrollstackpage]);
           atmlogocurrentpage.set({show: "both", label:"Menu"});
         }
       }, this);
@@ -975,7 +1053,7 @@ qx.Class.define("ville.wax.demo.Application",
         scrollwestbox.setVisibility("excluded");
         profilemenubutton.setVisibility("hidden");
         mainmenupart.setVisibility("hidden");
-        centerbox.setSelection([menupage]);
+        centerbox.setSelection([menuscrollstackpage]);
         atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
         mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
       }, this);

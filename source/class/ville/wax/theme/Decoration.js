@@ -9,6 +9,8 @@
 ************************************************************************ */
 /**
  * @asset(ville/wax/wax-switch-knob.svg)
+ * @asset(ville/wax/wax-switch-knob26.svg)
+ * 
  */
 
 
@@ -139,6 +141,15 @@ qx.Theme.define("ville.wax.theme.Decoration",
         width : [1,0,0,0],
         color : "white-box-border",
         style : "solid"
+      }
+    },
+
+    "mmenubutton-hym" :
+    {
+      include : "image",
+      style :
+      {
+        backgroundImage: ""
       }
     },
 
@@ -357,16 +368,31 @@ qx.Theme.define("ville.wax.theme.Decoration",
       }
     },
 
-
-    "mmenubutton-hym" :
+    "wax-switch-lgr" :
     {
-      include : "image",
       style :
       {
-        backgroundImage: ""
+        radius: 70,
+        width : [1,2],
+        color: "#e3e2e2",
+        backgroundImage: "ville/wax/wax-switch-knob26.svg",
+        backgroundPositionX: "left",
+        backgroundPositionY: "center"
+      }
+    },
+
+    "wax-switch-lgr-checked" :
+    {
+      style :
+      {
+        radius: 70,
+        width : [1,2],
+        color: "blue",
+        backgroundImage: "ville/wax/wax-switch-knob26.svg",
+        backgroundPositionX: "right",
+        backgroundPositionY: "center"
       }
     }
-
     
   }
 });

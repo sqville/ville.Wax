@@ -52,8 +52,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
         return {
           iconPosition: "top", 
           center: true,
-          padding: [40, 6, 20, 6],
-          marginBottom: 10,
+          padding: [40, 6, 4, 6],
           font : "control-headeratom"
         }
       }
@@ -386,6 +385,33 @@ qx.Theme.define("ville.wax.theme.Appearance",
           scale : true,
           width: 48,
           height: 24,
+          backgroundColor : bgcolor,
+          cursor: "pointer"
+        };
+      }
+    },
+
+    "wax-switch-larger": "wax-switch",
+
+    "wax-switch-larger/icon" : {
+      style : function(states)
+      {
+        var decorator = "wax-switch-lgr";
+        //TODOs - grab color from color theme
+        var bgcolor = "#e3e2e2";
+
+        // Checked
+        if (states.checked) {
+          //TODOs - grab color from color theme
+          bgcolor = "blue";
+          decorator = "wax-switch-lgr-checked"
+        } 
+
+        return {
+          decorator : decorator,
+          scale : true,
+          width: 48,
+          height: 28,
           backgroundColor : bgcolor,
           cursor: "pointer"
         };
