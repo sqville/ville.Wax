@@ -232,32 +232,21 @@ qx.Theme.define("ville.wax.theme.Appearance",
 
      style : function(states)
      {
-       var decorator = "mainmenubutton-box";
        var padding = [4,2,4,2];
        var textcolor = "gray";
-       var opacity = .85;
        var icon = "ville/wax/wax-icon-24-outline.svg";
 
        if (!states.disabled) {
          if (states.hovered && !states.pressed && !states.checked) {
-           //decorator = "mainmenubutton-box-hovered";
-           //padding = [12,6,12,14];
            textcolor = "gray";
-           opacity = 1;
-         } /*else if (states.hovered && (states.pressed || states.checked)) {
-           decorator = "mainmenubutton-box-pressed-hovered";
-         }*/ else if (states.pressed || states.checked) {
-           //decorator = "mainmenubutton-box-pressed";
-           //padding = [12,6,12,14];
+         } else if (states.pressed || states.checked) {
            textcolor = "blue";
-           opacity = 1;
            var icon = "ville/wax/wax-icon-24-filled.svg";
          }
        }
 
        return {
         icon : icon, 
-        decorator : decorator,
         padding : padding,
         cursor: states.disabled ? undefined : "pointer",
         minWidth: 5,

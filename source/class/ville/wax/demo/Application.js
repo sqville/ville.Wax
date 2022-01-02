@@ -320,7 +320,7 @@ qx.Class.define("ville.wax.demo.Application",
 
       // SWITCH
       firststackpage.add(new qx.ui.basic.Label("Switch").set({font: stackpageheaderfont, padding: [60, 0, 0, 0]}));
-      firststackpage.add(new qx.ui.basic.Label("Just a simple qx.ui.form.CheckBox made to look like a switch control via appearance and decorator changes (with help of an SVG file)").set({rich: true, wrap: true}));
+      firststackpage.add(new qx.ui.basic.Label("Just a simple qx.ui.form.CheckBox made to look like a switch control via appearance and decorator changes (with help of an SVG file for the white knob).").set({rich: true, wrap: true}));
       var waxswitch = new qx.ui.form.CheckBox("Default switch").set({appearance: "wax-switch"});
       firststackpage.add(waxswitch);
       var waxswitch2 = new qx.ui.form.CheckBox("Larger switch").set({appearance: "wax-switch-larger"});
@@ -474,22 +474,86 @@ qx.Class.define("ville.wax.demo.Application",
           timing: "ease", 
           keyFrames : {
             0: {"left": oldbounds.left + "px", "top": oldtop + "px", "width": oldbounds.width + "px"},
-            100: {"left": newbounds.left + "px", "top": newtop + "px", "width": newbounds.width + "px"}
+            100: {"left": newbounds.left + 8 + "px", "top": newtop + "px", "width": newbounds.width - 16 + "px"}
           },
           keep : 100
         };
         qx.bom.element.AnimationCss.animate(tbvmarkdom, tabviewbarlinemove);
+
+        //remove old mouseover and mouseout listeners
+        e.getOldData()[0].getChildControl("button").removeListenerById(tabviewbarline.getUserData("mouseoverid"));
+        e.getOldData()[0].getChildControl("button").removeListenerById(tabviewbarline.getUserData("mouseoutid"));
+
+        var tabvbutton = e.getData()[0].getChildControl("button");
+
+        var mouseoverid = tabvbutton.addListener("mouseover", function() {
+          var tbvmarkdom = tabviewbarline.getContentElement().getDomElement();
+          qx.bom.element.AnimationCss.animate(tbvmarkdom, {
+            duration: 150, 
+            timing: "ease-in", 
+            keyFrames : {
+              0: {"width": newbounds.width + "px"},
+              100: {"width": newbounds.width -16 + "px", "left": newbounds.left +8 + "px"}
+            },
+            keep : 100
+          });
+        });
+        var mouseoutid = tabvbutton.addListener("mouseout", function() {
+          var tbvmarkdom = tabviewbarline.getContentElement().getDomElement();
+          qx.bom.element.AnimationCss.animate(tbvmarkdom, {
+            duration: 150, 
+            timing: "ease-in", 
+            keyFrames : {
+              0: {"width": newbounds.width -16 + "px", "left": newbounds.left +8 + "px"},
+              100: {"width": newbounds.width + "px", "left": newbounds.left + "px"}
+            },
+            keep : 100
+          });
+        });
+        tabviewbarline.setUserData("mouseoverid", mouseoverid);
+        tabviewbarline.setUserData("mouseoutid", mouseoutid);
+
       }, this); 
     
       wtabView2.addListenerOnce("appear", function() {
-        var movetobounds = wtabView2.getSelection()[0].getChildControl("button").getBounds();
+        var movetobounds = this.getSelection()[0].getChildControl("button").getBounds();
         tabviewbarline.getContentElement().setStyles({
           "left": movetobounds.left + "px", 
           "top": movetobounds.height - tabviewbarline.getHeight() + "px", 
           "width": movetobounds.width + "px", 
           "height": tabviewbarline.getHeight() + "px"
         });
-      })
+
+        var tabvbutton = this.getSelection()[0].getChildControl("button");
+
+        var mouseoverid = tabvbutton.addListener("mouseover", function() {
+          var tbvmarkdom = tabviewbarline.getContentElement().getDomElement();
+          qx.bom.element.AnimationCss.animate(tbvmarkdom, {
+            duration: 150, 
+            timing: "ease-in", 
+            keyFrames : {
+              0: {"width": this.getBounds().width + "px"},
+              100: {"width": this.getBounds().width -16 + "px", "left": this.getBounds().left +8 + "px"}
+            },
+            keep : 100
+          });
+        });
+        var mouseoutid = tabvbutton.addListener("mouseout", function() {
+          var tbvmarkdom = tabviewbarline.getContentElement().getDomElement();
+          qx.bom.element.AnimationCss.animate(tbvmarkdom, {
+            duration: 150, 
+            timing: "ease-in", 
+            keyFrames : {
+              0: {"width": this.getBounds().width -16 + "px", "left": this.getBounds().left +8 + "px"},
+              100: {"width": this.getBounds().width + "px", "left": this.getBounds().left + "px"}
+            },
+            keep : 100
+          });
+        });
+        tabviewbarline.setUserData("mouseoverid", mouseoverid);
+        tabviewbarline.setUserData("mouseoutid", mouseoutid);
+
+      });
 
       // Wax TabView - gray bar with white block
       var wtabView3 = new qx.ui.tabview.TabView().set({appearance: "wax-tabview-block"});
@@ -586,7 +650,7 @@ qx.Class.define("ville.wax.demo.Application",
           "width": movetobounds.width + "px", 
           "height": movetobounds.height - 4 + "px"
         });
-      })
+      });
 
       firststackpage.add(new qx.ui.basic.Label("Drawer").set({font: stackpageheaderfont, padding: [80, 0, 0, 0]}));
 
@@ -673,7 +737,7 @@ qx.Class.define("ville.wax.demo.Application",
         profilemenubutton.setVisibility("hidden");
         mainmenupart.setVisibility("hidden");
         centerbox.setSelection([menuscrollstackpage]);
-        atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
+        //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
         mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
       }, this);
 
@@ -695,17 +759,18 @@ qx.Class.define("ville.wax.demo.Application",
       // Menu Page for mobile only
       var menuscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
       var menupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10, null, "separator-vertical")).set({padding: [60, 0, 0, 0]});
-      var btnAbout = new qx.ui.form.Button("About Wax", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
-      var btnSwitchBack = new qx.ui.form.Button("Switch to Desktop", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
-      var btnProfile = new qx.ui.form.Button("Profile", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
-      var btnSettings = new qx.ui.form.Button("Settings", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
-      var btnLogout = new qx.ui.form.Button("Logout", "ville/wax/wireframe-image-sm.png").set({appearance : "hym-page-button"});
+      var btnAbout = new qx.ui.form.Button("About Wax", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
+      var btnSwitchBack = new qx.ui.form.Button("Switch to Desktop", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
+      var btnProfile = new qx.ui.form.Button("Profile", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
+      var btnSettings = new qx.ui.form.Button("Settings", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
+      var btnLogout = new qx.ui.form.Button("Logout", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       
       var lblwaxdemo = new qx.ui.basic.Label("WAX DEMO").set({paddingLeft: 20, textColor: "gray"});
       menupage.add(lblwaxdemo);
+      // Add a vbox container of buttons
       menupage.add(btnSwitchBack);
       menupage.add(btnAbout);
-      menupage.add(new qx.ui.basic.Label("ADDITIONAL FEATURES").set({paddingLeft: 20, paddingTop: 38, textColor: "gray"}));
+      //menupage.add(new qx.ui.basic.Label("ADDITIONAL FEATURES").set({paddingLeft: 20, paddingTop: 38, textColor: "gray"}));
       menupage.add(btnProfile);
       menupage.add(btnSettings);
       menupage.add(btnLogout);
@@ -1042,7 +1107,7 @@ qx.Class.define("ville.wax.demo.Application",
       tbtnmenuhym.addListener("changeValue", function(e) {
         if (e.getData()) {
           centerbox.setSelection([menuscrollstackpage]);
-          atmlogocurrentpage.set({show: "both", label:"Menu"});
+          //atmlogocurrentpage.set({show: "both", label:"Menu"});
         }
       }, this);
 
@@ -1054,7 +1119,7 @@ qx.Class.define("ville.wax.demo.Application",
         profilemenubutton.setVisibility("hidden");
         mainmenupart.setVisibility("hidden");
         centerbox.setSelection([menuscrollstackpage]);
-        atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
+        //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
         mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
       }, this);
 
@@ -1062,6 +1127,7 @@ qx.Class.define("ville.wax.demo.Application",
       btnSwitchBack.addListener("execute", function(e){
         this.setDemoMode("desktop");
         southbox.setVisibility("excluded");
+        northhbox.setVisibility("excluded");
         profilemenubutton.setVisibility("visible");
         atmlogocurrentpage.setVisibility("hidden");
         mainmenupart.setVisibility("visible");
