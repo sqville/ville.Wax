@@ -76,10 +76,22 @@ qx.Theme.define("ville.wax.theme.Decoration",
     {
       style :
       {
+        width: [0,0,1,0],
+        color: "#C7C7C7",
         backgroundImage: "ville/wax/chevron_right-24px.svg",
         backgroundRepeat: "no-repeat",
         backgroundPositionX: "right",
         backgroundPositionY: "center"
+      }
+    },
+
+    "page-button-right-last" :
+    {
+      include: "page-button-right",
+      
+      style :
+      {
+        width: 0
       }
     },
 
@@ -119,7 +131,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
       style :
       {
         width : [0,0,1,0],
-        color : "white-box-border",
+        color : "gray",
         style : "solid"
       }
     },
@@ -243,6 +255,35 @@ qx.Theme.define("ville.wax.theme.Decoration",
       width: 0
      }
    },
+
+   "hym-box-noborder" :
+   {
+     style :
+     {
+      radius: 8
+     }
+   },
+
+   "wax-form-button" :
+   {
+    style :
+    {
+     radius: 6
+    }
+   },
+
+   "article": 
+   {
+    include : "hym-box-noborder",
+    
+    style: 
+    {
+      backgroundImage: "ville/wax/Yellow_Car_g7.jpg",
+      backgroundRepeat: "no-repeat",
+      backgroundPositionX: "center",
+      backgroundPositionY: -30
+    }
+  },
 
     /*
     ---------------------------------------------------------------------------

@@ -90,6 +90,33 @@ qx.Theme.define("ville.wax.theme.Font",
       family : ["-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "arial", "Helvetica", "sans-serif"],
       bold : true,
       size : 16
+    },
+
+    "hym-app-page-header" :
+    {
+      family : ["-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "arial", "Helvetica", "sans-serif"],
+      bold : true,
+      size : 24
+    },
+
+    "hym-app-page-section-header" :
+    {
+      family : ["-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "arial", "Helvetica", "sans-serif"],
+      bold : true,
+      size : 16
+    },
+
+    "hym-app-link" :
+    {
+      family : ["-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "arial", "Helvetica", "sans-serif"],
+      size : 14
+    },
+
+    "hym-form-button" :
+    {
+      family : ["-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "arial", "Helvetica", "sans-serif"],
+      size : 14,
+      bold : true
     }
   }
 });

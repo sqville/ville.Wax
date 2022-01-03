@@ -64,24 +64,20 @@ qx.Theme.define("ville.wax.theme.Appearance",
     ---------------------------------------------------------------------------
     */
 
-    "testbutton" :
+    "wax-form-button" :
     {
-      include : "button",
 
       style : function(states)
-      {
-        /*var iprops;
-        if (states.hovered)
-          iprops = {animation:"grow"};
-        else if (!states.hovered && states.abandoned)
-          iprops = {animation:"shrink"};
-        else
-          iprops = undefined;*/
-        
+      {        
         return {
-          padding : 16,
-          gap : 16
-          //iconProps : iprops
+          backgroundColor : "blue",
+          textColor : "white",
+          padding : [3, 8],
+          gap : 16,
+          cursor: "pointer",
+          center: true,
+          decorator : "hym-box-noborder",
+          font: "hym-form-button"
         }
       }
     },
@@ -327,9 +323,40 @@ qx.Theme.define("ville.wax.theme.Appearance",
       return {
         center : false,
         gap : 12,
-        padding : [8,20,8,20],
-        marginRight : 30,
-        decorator : "page-button-right"
+        padding : [12,0,11,0],
+        margin : [0,0,0,14],
+        decorator : "page-button-right",
+        font : "default-bold"
+      };
+    }
+   },
+
+   "hym-page-last-button" :
+   {
+    style : function(states)
+    {
+      return {
+        center : false,
+        gap : 12,
+        padding : [12,0,12,0],
+        margin : [0,0,0,14],
+        decorator : "page-button-right-last",
+        font : "default-bold"
+      };
+    }
+   },
+
+   "hym-page-link-last-button" :
+   {
+    style : function(states)
+    {
+      return {
+        center : false,
+        gap : 12,
+        padding : [0,0,0,0],
+        margin : [0,0,0,14],
+        font : "hym-app-link",
+        textColor: "blue"
       };
     }
    },
