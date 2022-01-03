@@ -22,12 +22,18 @@ Hooked on a feeling that a single project (codebase) can be used to build applic
 * Skeleton (template) based - all projects have an associated application skeleton
 
 **Screen Shots**
+<br />
 Switch
-<img src="screen_capture_Switch.PNG" alt="Switch control for qx.Desktop applications" width="700" height="234">
+<br />
+<img src="screen_capture_Switch.PNG" alt="Switch control for qx.Desktop applications" width="600" height="201">
+<br />
 TabView
-<img src="screen_capture_Tabview.PNG" alt="TabView control enhancements for qx.Desktop applications" width="700" height="385">
+<br />
+<img src="screen_capture_Tabview.PNG" alt="TabView control enhancements for qx.Desktop applications" width="600" height="330">
+<br />
 Mobile UI
-<img src="screen_capture_MobileUI.PNG" alt="Mobile UI features for qx.Desktop applications" width="746" height="897">
+<br />
+<img src="screen_capture_MobileUI.PNG" alt="Mobile UI features for qx.Desktop applications" width="550" height="661">
 
 <!-- GETTING STARTED -->
 **Getting started:**
