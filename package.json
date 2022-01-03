@@ -1,6 +1,6 @@
 {
   "name": "ville.wax",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Single code base multiple platforms",
   "main": "index.js",
   "scripts": {

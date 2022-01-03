@@ -1,36 +1,28 @@
 {
- "$schema": "https://qooxdoo.org/schema/Manifest-1-0-0.json",
-  "info" :
-  {
-    "name" : "ville.Wax",
-
-    "summary" : "one code base all platforms for the Qooxdoo Javascript Framework",
-    "description" : "",
-
-    "homepage" : "",
-
-    "license" : "MIT license",
-    "authors" : [
-  {
-    "name": "Chris Eskew (sqville)",
-    "email": "chris.eskew@sqville.com"
-  }
-],
-
-    "version" : "1.0.0"
+  "$schema": "https://qooxdoo.org/schema/Manifest-1-0-0.json",
+  "info": {
+    "name": "ville.Wax",
+    "summary": "one code base all platforms for the Qooxdoo Javascript Framework",
+    "description": "",
+    "homepage": "",
+    "license": "MIT license",
+    "authors": [
+      {
+        "name": "Chris Eskew (sqville)",
+        "email": "chris.eskew@sqville.com"
+      }
+    ],
+    "version": "1.0.1"
   },
-
-  "provides" :
-  {
-    "namespace"   : "ville.wax",
-    "encoding"    : "utf-8",
-    "class"       : "source/class",
-    "resource"    : "source/resource",
-    "translation" : "source/translation"
+  "provides": {
+    "namespace": "ville.wax",
+    "encoding": "utf-8",
+    "class": "source/class",
+    "resource": "source/resource",
+    "translation": "source/translation"
   },
-
   "requires": {
     "@qooxdoo/framework": "^6.0.0",
-    "@qooxdoo/compiler" : "^1.0.0"
+    "@qooxdoo/compiler": "^1.0.0"
   }
 }
