@@ -23,17 +23,14 @@ Hooked on a feeling that a single project (codebase) can be used to build applic
 
 **Screen Shots**
 <br />
-Switch
-<br />
 <img src="screen_capture_Switch.PNG" alt="Switch control for qx.Desktop applications" width="600" height="201">
 <br />
-TabView
 <br />
 <img src="screen_capture_Tabview.PNG" alt="TabView control enhancements for qx.Desktop applications" width="600" height="330">
-<br />
+<br /><br />
 Mobile UI
 <br />
-<img src="screen_capture_MobileUI.PNG" alt="Mobile UI features for qx.Desktop applications" width="550" height="661">
+<img src="screen_capture_MobileUI.PNG" alt="Mobile UI features for qx.Desktop applications" width="350" height="421">
 
 <!-- GETTING STARTED -->
 **Getting started:**
