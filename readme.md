@@ -38,7 +38,7 @@ In progress
 
 <!-- DEMO -->
 ## Demos
-The Wax Control Showcase 
+[The Wax Control Showcase](https://sqville.github.io/ville.Wax/published/) 
 
 <!-- ROADMAP -->
 ## Roadmap
