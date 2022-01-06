@@ -898,7 +898,17 @@ qx.Class.define("ville.wax.demo.Application",
         qx.bom.element.AnimationCss.animateReverse(appdockdom, scaleback);
       }, this);
 
+      // add a mobile detail page
+      var mobiledetailscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
+      var mobiledetailpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: [10, 20], backgroundColor: bckgcolormain });
 
+      btnAbout.addListener("execute", function(e) {
+        /*winAboutWax.restore();
+        winAboutWax.maximize();
+        winAboutWax.center();
+        winAboutWax.show();*/
+        centerbox.setSelection([secondstackpage]);
+      }, this);
 
     
       // Assemble - THE STACK 
@@ -910,12 +920,7 @@ qx.Class.define("ville.wax.demo.Application",
       // Show the default page
       centerbox.setSelection([firstscrollstackpage]);
 
-      btnAbout.addListener("execute", function(e) {
-        winAboutWax.restore();
-        winAboutWax.maximize();
-        winAboutWax.center();
-        winAboutWax.show();
-      }, this);
+      
 
       // *** END of THE STACK ******************************************************
       
