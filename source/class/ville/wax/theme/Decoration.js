@@ -131,7 +131,17 @@ qx.Theme.define("ville.wax.theme.Decoration",
       style :
       {
         width : [0,0,1,0],
-        color : "gray",
+        color : "white-box-border",
+        style : "solid"
+      }
+    },
+
+    "topheader-blended" :
+    {
+      style :
+      {
+        width : [0,0,1,0],
+        color : "#F2F1F6",
         style : "solid"
       }
     },
@@ -152,6 +162,16 @@ qx.Theme.define("ville.wax.theme.Decoration",
       {
         width : [1,0,0,0],
         color : "white-box-border",
+        style : "solid"
+      }
+    },
+
+    "bottombar-blended" :
+    {
+      style :
+      {
+        width : [1,0,0,0],
+        color : "#F2F1F6",
         style : "solid"
       }
     },

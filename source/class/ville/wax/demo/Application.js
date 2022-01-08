@@ -838,11 +838,30 @@ qx.Class.define("ville.wax.demo.Application",
         var opacityincrement = 1/scrollrange;
         var atmopac = atmlogocurrentpage.getOpacity();
         var lblwdopac = lblwaxdemo.getOpacity();
+
+        var menuscrollheight = menuscrollstackpage.getItemBottom(lbltheend);
+
+        var menuscrolldom = menuscrollcontentEl.getDomElement();
+        //console.log("offsetHeight: " + menuscrolldom.offsetHeight + " scrollTop: " + menuscrolldom.scrollTop + " height: " + menuscrolldom.scrollHeight);
+        /*if (menuscrolldom.offsetHeight + menuscrolldom.scrollTop >= menuscrolldom.scrollHeight)
+          console.log("hello");*/
         
+        // top bar
         if (scrollval >= menulbllocbtm-6) {
           atmlogocurrentpage.set({ opacity: 1 });
+          northhbox.set({backgroundColor: bckgcolortopbtm, decorator: "topheader"});
         } else {
           atmlogocurrentpage.set({ opacity: 0 });
+          northhbox.set({backgroundColor: bckgcolormain, decorator: "topheader-blended"});
+        }
+
+        //console.log("scrollval: " + scrollval + " menuscrollheight: " + menuscrollheight);
+
+        //bottom bar
+        if (menuscrolldom.offsetHeight + menuscrolldom.scrollTop >= menuscrolldom.scrollHeight) {
+          southbox.set({backgroundColor: bckgcolormain, decorator: "bottombar-blended"});
+        } else {
+          southbox.set({backgroundColor: bckgcolortopbtm, decorator: "bottombar"});
         }
         
         /*
