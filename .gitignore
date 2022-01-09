@@ -3,5 +3,6 @@
 /qx_packages
 /android
 /node_modules
+/deployed
 /www
 .package-cache.json
