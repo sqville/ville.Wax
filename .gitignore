@@ -6,3 +6,4 @@
 /deployed
 /www
 .package-cache.json
+.package-lock.json
