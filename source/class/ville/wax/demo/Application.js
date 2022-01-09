@@ -770,9 +770,9 @@ qx.Class.define("ville.wax.demo.Application",
 
       var menuscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
       var menupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: [10, 20], backgroundColor: bckgcolormain });
-      var btnAbout = new qx.ui.form.Button("About Wax", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
+      var btnAbout = new qx.ui.form.Button("Detail Screen", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       var btnSwitchBack = new qx.ui.form.Button("Switch to Desktop", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
-      var btnProfile = new qx.ui.form.Button("Profile", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
+      var btnProfile = new qx.ui.form.Button("Modal Popup", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       var btnSettings = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       var btnLogout = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       var btnLastBtn = new qx.ui.form.Button("Last Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-last-button"});
@@ -819,7 +819,7 @@ qx.Class.define("ville.wax.demo.Application",
       menuscrollstackpage.add(menupage);
 
       // Test mobile modal window animations
-      var mobilemodalwindow = new qx.ui.window.Window("Detail Window").set({ width: 300, height: 200, appearance: "wax-window", allowMaximize : false, allowMinimize : false, modal: true, movable: true });
+      var mobilemodalwindow = new qx.ui.window.Window("Detail Window").set({ appearance: "wax-window", allowMaximize : false, allowMinimize : false, modal: true, movable: false, resizable: false });
       mobilemodalwindow.setLayout(new qx.ui.layout.VBox(4));
       mobilemodalwindow.add(new qx.ui.basic.Label("I am a modal window"));
 
@@ -830,7 +830,7 @@ qx.Class.define("ville.wax.demo.Application",
 
       // Scroll feature
       var menuscrollcontentEl = menuscrollstackpage.getChildControl("pane").getContentElement();
-      menuscrollcontentEl.addListener("scroll", function(e){
+      menuscrollcontentEl.addListener("scroll", function(e) {
         var menulblloctop = menuscrollstackpage.getItemTop(lblwaxdemo);
         var menulbllocbtm = menuscrollstackpage.getItemBottom(lblwaxdemo);
         var scrollval = menuscrollcontentEl.getScrollY();
@@ -840,11 +840,6 @@ qx.Class.define("ville.wax.demo.Application",
         var lblwdopac = lblwaxdemo.getOpacity();
 
         var menuscrollheight = menuscrollstackpage.getItemBottom(lbltheend);
-
-        var menuscrolldom = menuscrollcontentEl.getDomElement();
-        //console.log("offsetHeight: " + menuscrolldom.offsetHeight + " scrollTop: " + menuscrolldom.scrollTop + " height: " + menuscrolldom.scrollHeight);
-        /*if (menuscrolldom.offsetHeight + menuscrolldom.scrollTop >= menuscrolldom.scrollHeight)
-          console.log("hello");*/
         
         // top bar
         if (scrollval >= menulbllocbtm-6) {
@@ -858,6 +853,8 @@ qx.Class.define("ville.wax.demo.Application",
         //console.log("scrollval: " + scrollval + " menuscrollheight: " + menuscrollheight);
 
         //bottom bar
+        var menuscrolldom = menuscrollcontentEl.getDomElement();
+
         if (menuscrolldom.offsetHeight + menuscrolldom.scrollTop >= menuscrolldom.scrollHeight) {
           southbox.set({backgroundColor: bckgcolormain, decorator: "bottombar-blended"});
         } else {
@@ -893,11 +890,11 @@ qx.Class.define("ville.wax.demo.Application",
 
       //***  CODE for applying popup fading in and out  ***//
       var scaleback = {
-        duration: 500, 
+        duration: 400, 
         timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
         keyFrames : {
           0: {scale: 1},
-          100: {scale: .85}
+          100: {scale: .95}
         },
         keep : 100
       };
@@ -906,15 +903,44 @@ qx.Class.define("ville.wax.demo.Application",
         var appdockdom = appcompdock.getContentElement().getDomElement();
         appcompdock.setDecorator("scaledback-box");
         qx.bom.element.AnimationCss.animate(appdockdom, scaleback);
-        mobilemodalwindow.restore();
-        mobilemodalwindow.center();
         mobilemodalwindow.show();
       }, this);
 
-      mobilemodalwindow.addListener("close", function(e) {
+      mobilemodalwindow.addListener("appear", function() {
+        var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
+        var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
+        mobilemodalwindow.moveTo(0,appheight);
+        mobilemodalwindow.set({width: appwidth, height: appheight - 28});
+        var popupup = {
+          duration: 400, 
+          timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
+          keyFrames : {
+            0: {top: appheight + "px"},
+            100: {top: "30px"}
+          },
+          keep : 100
+        };
+        qx.bom.element.AnimationCss.animate(mobilemodalwindow.getContentElement().getDomElement(), popupup);
+      }, this);
+
+      mobilemodalwindow.addListener("beforeClose", function(e) {
+        e.preventDefault();
         var appdockdom = appcompdock.getContentElement().getDomElement();
-        //appcompdock.setDecorator("scaledback-box");
+        var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
         qx.bom.element.AnimationCss.animateReverse(appdockdom, scaleback);
+        var popupdown = {
+          duration: 200, 
+          timing: "ease-in", 
+          keyFrames : {
+            0: {top: "30px"},
+            100: {top: appheight + "px"}
+          },
+          keep : 100
+        };
+        qx.bom.element.AnimationCss.animate(mobilemodalwindow.getContentElement().getDomElement(), popupdown).addListener("end", function() {
+          mobilemodalwindow.hide();
+          appcompdock.setDecorator("normal-box");
+        });
       }, this);
 
       // add a mobile detail page

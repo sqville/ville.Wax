@@ -29,6 +29,14 @@ qx.Theme.define("ville.wax.theme.Decoration",
         radius: 3
       }
     },
+
+    "normal-box" :
+    {
+      style :
+      {
+        radius: 0
+      }
+    },
     
     "nobgimg" :
     {
