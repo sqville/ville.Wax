@@ -128,7 +128,7 @@ qx.Class.define("ville.wax.demo.Application",
       var scrollcenterbox = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
 
       // === North Toolbar, Parts and Buttons ===
-      var northtoolbar = new qx.ui.toolbar.ToolBar().set({backgroundColor: "white"});
+      var northtoolbar = new qx.ui.toolbar.ToolBar().set({allowGrowX: true});
       var mainmenupart = new qx.ui.toolbar.Part(); //Top-Left of the screen 
       var profilepart = new qx.ui.toolbar.Part(); // Top-Right of the screen
 
@@ -226,8 +226,8 @@ qx.Class.define("ville.wax.demo.Application",
       //var atmlogocurrentpage = new qx.ui.basic.Atom("Wax","ville/wax/Wax_demo_logo.svg").set({font: "hym-app-header", gap: 10, padding: 0, visibility: "hidden"});
       //atmlogocurrentpage.getChildControl("icon").set({ scale: true, width: 48, height: 38 });
       var atmlogocurrentpage = new qx.ui.basic.Atom("Wax").set({font: "hym-app-header", gap: 10, padding: 0, visibility: "hidden"});
-      mainmenupart.add(mainmenubtnbutton);
-      profilepart.add(profilemenubutton);
+      //mainmenupart.add(mainmenubtnbutton);
+      //profilepart.add(profilemenubutton);
       
       northtoolbar.add(mainmenupart);
       northtoolbar.addSpacer();
@@ -370,6 +370,19 @@ qx.Class.define("ville.wax.demo.Application",
       var secondstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: stackpagepadding});
       var lblsecondpageheader = new qx.ui.basic.Label("Second Page").set({font: stackpageheaderfont});
       secondstackpage.add(lblsecondpageheader);
+
+      //Password show
+      var txtpassword = new qx.ui.form.PasswordField();
+      secondstackpage.add(txtpassword);
+      var chkshowvalue = new qx.ui.form.CheckBox("Show password");
+      chkshowvalue.addListener("changeValue", function(e) {
+        if (e.getData())
+          txtpassword.getContentElement().setAttribute("type", "text");
+        else
+          txtpassword.getContentElement().setAttribute("type", "password");
+      });
+      secondstackpage.add(chkshowvalue);
+
       var btngobackhome = new qx.ui.form.Button("Go Back Home").set({allowGrowX: false});
       secondstackpage.add(btngobackhome);
       btngobackhome.addListener("execute", function(e) {
@@ -736,8 +749,8 @@ qx.Class.define("ville.wax.demo.Application",
         this.setDemoMode("mobile");
         northhbox.setVisibility("visible");
         southbox.setVisibility("visible");
-        profilemenubutton.setVisibility("hidden");
-        mainmenupart.setVisibility("hidden");
+        //profilemenubutton.setVisibility("hidden");
+        //mainmenupart.setVisibility("hidden");
         centerbox.setSelection([menuscrollstackpage]);
         //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
         mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
@@ -850,12 +863,13 @@ qx.Class.define("ville.wax.demo.Application",
           northhbox.set({backgroundColor: bckgcolormain, decorator: "topheader-blended"});
         }
 
-        //console.log("scrollval: " + scrollval + " menuscrollheight: " + menuscrollheight);
-
+        
         //bottom bar
         var menuscrolldom = menuscrollcontentEl.getDomElement();
 
-        if (menuscrolldom.offsetHeight + menuscrolldom.scrollTop >= menuscrolldom.scrollHeight) {
+        //console.log("offsetheight: " + menuscrolldom.offsetHeight + " scrollTop: " + menuscrolldom.scrollTop + " scrollheight: " + menuscrolldom.scrollHeight);
+
+        if (menuscrolldom.offsetHeight + menuscrolldom.scrollTop >= menuscrolldom.scrollHeight - 1) {
           southbox.set({backgroundColor: bckgcolormain, decorator: "bottombar-blended"});
         } else {
           southbox.set({backgroundColor: bckgcolortopbtm, decorator: "bottombar"});
@@ -894,7 +908,7 @@ qx.Class.define("ville.wax.demo.Application",
         timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
         keyFrames : {
           0: {scale: 1},
-          100: {scale: .95}
+          100: {scale: .96}
         },
         keep : 100
       };
@@ -910,13 +924,13 @@ qx.Class.define("ville.wax.demo.Application",
         var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
         var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
         mobilemodalwindow.moveTo(0,appheight);
-        mobilemodalwindow.set({width: appwidth, height: appheight - 28});
+        mobilemodalwindow.set({width: appwidth, height: appheight - 18});
         var popupup = {
           duration: 400, 
           timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
           keyFrames : {
             0: {top: appheight + "px"},
-            100: {top: "30px"}
+            100: {top: "20px"}
           },
           keep : 100
         };
@@ -932,7 +946,7 @@ qx.Class.define("ville.wax.demo.Application",
           duration: 200, 
           timing: "ease-in", 
           keyFrames : {
-            0: {top: "30px"},
+            0: {top: "20px"},
             100: {top: appheight + "px"}
           },
           keep : 100
@@ -946,13 +960,16 @@ qx.Class.define("ville.wax.demo.Application",
       // add a mobile detail page
       var mobiledetailscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
       var mobiledetailpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: [10, 20], backgroundColor: bckgcolormain });
+      mobiledetailscrollstackpage.add(mobiledetailpage);
+      var lbldetailscreen = new qx.ui.basic.Label("Detail Screen").set({font: "hym-app-page-header"});
+      mobiledetailpage.add(lbldetailscreen);
+      var btnBackButton = new qx.ui.form.Button("na").set({visibility: "hidden"});
+      mainmenupart.add(btnBackButton);
 
       btnAbout.addListener("execute", function(e) {
-        /*winAboutWax.restore();
-        winAboutWax.maximize();
-        winAboutWax.center();
-        winAboutWax.show();*/
-        centerbox.setSelection([secondstackpage]);
+        centerbox.setSelection([mobiledetailscrollstackpage]);
+        btnBackButton.set({ label: "Menu", visibility: "visible" });
+        mainmenupart.setVisibility("visible");
       }, this);
 
     
@@ -961,6 +978,7 @@ qx.Class.define("ville.wax.demo.Application",
       centerbox.add(secondstackpage);
       centerbox.add(thirdstackpage);
       centerbox.add(menuscrollstackpage);
+      centerbox.add(mobiledetailscrollstackpage);
 
       // Show the default page
       centerbox.setSelection([firstscrollstackpage]);
@@ -1244,8 +1262,8 @@ qx.Class.define("ville.wax.demo.Application",
         this.setDemoMode("mobile");
         southbox.setVisibility("visible");
         scrollwestbox.setVisibility("excluded");
-        profilemenubutton.setVisibility("hidden");
-        mainmenupart.setVisibility("hidden");
+        //profilemenubutton.setVisibility("hidden");
+        //mainmenupart.setVisibility("hidden");
         centerbox.setSelection([menuscrollstackpage]);
         //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
         mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
@@ -1256,9 +1274,9 @@ qx.Class.define("ville.wax.demo.Application",
         this.setDemoMode("desktop");
         southbox.setVisibility("excluded");
         northhbox.setVisibility("excluded");
-        profilemenubutton.setVisibility("visible");
+       // profilemenubutton.setVisibility("visible");
         atmlogocurrentpage.setVisibility("hidden");
-        mainmenupart.setVisibility("visible");
+        //mainmenupart.setVisibility("visible");
         centerbox.setSelection([firstscrollstackpage]);
         mainmenubuttongroup.setSelection([tbtnmenufirststackpage]);
         westboxbuttongroup.setSelection([tbtnfirststackpage]);
