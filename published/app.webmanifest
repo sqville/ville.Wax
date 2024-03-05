@@ -1,0 +1,12 @@
+{
+    "name": "My First Qooxdoo Wax PWA",
+    "short_name": "VilleWaxDemo",
+    "theme_color": "red",
+    "background_color": "silver",
+    "start_url": "./",
+    "id": "ville-wax-pwa-1",
+    "display": "standalone",
+    "scope": "./",
+    "description": "This is a long text that can describe what your PWA does to the user",
+    "categories": ["qooxdoo", "pwa"]
+}

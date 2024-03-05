@@ -1,5 +1,5 @@
 {
-  "$schema": "https://qooxdoo.org/schema/Manifest-1-0-0.json",
+  "$schema": "https://qooxdoo.org/schema/Manifest-2-0-0.json",
   "info": {
     "name": "ville.Wax",
     "summary": "one code base all platforms for the Qooxdoo Javascript Framework",
@@ -22,7 +22,6 @@
     "translation": "source/translation"
   },
   "requires": {
-    "@qooxdoo/framework": "^6.0.0",
-    "@qooxdoo/compiler": "^1.0.0"
+    "@qooxdoo/framework": "^7.6.1"
   }
 }
