@@ -420,20 +420,20 @@ qx.Theme.define("ville.wax.theme.Decoration",
         color: "#e3e2e2",
         backgroundImage: "ville/wax/wax-switch-knob.svg",
         backgroundPositionX: "left",
-        backgroundPositionY: "center"
+        backgroundPositionY: "center",
+        transitionProperty: ["background-color", "border", "background-position-x"],
+        transitionDuration: "300ms",
+        transitionTimingFunction : "ease"
       }
     },
 
     "wax-switch-checked" :
     {
+      include: "wax-switch",
       style :
       {
-        radius: 70,
-        width : [1,2],
         color: "blue",
-        backgroundImage: "ville/wax/wax-switch-knob.svg",
-        backgroundPositionX: "right",
-        backgroundPositionY: "center"
+        backgroundPositionX: "right"
       }
     },
 
@@ -446,20 +446,20 @@ qx.Theme.define("ville.wax.theme.Decoration",
         color: "#e3e2e2",
         backgroundImage: "ville/wax/wax-switch-knob26.svg",
         backgroundPositionX: "left",
-        backgroundPositionY: "center"
+        backgroundPositionY: "center",
+        transitionProperty: ["background-color", "border", "background-position-x"],
+        transitionDuration: "300ms",
+        transitionTimingFunction : "ease"
       }
     },
 
     "wax-switch-lgr-checked" :
     {
+      include: "wax-switch-lgr",
       style :
       {
-        radius: 70,
-        width : [1,2],
         color: "blue",
-        backgroundImage: "ville/wax/wax-switch-knob26.svg",
-        backgroundPositionX: "right",
-        backgroundPositionY: "center"
+        backgroundPositionX: "right"
       }
     }
     

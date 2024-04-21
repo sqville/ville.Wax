@@ -363,6 +363,44 @@ qx.Theme.define("ville.wax.theme.Appearance",
 
    /*
     ---------------------------------------------------------------------------
+      DONUT BOOLEAN
+    ---------------------------------------------------------------------------
+    */
+    "donutboolean": {},
+    
+    "donutboolean-trans": {},
+
+    "donutboolean/progress":
+    {
+      style: function(states) {
+        return {
+          backgroundColor: "transparent"
+        };
+      }
+    },
+
+    "donutboolean/measure":
+    {
+      style: function(states) {
+        return {
+          marginTop: -15,
+          font: "control-header"
+        };
+      }
+    },
+
+    "donutboolean/statement":
+    {
+      style: function(states) {
+        return {
+          marginTop: 15,
+          font: "headeratom"
+        };
+      }
+    },
+
+   /*
+    ---------------------------------------------------------------------------
       WAX SWITCH
     ---------------------------------------------------------------------------
     */
@@ -372,10 +410,9 @@ qx.Theme.define("ville.wax.theme.Appearance",
 
       style : function(states)
       {
-        var icon;
-
         return {
           icon: qx.theme.simple.Image.URLS["blank"],
+          //icon: "ville/wax/wax-switch-knob.svg",
           gap: 6
         };
       }
@@ -386,12 +423,10 @@ qx.Theme.define("ville.wax.theme.Appearance",
       style : function(states)
       {
         var decorator = "wax-switch";
-        //TODOs - grab color from color theme
         var bgcolor = "#e3e2e2";
 
         // Checked
         if (states.checked) {
-          //TODOs - grab color from color theme
           bgcolor = "blue";
           decorator = "wax-switch-checked"
         } 
@@ -494,7 +529,8 @@ qx.Theme.define("ville.wax.theme.Appearance",
         return {
           backgroundColor : "#e3e2e2",
           paddingLeft : 4,
-          decorator : "wax-tabview-bar-block"
+          decorator : "wax-tabview-bar-block",
+          padding : [4,0]
         };
       }
     },

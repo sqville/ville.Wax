@@ -94,6 +94,9 @@ qx.Class.define("ville.wax.demo.Application",
       // Change Widget to enable touch action for native scrolling
       qx.Class.include(qx.ui.core.Widget, ville.wax.MWidget); 
 
+      // Enable dynamic bar movement
+      qx.Class.include(qx.ui.tabview.TabView, ville.wax.MTabView);
+
       // App's Root
       var approot = this.getRoot();
       approot.setBackgroundColor("black");
@@ -143,7 +146,13 @@ qx.Class.define("ville.wax.demo.Application",
       var profilemenubutton = new qx.ui.toolbar.MenuButton("ProfileMenu", roundacct).set({show: "icon", showArrow: false});
       
       // Main Menu Popup (VBox)
-      var mainmenupopup = new qx.ui.popup.Popup().set({allowStretchX: true, allowStretchY: true, padding: 10, minWidth: 300});
+      var mainmenupopup = new qx.ui.popup.Popup().set(
+        {
+          allowStretchX: true, 
+          allowStretchY: true, 
+          padding: 10, 
+          minWidth: 300
+        });
       mainmenupopup.setLayout(new qx.ui.layout.VBox(0));
 
       // Profile and Settings Menu and Menu Buttons
@@ -318,6 +327,57 @@ qx.Class.define("ville.wax.demo.Application",
         qx.bom.element.AnimationCss.animate(icondom, bounceloopanima);
       });
 
+      // DONUTCHARTBOOLEAN
+      firststackpage.add(new qx.ui.basic.Label("Donut Chart Boolean").set({font: stackpageheaderfont, padding: [60, 0, 0, 0]}));
+      firststackpage.add(new qx.ui.basic.Label("https://spectrum.adobe.com/page/donut-chart/#Boolean").set({rich: true, wrap: true}));
+
+      var donutcontainer = new qx.ui.container.Composite(new qx.ui.layout.Canvas()).set({maxWidth: 200, width: 200, height: 200});
+      
+      var donutdec = new qx.ui.decoration.Decorator().set({
+        radius : 100
+      });
+      
+      var DonutChartBoolean = new qx.ui.core.Widget().set({
+        backgroundColor: "blue",
+        decorator: donutdec
+      });
+
+      var internalwidget = new qx.ui.core.Widget().set({
+        backgroundColor: "white",
+        decorator: donutdec
+      });
+
+      var valuelabel = new qx.ui.basic.Label("<span style='font-size: 3em; font-weight: 300;'>78%</span><br><span style='font-size: 1.2em; font-weight: 800;'>Completion rate</span>").set({ rich: true, alignX: "center", alignY: "middle", textAlign: "center" });
+
+      DonutChartBoolean.addListenerOnce("appear", function() {
+        this.getContentElement().setStyle("background-image", "conic-gradient(white 0 1deg, green 1deg 280deg, white 280deg 281deg, gray 0)");
+        //this.getContentElement().setStyle("border-image", "repeating-linear-gradient(45deg, #f33, #3bf, #f33 30px) 60");
+      });
+
+      donutcontainer.add(DonutChartBoolean, {
+        left: "2%",
+        top: "2%",
+        right: "2%",
+        bottom: "2%",
+        width: "20%",
+        height: "20%",
+      });
+      donutcontainer.add(internalwidget, {
+        left: "10%",
+        top: "10%",
+        right: "10%",
+        bottom: "10%",
+        width: "20%",
+        height: "20%",
+      });
+
+      donutcontainer.add(valuelabel);
+
+      var donutwidget = new ville.wax.indicator.DonutBoolean(82, 100, "Good Rate").set({maxWidth: 150, width: 150, height: 150});
+
+      firststackpage.add(donutwidget);
+
+      //firststackpage.add(donutcontainer);
 
 
       // SWITCH
@@ -327,35 +387,6 @@ qx.Class.define("ville.wax.demo.Application",
       firststackpage.add(waxswitch);
       var waxswitch2 = new qx.ui.form.CheckBox("Larger switch").set({appearance: "wax-switch-larger"});
       firststackpage.add(waxswitch2);
-
-      // Switch - toggle switch animation
-      // TODOs: Need to grab colors from Color Theme
-      var slideright = {
-        duration: 300, 
-        timing: "ease", 
-        keyFrames : {
-          0: {"backgroundColor": "#e3e2e2", "background-position-x": "0%", "border-color": "#e3e2e2"},
-          100: {"backgroundColor": "blue", "background-position-x": "100%", "border-color": "blue"}
-        },
-        keep : 100
-      };
-
-      // Wax Switch - animate on change of value
-      waxswitch.addListener("changeValue", function(e) {
-        var cbimage = waxswitch.getChildControl("icon").getContentElement().getDomElement();
-        if (e.getData())
-          qx.bom.element.AnimationCss.animate(cbimage, slideright);
-        else
-          qx.bom.element.AnimationCss.animateReverse(cbimage, slideright);
-      }, this); 
-
-      waxswitch2.addListener("changeValue", function(e) {
-        var cbimage = waxswitch2.getChildControl("icon").getContentElement().getDomElement();
-        if (e.getData())
-          qx.bom.element.AnimationCss.animate(cbimage, slideright);
-        else
-          qx.bom.element.AnimationCss.animateReverse(cbimage, slideright);
-      }, this); 
 
       //***  CODE for applying popup fading in and out  ***//
       var fadeinleft = {
@@ -414,43 +445,10 @@ qx.Class.define("ville.wax.demo.Application",
 
       wtabView1.setSelection([page2]);
 
-      //--START--// Animate tabview //--//--//
-      var tabviewbarmark = new qx.ui.core.Widget().set({backgroundColor: "blue", zIndex: 4, decorator : "wax-tabview-mark"});
-      //add the widget to the tabview's bar
-      wtabView1.getChildControl("bar").add(tabviewbarmark); 
-
-      //animate the widget when the tabview's selection changes
-      wtabView1.addListener("changeSelection", function(e) {
-        //previous tabview buttons location and size details
-        var oldbounds = e.getOldData()[0].getChildControl("button").getBounds();
-        //the clicked tabview buttons location and size details
-        var newbounds = e.getData()[0].getChildControl("button").getBounds();
-        //grab the marks dom element
-        var tbvmarkdom = tabviewbarmark.getContentElement().getDomElement();
-        // build and adjust the animation each time since tabview buttons vary in size and location
-        var tabviewbarmarkmove = {
-          duration: 300, 
-          timing: "ease", 
-          keyFrames : {
-            0: {"left": oldbounds.left + "px", "top": oldbounds.top + "px", "width": oldbounds.width + "px", "height": oldbounds.height + "px"},
-            100: {"left": newbounds.left + "px", "top": newbounds.top + "px", "width": newbounds.width + "px", "height": newbounds.height + "px"}
-          },
-          keep : 100
-        };
-        //run the animation on the marks dom element
-        qx.bom.element.AnimationCss.animate(tbvmarkdom, tabviewbarmarkmove);
-      }, this); 
-      //--//--// Animate tabview //--END--//
-      wtabView1.addListenerOnce("appear", function() {
-        var movetobounds = wtabView1.getSelection()[0].getChildControl("button").getBounds();
-        //tabviewbarmark.setUserBounds(movetobounds.left, movetobounds.top, movetobounds.width, movetobounds.height);
-        tabviewbarmark.getContentElement().setStyles({
-          "left": movetobounds.left + "px", 
-          "top": movetobounds.top + "px", 
-          "width": movetobounds.width + "px", 
-          "height": movetobounds.height + "px"
-        });
-      })
+      var tabviewbarmark = new qx.ui.core.Widget().set({width: 40, height: 40, backgroundColor: "blue", zIndex: 5, decorator : "wax-tabview-mark"});
+      wtabView1.setDynamicMarkAnimationDuration(300); 
+      wtabView1.setDynamicMarkAnimationTiming("ease");
+      wtabView1.setDynamicMark(tabviewbarmark);
 
       // Wax TabView with a line
       var wtabView2 = new qx.ui.tabview.TabView();
@@ -476,99 +474,9 @@ qx.Class.define("ville.wax.demo.Application",
       wtabView2.setSelection([page2tbv2]);
 
       var tabviewbarline = new qx.ui.core.Widget().set({height: 4, backgroundColor: "blue", zIndex: 5, decorator : "wax-tabview-line"});
-      wtabView2.getChildControl("bar").add(tabviewbarline); 
-
-      wtabView2.addListener("changeSelection", function(e) {
-        var oldbounds = e.getOldData()[0].getChildControl("button").getBounds();
-        var newbounds = e.getData()[0].getChildControl("button").getBounds();
-        var tbvmarkdom = tabviewbarline.getContentElement().getDomElement();
-        var oldtop = oldbounds.height - tabviewbarline.getHeight();
-        var newtop = newbounds.height - tabviewbarline.getHeight();
-        var tabviewbarlinemove = {
-          duration: 300, 
-          timing: "ease", 
-          keyFrames : {
-            0: {"left": oldbounds.left + "px", "top": oldtop + "px", "width": oldbounds.width + "px"},
-            100: {"left": newbounds.left + 8 + "px", "top": newtop + "px", "width": newbounds.width - 16 + "px"}
-          },
-          keep : 100
-        };
-        qx.bom.element.AnimationCss.animate(tbvmarkdom, tabviewbarlinemove);
-
-        //remove old mouseover and mouseout listeners
-        e.getOldData()[0].getChildControl("button").removeListenerById(tabviewbarline.getUserData("mouseoverid"));
-        e.getOldData()[0].getChildControl("button").removeListenerById(tabviewbarline.getUserData("mouseoutid"));
-
-        var tabvbutton = e.getData()[0].getChildControl("button");
-
-        var mouseoverid = tabvbutton.addListener("mouseover", function() {
-          var tbvmarkdom = tabviewbarline.getContentElement().getDomElement();
-          qx.bom.element.AnimationCss.animate(tbvmarkdom, {
-            duration: 150, 
-            timing: "ease-in", 
-            keyFrames : {
-              0: {"width": newbounds.width + "px"},
-              100: {"width": newbounds.width -16 + "px", "left": newbounds.left +8 + "px"}
-            },
-            keep : 100
-          });
-        });
-        var mouseoutid = tabvbutton.addListener("mouseout", function() {
-          var tbvmarkdom = tabviewbarline.getContentElement().getDomElement();
-          qx.bom.element.AnimationCss.animate(tbvmarkdom, {
-            duration: 150, 
-            timing: "ease-in", 
-            keyFrames : {
-              0: {"width": newbounds.width -16 + "px", "left": newbounds.left +8 + "px"},
-              100: {"width": newbounds.width + "px", "left": newbounds.left + "px"}
-            },
-            keep : 100
-          });
-        });
-        tabviewbarline.setUserData("mouseoverid", mouseoverid);
-        tabviewbarline.setUserData("mouseoutid", mouseoutid);
-
-      }, this); 
-    
-      wtabView2.addListenerOnce("appear", function() {
-        var movetobounds = this.getSelection()[0].getChildControl("button").getBounds();
-        tabviewbarline.getContentElement().setStyles({
-          "left": movetobounds.left + "px", 
-          "top": movetobounds.height - tabviewbarline.getHeight() + "px", 
-          "width": movetobounds.width + "px", 
-          "height": tabviewbarline.getHeight() + "px"
-        });
-
-        var tabvbutton = this.getSelection()[0].getChildControl("button");
-
-        var mouseoverid = tabvbutton.addListener("mouseover", function() {
-          var tbvmarkdom = tabviewbarline.getContentElement().getDomElement();
-          qx.bom.element.AnimationCss.animate(tbvmarkdom, {
-            duration: 150, 
-            timing: "ease-in", 
-            keyFrames : {
-              0: {"width": this.getBounds().width + "px"},
-              100: {"width": this.getBounds().width -16 + "px", "left": this.getBounds().left +8 + "px"}
-            },
-            keep : 100
-          });
-        });
-        var mouseoutid = tabvbutton.addListener("mouseout", function() {
-          var tbvmarkdom = tabviewbarline.getContentElement().getDomElement();
-          qx.bom.element.AnimationCss.animate(tbvmarkdom, {
-            duration: 150, 
-            timing: "ease-in", 
-            keyFrames : {
-              0: {"width": this.getBounds().width -16 + "px", "left": this.getBounds().left +8 + "px"},
-              100: {"width": this.getBounds().width + "px", "left": this.getBounds().left + "px"}
-            },
-            keep : 100
-          });
-        });
-        tabviewbarline.setUserData("mouseoverid", mouseoverid);
-        tabviewbarline.setUserData("mouseoutid", mouseoutid);
-
-      });
+      wtabView2.setDynamicMarkAnimationDuration(300); 
+      wtabView2.setDynamicMarkAnimationTiming("ease");
+      wtabView2.setDynamicMark(tabviewbarline);
 
       // Wax TabView - gray bar with white block
       var wtabView3 = new qx.ui.tabview.TabView().set({appearance: "wax-tabview-block"});
@@ -638,34 +546,10 @@ qx.Class.define("ville.wax.demo.Application",
 
       wtabView3.setSelection([page2tbv3]);
 
-      var tabviewbarblock = new qx.ui.core.Widget().set({backgroundColor: "white", zIndex: 4, decorator : "wax-tabview-block"});
-      wtabView3.getChildControl("bar").add(tabviewbarblock); 
-
-      wtabView3.addListener("changeSelection", function(e) {
-        var oldbounds = e.getOldData()[0].getChildControl("button").getBounds();
-        var newbounds = e.getData()[0].getChildControl("button").getBounds();
-        var tbvmarkdom = tabviewbarblock.getContentElement().getDomElement();
-        var tabviewbarblockmove = {
-          duration: 300, 
-          timing: "ease", 
-          keyFrames : {
-            0: {"left": oldbounds.left + "px", "top": oldbounds.top + 2 + "px", "width": oldbounds.width + "px", "height": oldbounds.height - 4 + "px"},
-            100: {"left": newbounds.left + "px", "top": newbounds.top + 2 + "px", "width": newbounds.width + "px", "height": newbounds.height - 4 + "px"}
-          },
-          keep : 100
-        };
-        qx.bom.element.AnimationCss.animate(tbvmarkdom, tabviewbarblockmove);
-      }, this); 
-
-      wtabView3.addListenerOnce("appear", function() {
-        var movetobounds = wtabView3.getSelection()[0].getChildControl("button").getBounds();
-        tabviewbarblock.getContentElement().setStyles({
-          "left": movetobounds.left + "px", 
-          "top": movetobounds.top + 2 + "px", 
-          "width": movetobounds.width + "px", 
-          "height": movetobounds.height - 4 + "px"
-        });
-      });
+      var tabviewbarblock = new qx.ui.core.Widget().set({ width: 40, height: 40, backgroundColor: "white", zIndex: 5, decorator : "wax-tabview-block"});
+      wtabView3.setDynamicMarkAnimationDuration(300); 
+      wtabView3.setDynamicMarkAnimationTiming("ease");
+      wtabView3.setDynamicMark(tabviewbarblock);
 
       firststackpage.add(new qx.ui.basic.Label("Drawer").set({font: stackpageheaderfont, padding: [80, 0, 0, 0]}));
 
