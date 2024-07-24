@@ -1,11 +1,9 @@
 {
+  "$schema": "https://qooxdoo.org/schema/compile-1-0-0.json",
   "targets": [
     {
       "type": "source",
-      "outputPath": "compiled/source",
-      "bundle": {
-        "include": "qx.*"
-      }
+      "outputPath": "compiled/source"
     },
     {
       "type": "build",
@@ -19,7 +17,12 @@
     {
       "class": "ville.wax.demo.Application",
       "theme": "ville.wax.theme.Theme",
-      "name": "ville.wax"
+      "name": "ville.wax",
+      "title": "ville.Wax",
+      "bootPath": "source/boot",
+      "environment": {
+        "qx.nativeScrollBars": true
+      }
     }
   ]
 }

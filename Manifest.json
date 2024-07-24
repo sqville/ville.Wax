@@ -2,14 +2,14 @@
   "$schema": "https://qooxdoo.org/schema/Manifest-2-0-0.json",
   "info": {
     "name": "ville.Wax",
-    "summary": "one code base all platforms for the Qooxdoo Javascript Framework",
-    "description": "",
+    "summary": "One code base, all platforms.",
+    "description": "UI UX design paradigms for the Qooxdoo JavaScript Framework",
     "homepage": "",
     "license": "MIT license",
     "authors": [
       {
         "name": "Chris Eskew (sqville)",
-        "email": "chris.eskew@sqville.com"
+        "email": "sqville@gmail.com"
       }
     ],
     "version": "1.0.0"
