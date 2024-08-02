@@ -1,8 +1,10 @@
 /* ************************************************************************
 
+   Copyright: 2021 sqville
+
    License: MIT license
 
-   Authors: Chris Eskew (sqville) sqville@gmail.com
+   Authors: Chris Eskew (sqville) chris.eskew@sqville.com
 
 ************************************************************************ */
 
@@ -63,6 +65,8 @@ qx.Class.define("ville.wax.demo.Application",
     _blocker : null,
     
     _northBox : null,
+    
+    _westBox : null,
 
     /**
      * This method contains the initial application code and gets called 
@@ -106,10 +110,25 @@ qx.Class.define("ville.wax.demo.Application",
       // Dock's North section (Canvas)
       var northhbox = this._northBox = new qx.ui.container.Composite(new qx.ui.layout.Canvas()).set({visibility: "excluded"});
 
+      // Dock's West section (VBox)
+      var westbox = this._westBox = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({backgroundColor: "white", padding: [10,0,10,10], decorator : "leftside"});
+      westbox.setVisibility("excluded");
+
       // Dock's Center section (Stack) === THE STACK ===
       var centerbox = new qx.ui.container.Stack().set({backgroundColor: "white", padding: 0});
 
+      // phone/phonegap
+      //if (qx.core.Environment.get("phonegap")) {
       var southbox = new qx.ui.container.Composite(new qx.ui.layout.HBox(4)).set({alignY: "middle", padding: [8,4,34,4], decorator: "bottombar"});
+      //}
+
+      // West Scroll area to fit all menu items
+      var scrollwestbox = new qx.ui.container.Scroll().set({scrollbarX: "off", minWidth: 231, padding: 0, margin: 0, contentPadding: [0,0,0,0]});
+      scrollwestbox.setVisibility("excluded"); 
+
+      // Center Scroll area to fit all content
+      //var scrollcenterbox = new qx.ui.container.Scroll().set({padding: 0, margin: 0, contentPadding: [0,0,0,0]});
+      var scrollcenterbox = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
 
       // === North Toolbar, Parts and Buttons ===
       var northtoolbar = new qx.ui.toolbar.ToolBar().set({allowGrowX: true});
@@ -167,8 +186,13 @@ qx.Class.define("ville.wax.demo.Application",
 
       winAboutWax.add(aboutscroll, {flex:1});
       var btnClosewinAbout = new qx.ui.form.Button("Close Window").set({marginBottom: 18, maxWidth: 300, alignX: "center", alignY: "middle"});
+      //winAboutWax.add(new qx.ui.core.Spacer(30, 20), {flex: 1});
       winAboutWax.add(btnClosewinAbout);
-
+      /*winAboutWax.addListener("execute", function(e) {
+        winAboutWax.restore();
+        winAboutWax.center();
+        winAboutWax.show();
+      }, this);*/
       btnClosewinAbout.addListener("execute", function(e) {
         winAboutWax.close();
       }, this);
@@ -197,16 +221,22 @@ qx.Class.define("ville.wax.demo.Application",
       
 
       // Assemble all base pieces  
+      scrollwestbox.add(westbox);
+      //scrollcenterbox.add(centerbox);
       appcompdock.add(northhbox, {edge:"north"});
+      appcompdock.add(scrollwestbox, {edge:"west"});
+      //appcompdock.add(scrollcenterbox, {edge:"center"});
       appcompdock.add(centerbox, {edge:"center"});
       approot.add(appcompdock, {edge: 0});
       profilemenu.add(switchmenubutton1);
       profilemenu.add(aboutmenubutton1);
       profilemenubutton.setMenu(profilemenu);
 
+      //var atmlogocurrentpage = new qx.ui.basic.Atom("Wax","ville/wax/Wax_demo_logo.svg").set({font: "hym-app-header", gap: 10, padding: 0, visibility: "hidden"});
+      //atmlogocurrentpage.getChildControl("icon").set({ scale: true, width: 48, height: 38 });
       var atmlogocurrentpage = new qx.ui.basic.Atom("Wax").set({font: "hym-app-header", gap: 10, padding: 0, visibility: "hidden"});
-      mainmenupart.add(mainmenubtnbutton);
-      profilepart.add(profilemenubutton);
+      //mainmenupart.add(mainmenubtnbutton);
+      //profilepart.add(profilemenubutton);
       
       northtoolbar.add(mainmenupart);
       northtoolbar.addSpacer();
@@ -357,18 +387,11 @@ qx.Class.define("ville.wax.demo.Application",
       firststackpage.add(waxswitch2);
 
       //***  CODE for applying popup fading in and out  ***//
-      /*var fadeinleft = {
+      var fadeinleft = {
         duration: 300, timing: "ease-out", origin: "left top", keep: 100,
         keyFrames : {
           0: {opacity: 0, left: "-300px"},
           100: {opacity: 1, left: "0px"}
-        }
-      };*/
-      var fadeinleft = {
-        duration: 300, timing: "ease-out", origin: "left top", keep: 100,
-        keyFrames : {
-          0: {translate: "-300px"},
-          100: {translate: "0px"}
         }
       };
 
@@ -377,14 +400,26 @@ qx.Class.define("ville.wax.demo.Application",
       var lblsecondpageheader = new qx.ui.basic.Label("Second Page").set({font: stackpageheaderfont});
       secondstackpage.add(lblsecondpageheader);
 
+      //Password show
+      var txtpassword = new qx.ui.form.PasswordField();
+      secondstackpage.add(txtpassword);
+      var chkshowvalue = new qx.ui.form.CheckBox("Show password");
+      chkshowvalue.addListener("changeValue", function(e) {
+        if (e.getData())
+          txtpassword.getContentElement().setAttribute("type", "text");
+        else
+          txtpassword.getContentElement().setAttribute("type", "password");
+      });
+      secondstackpage.add(chkshowvalue);
+
       var btngobackhome = new qx.ui.form.Button("Go Back Home").set({allowGrowX: false});
       secondstackpage.add(btngobackhome);
       btngobackhome.addListener("execute", function(e) {
         centerbox.setSelection([firstscrollstackpage]);
+        westboxbuttongroup.setSelection([tbtnfirststackpage]);
       });
       
       // Wax TabView 1 - Oval mark that matches all bounds
-      /*
       var wtabView1 = new qx.ui.tabview.TabView();
 
       var page1 = new qx.ui.tabview.Page("Home").set({appearance: "wax-tabview-page"});
@@ -412,7 +447,6 @@ qx.Class.define("ville.wax.demo.Application",
       wtabView1.setDynamicMarkAnimationDuration(300); 
       wtabView1.setDynamicMarkAnimationTiming("ease");
       wtabView1.setDynamicMark(tabviewbarmark);
-      */
 
       // Wax TabView with a line
       var wtabView2 = new qx.ui.tabview.TabView();
@@ -444,7 +478,6 @@ qx.Class.define("ville.wax.demo.Application",
       //wtabView2.setDynamicMarkEnabled(true);
 
       // Wax TabView - gray bar with white block
-      /*
       var wtabView3 = new qx.ui.tabview.TabView().set({appearance: "wax-tabview-block"});
 
       var page1tbv3 = new qx.ui.tabview.Page("Day").set({appearance: "wax-tabview-page-block"});
@@ -516,7 +549,6 @@ qx.Class.define("ville.wax.demo.Application",
       wtabView3.setDynamicMarkAnimationDuration(300); 
       wtabView3.setDynamicMarkAnimationTiming("ease");
       wtabView3.setDynamicMark(tabviewbarblock);
-      */
 
       firststackpage.add(new qx.ui.basic.Label("Drawer").set({font: stackpageheaderfont, padding: [80, 0, 0, 0]}));
 
@@ -600,8 +632,8 @@ qx.Class.define("ville.wax.demo.Application",
         this.setDemoMode("mobile");
         northhbox.setVisibility("visible");
         southbox.setVisibility("visible");
-        profilemenubutton.setVisibility("hidden");
-        mainmenupart.setVisibility("hidden");
+        //profilemenubutton.setVisibility("hidden");
+        //mainmenupart.setVisibility("hidden");
         centerbox.setSelection([menuscrollstackpage]);
         //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
         mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
@@ -615,6 +647,7 @@ qx.Class.define("ville.wax.demo.Application",
       thirdstackpage.add(btngobackhome3);
       btngobackhome3.addListener("execute", function(e) {
         centerbox.setSelection([firstscrollstackpage]);
+        westboxbuttongroup.setSelection([tbtnfirststackpage]);
       });
 
       firststackpage.add(new qx.ui.basic.Label("The End").set({backgroundColor: "#f3f3f3", font: stackpageheaderfont, textColor: "red", textAlign: "center", allowGrowX: true, padding: [20,0,20,0], margin: [80,0,20,0]}));
@@ -681,7 +714,10 @@ qx.Class.define("ville.wax.demo.Application",
       menupage.add(lbltheend);
       menuscrollstackpage.add(menupage);
 
-      
+      // Test mobile modal window animations
+      var mobilemodalwindow = new qx.ui.window.Window("Detail Window").set({ appearance: "wax-window", allowMaximize : false, allowMinimize : false, modal: true, movable: false, resizable: false });
+      mobilemodalwindow.setLayout(new qx.ui.layout.VBox(4));
+      mobilemodalwindow.add(new qx.ui.basic.Label("I am a modal window"));
 
       northhbox.setBackgroundColor(bckgcolormain);
       northtoolbar.setBackgroundColor("transparent");
@@ -760,36 +796,24 @@ qx.Class.define("ville.wax.demo.Application",
         keep : 100
       };
 
-      // Test mobile modal window animations
-      var mobilemodalwindow = new qx.ui.window.Window("Detail Window").set({ appearance: "wax-window", allowMaximize : false, allowMinimize : false, modal: true, movable: false, resizable: false });
-      mobilemodalwindow.setLayout(new qx.ui.layout.VBox(4));
-      mobilemodalwindow.add(new qx.ui.basic.Label("I am a modal window"));
-
       btnProfile.addListener("execute", function(e) {
-        appcompdock.setDecorator("scaledback-box");
         var appdockdom = appcompdock.getContentElement().getDomElement();
+        appcompdock.setDecorator("scaledback-box");
         qx.bom.element.AnimationCss.animate(appdockdom, scaleback);
         mobilemodalwindow.show();
       }, this);
 
-      /*
-      keyFrames : {
-            0: {top: appheight + "px"},
-            100: {top: "20px"}
-          },
-      */
-
       mobilemodalwindow.addListener("appear", function() {
         var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
         var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
-        //mobilemodalwindow.moveTo(0,appheight);
+        mobilemodalwindow.moveTo(0,appheight);
         mobilemodalwindow.set({width: appwidth, height: appheight - 18});
         var popupup = {
           duration: 400, 
           timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
           keyFrames : {
-            0: {translate: [null, appheight + "px"]},
-            100: {translate: [null, "20px"]}
+            0: {top: appheight + "px"},
+            100: {top: "20px"}
           },
           keep : 100
         };
@@ -805,8 +829,8 @@ qx.Class.define("ville.wax.demo.Application",
           duration: 200, 
           timing: "ease-in", 
           keyFrames : {
-            0: {translate: [null, "20px"]},
-            100: {translate: [null, appheight + "px"]}
+            0: {top: "20px"},
+            100: {top: appheight + "px"}
           },
           keep : 100
         };
@@ -851,19 +875,65 @@ qx.Class.define("ville.wax.demo.Application",
       // Populate westBox with content
       var atmleftnavheader = new qx.ui.basic.Atom("Wax Demo", "ville/wax/Wax_demo_logo.png").set({appearance: "header-atom", anonymous: true, focusable: false, selectable: false });
       atmleftnavheader.getChildControl("icon").set({ scale : true });
-      //westbox.add(atmleftnavheader);
+      westbox.add(atmleftnavheader);
       var tbtnfirststackpage = new ville.wax.demo.MenuButton("Home");
       tbtnfirststackpage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
-      //westbox.add(tbtnfirststackpage);
+      westbox.add(tbtnfirststackpage);
 
       var tbtnSecondPage = new ville.wax.demo.MenuButton("Second Page");
       tbtnSecondPage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
-      //westbox.add(tbtnSecondPage);
+      westbox.add(tbtnSecondPage);
 
       var tbtnThirdPage = new ville.wax.demo.MenuButton("Third Page");
       tbtnThirdPage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
+      westbox.add(tbtnThirdPage);
+
+      westbox.add(new qx.ui.core.Spacer(), {flex: 1});
+
       
-    
+
+      westbox.add(new qx.ui.basic.Label("BBottom of area").set({textAlign: "center", allowGrowX: true, height: 40}));
+
+      var westboxbuttongroup = new qx.ui.form.RadioGroup();
+      westboxbuttongroup.add(tbtnfirststackpage, tbtnSecondPage, tbtnThirdPage);
+
+      //--START--// Animate westbox nav //--//--//
+      /*var westboxmark = new qx.ui.core.Widget();
+      westbox.add(westboxmark);
+      westboxbuttongroup.addListener("changeSelection", function(e) {
+        if (e.getOldData()[0].getBounds() && e.getData()[0].getBounds()){
+          var oldbounds = e.getOldData()[0].getBounds();
+          var newbounds = e.getData()[0].getBounds();
+          westboxmark.set({decorator : "mainmenubutton-box-mark"});
+          e.getData()[0].setDecorator("mainmenubutton-box-new");
+          //grab the marks dom element
+          var westboxmarkdom = westboxmark.getContentElement().getDomElement();
+          // build and adjust the animation each time since tabview buttons vary in size and location
+          var westboxmarkmove = {
+            duration: 300, 
+            timing: "ease", 
+            keyFrames : {
+              0: {"left": oldbounds.left + "px", "top": oldbounds.top + "px", "width": oldbounds.width + "px", "height": oldbounds.height + "px"},
+              100: {"left": newbounds.left + "px", "top": newbounds.top + "px", "width": newbounds.width + "px", "height": newbounds.height + "px"}
+            },
+            keep : 100
+          };
+          //run the animation on the marks dom element
+          qx.bom.element.AnimationCss.animate(westboxmarkdom, westboxmarkmove);
+        }
+      }); */
+      //--//--// Animate westbox nav //--END--//
+
+      /*tbtnfirststackpage.addListener("appear", function(e) {
+        westboxmark.set({opacity : .08, backgroundColor : "blue"});
+        this.setBackgroundColor("yellow");
+        westboxmark.setDomPosition(0, 0);
+      });*/
+      
+     
+      
+
+      
       // CLONE the above controls
       var atmmenuleftnavheader = atmleftnavheader.clone();
       atmmenuleftnavheader.getChildControl("icon").set({ scale : true });
@@ -880,11 +950,34 @@ qx.Class.define("ville.wax.demo.Application",
       mainmenupopup.add(tbtnmenuSecondPage);
       mainmenupopup.add(tbtnmenuThirdPage);
       mainmenupopup.add(new qx.ui.core.Spacer(), {flex: 1});
+
+      // Test for Pat
+      var testcontrol = new qx.ui.container.Composite();
+      testcontrol.setLayout(new qx.ui.layout.HBox(2));
+      testcontrol.add(new qx.ui.basic.Label("Filter: "));
+      testcontrol.add(new qx.ui.form.TextField());
+      testcontrol.setFocusable(false);
+      testcontrol.setKeepFocus(true);
+      testcontrol.set({
+        allowGrowX: true,
+        alignY: "middle",
+        paddingLeft: 5,
+        paddingBottom: 5,
+        paddingRight: 5
+      });
+      mainmenupopup.add(testcontrol);
+      // End Test for Pat
+
       mainmenupopup.add(new qx.ui.basic.Label("Bottom of area").set({textAlign: "center", allowGrowX: true, height: 40}));
+
+
 
       // Assign all the clones their own RadioGroup
       var mainmenubuttongroup = new qx.ui.form.RadioGroup();
       mainmenubuttongroup.add(tbtnmenufirststackpage, tbtnmenuSecondPage, tbtnmenuThirdPage);
+      
+      
+
 
       // --Drawer--
       // Turn off auto hide so we can animate the closing of the main menu popup
@@ -992,7 +1085,7 @@ qx.Class.define("ville.wax.demo.Application",
       tbtnmenufirststackpage.addListener("changeValue", function(e) {
         if (e.getData()) {
           centerbox.setSelection([firstscrollstackpage]);
-          //westboxbuttongroup.setSelection([tbtnfirststackpage]);
+          westboxbuttongroup.setSelection([tbtnfirststackpage]);
           
           if (mainmenupopup.getVisibility() == "visible"){
             this._blocker.unblock();
@@ -1008,7 +1101,7 @@ qx.Class.define("ville.wax.demo.Application",
       tbtnmenuSecondPage.addListener("changeValue", function(e) {
         if (e.getData()) {
           centerbox.setSelection([secondstackpage]);
-          //westboxbuttongroup.setSelection([tbtnSecondPage]);
+          westboxbuttongroup.setSelection([tbtnSecondPage]);
 
           //firststackpage.setVisibility("excluded");
 
@@ -1025,7 +1118,7 @@ qx.Class.define("ville.wax.demo.Application",
       tbtnmenuThirdPage.addListener("changeValue", function(e) {
         if (e.getData()) {
           centerbox.setSelection([thirdstackpage]);
-          //westboxbuttongroup.setSelection([tbtnThirdPage]);
+          westboxbuttongroup.setSelection([tbtnThirdPage]);
 
           //firststackpage.setVisibility("excluded");
 
@@ -1072,9 +1165,9 @@ qx.Class.define("ville.wax.demo.Application",
       switchmenubutton1.addListener("execute", function(e){
         this.setDemoMode("mobile");
         southbox.setVisibility("visible");
-        //scrollwestbox.setVisibility("excluded");
+        scrollwestbox.setVisibility("excluded");
         //profilemenubutton.setVisibility("hidden");
-        mainmenupart.setVisibility("hidden");
+        //mainmenupart.setVisibility("hidden");
         centerbox.setSelection([menuscrollstackpage]);
         //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
         mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
@@ -1090,7 +1183,7 @@ qx.Class.define("ville.wax.demo.Application",
         //mainmenupart.setVisibility("visible");
         centerbox.setSelection([firstscrollstackpage]);
         mainmenubuttongroup.setSelection([tbtnmenufirststackpage]);
-        //westboxbuttongroup.setSelection([tbtnfirststackpage]);
+        westboxbuttongroup.setSelection([tbtnfirststackpage]);
       }, this);
 
       //westboxbuttongroup.setSelection([tbtnSecondPage]);
@@ -1103,7 +1196,6 @@ qx.Class.define("ville.wax.demo.Application",
       // =======  MediaQuery code  ========== 
       // ====================================
 
-      /*
       var mq1 = new qx.bom.MediaQuery("screen and (min-width: 1024px)");
 
       mq1.on("change", function(e){
@@ -1143,7 +1235,6 @@ qx.Class.define("ville.wax.demo.Application",
 
       if (mq2.isMatching()) {}
       else {}
-      */
     },
 
     __createDetailWindow : function()

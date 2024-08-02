@@ -405,6 +405,14 @@ qx.Theme.define("ville.wax.theme.Decoration",
       }
     },
 
+    "donut" :
+    {
+      style :
+      {
+        radius : 1000
+      }
+    },
+
    /*
     ---------------------------------------------------------------------------
       WAX SWITCH

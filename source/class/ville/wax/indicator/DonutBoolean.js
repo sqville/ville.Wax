@@ -12,35 +12,17 @@
 ************************************************************************ */
 
 /**
- * The Progress bar is designed to simply display the current % complete
- * for a process.
+ * The Donut Boolean is designed to simply display the current %
+ * of a measure.
  *
  * The Value is limited between 0 and Maximum value.
  * It's not allowed to set a Maximum value of 0.  If you set a Maximum value
  * bigger than 0, but smaller than Value, it will be limited to Value.
  *
- * The following example creates and adds a progress bar to the root element.
- * A listener is used to show the user if the value is changed,
- * and another one when the progress is complete.
- *
- * <pre class='javascript'>
- * var pb = new qx.ui.indicator.ProgressBar();
- * this.getRoot().add(pb, { left : 20, top: 20});
- *
- * pb.addListener("change", function(e) {
- *   this.debug(e.getData()); // % complete
- *   this.debug(pb.getValue()); // absolute value
- * });
- *
- * pb.addListener("complete", function(e) {
- *   this.debug("complete");
- * });
- *
- * //set a value
- * pb.setValue(20);
- * </pre>
- *
- * @childControl progress {qx.ui.container.Composite} The progress bar
+ * @childControl donut {qx.ui.core.Widget} The colored bar area
+ * @childControl donuthole {qx.ui.core.Widget} The middle area
+ * @childControl measure {qx.ui.basic.Label} The measure in percent  
+ * @childControl statement {qx.ui.basic.Label} The measure in words
  */
 qx.Class.define("ville.wax.indicator.DonutBoolean", {
   extend: qx.ui.container.Composite,
@@ -53,7 +35,8 @@ qx.Class.define("ville.wax.indicator.DonutBoolean", {
   construct(value, maximum, statement) {
     super();
 
-    this._createChildControl("progress");
+    this._createChildControl("donut");
+    this._createChildControl("donuthole");
     this._createChildControl("measure");
     this._createChildControl("statement");
 
@@ -96,6 +79,38 @@ qx.Class.define("ville.wax.indicator.DonutBoolean", {
     statement : {
       check: "String",
       nullable: true
+    },
+
+    /**
+     * The color of the primary segment.
+     */
+    primaryColor: {
+      nullable: false,
+      check: "Color",
+      init: "green",
+      themeable: true,
+      event: "changePrimaryColor",
+      apply: "_applyPrimaryColor"
+    },
+
+    /**
+     * The color of the secondary segment.
+     */
+    secondaryColor: {
+      nullable: false,
+      check: "Color",
+      themeable: true,
+      init: "gray"
+    },
+
+    /**
+     * The color of the segment gaps.
+     */
+    gapColor: {
+      nullable: false,
+      check: "Color",
+      themeable: true,
+      init: "white"
     }
   },
 
@@ -158,28 +173,50 @@ qx.Class.define("ville.wax.indicator.DonutBoolean", {
       //update progress
       this._changeProgress(val / max);
     },
+
+    // property apply
+    _applyPrimaryColor(value, old) {
+      var primc = value;
+      var val = this.getValue();
+      var max = this.getMaximum();
+
+      //do nothing if is not a number, is negative or zero
+      /*if (!qx.lang.Type.isNumber(max) || !isFinite(max) || max <= 0) {
+        max = old;
+      }
+
+      //limit max to a greater than 0 value
+      if (max < val) {
+        max = val;
+      }
+
+      //set max
+      this.setMaximum(max);
+      */
+
+      //update progress
+      this._changeProgress(val / max);
+    },
     
     //overridden
     _createChildControlImpl(id, hash) {
       var control;
 
-      var donutdec = new qx.ui.decoration.Decorator().set({
-        radius : 1000
-      });
-
       switch (id) {
-        case "progress":
-          control = new qx.ui.core.Widget().set({decorator: donutdec});
+        case "donut":
+          control = new qx.ui.core.Widget();
           this._add(control, { edge: 0 });
-          var donuthole = new qx.ui.core.Widget().set({decorator: donutdec, backgroundColor: "white"});
-          this._add(donuthole, { edge: "8%" });
+          break;
+        case "donuthole":
+          control = new qx.ui.core.Widget();
+          this._add(control, { edge: "8%" });
           break;
         case "measure":
-          control = new qx.ui.basic.Label().set({ rich: true, alignX: "center", alignY: "middle", textAlign: "center" });
+          control = new qx.ui.basic.Label();
           this._add(control);
           break;
         case "statement":
-          control = new qx.ui.basic.Label().set({ rich: true, alignX: "center", alignY: "middle", textAlign: "center" });
+          control = new qx.ui.basic.Label();
           this._add(control);  
         //control = new qx.ui.container.Composite(new qx.ui.layout.VBox(2));
           //control.add(new qx.ui.core.Spacer(), { flex: 1} );
@@ -199,16 +236,20 @@ qx.Class.define("ville.wax.indicator.DonutBoolean", {
      * @param value {Number} future value of progress bar
      */
     _changeProgress(value) {
-      var bar = this.getChildControl("progress");
+      var bar = this.getChildControl("donut");
       var measure = this.getChildControl("measure");
       var words = this.getChildControl("statement");
       var percent = Math.floor(value * 100);
       var to = Math.floor(value * 360);
       //var from = parseInt(bar.getLayoutProperties().width, 10);
       var tobargap = to + 1;
+      var gapcolor = this.getGapColor();
+      var seccolor = this.getSecondaryColor();
+      var primcolor = this.getPrimaryColor();
+      
 
       //bar.setLayoutProperties({ width: to + "%" });
-      bar.getContentElement().setStyle("background-image", "conic-gradient(white 0 1deg, green 1deg " + to + "deg, white " + to + "deg " + tobargap + "deg, gray 0)");
+      bar.getContentElement().setStyle("background-image", "conic-gradient(" + gapcolor + " 0 1deg, " + primcolor + " 1deg " + to + "deg, " + gapcolor + " " + to + "deg " + tobargap + "deg, " + seccolor + " 0)");
 
       //var wordsarr = words.getChildren();
       //wordsarr[0].setValue(percent + "%");

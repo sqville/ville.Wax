@@ -2,7 +2,7 @@ qx.Mixin.define("ville.wax.MWidget",
 {
   construct : function()
   {
-    this.setTouchAction("auto");
+    this.initTouchAction();
   }, 
   
   /*
@@ -37,7 +37,4 @@ qx.Mixin.define("ville.wax.MWidget",
       this.getContentElement().setStyles({"touch-action": value, "-ms-touch-action" : value});
     }
   }
-  
-
-  
 });

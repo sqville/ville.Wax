@@ -20,10 +20,10 @@
   },
   "homepage": "https://github.com/sqville/ville.Wax#readme",
   "dependencies": {
-    "@capacitor/android": "^3.2.0",
-    "@capacitor/core": "^3.2.0"
+    "@capacitor/android": "6.1.1",
+    "@capacitor/core": "6.1.1"
   },
   "devDependencies": {
-    "@capacitor/cli": "^3.2.0"
+    "@capacitor/cli": "6.1.1"
   }
 }

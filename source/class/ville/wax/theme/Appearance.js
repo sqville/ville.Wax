@@ -366,15 +366,35 @@ qx.Theme.define("ville.wax.theme.Appearance",
       DONUT BOOLEAN
     ---------------------------------------------------------------------------
     */
-    "donutboolean": {},
-    
-    "donutboolean-trans": {},
-
-    "donutboolean/progress":
+    "donutboolean": 
     {
       style: function(states) {
         return {
-          backgroundColor: "transparent"
+          maxWidth: 150,
+          width: 150, 
+          height: 150,
+          primaryColor: "green",
+          secondaryColor: "gray",
+          gapColor: "white"
+        };
+      }
+    },
+
+    "donutboolean/donut":
+    {
+      style: function(states) {
+        return {
+          decorator: "donut"
+        };
+      }
+    },
+
+    "donutboolean/donuthole":
+    {
+      style: function(states) {
+        return {
+          decorator: "donut",
+          backgroundColor: "white"
         };
       }
     },
@@ -384,7 +404,10 @@ qx.Theme.define("ville.wax.theme.Appearance",
       style: function(states) {
         return {
           marginTop: -15,
-          font: "control-header"
+          font: "control-header",
+          alignX: "center", 
+          alignY: "middle", 
+          textAlign: "center"
         };
       }
     },
@@ -394,7 +417,10 @@ qx.Theme.define("ville.wax.theme.Appearance",
       style: function(states) {
         return {
           marginTop: 15,
-          font: "headeratom"
+          font: "headeratom",
+          alignX: "center", 
+          alignY: "middle", 
+          textAlign: "center"
         };
       }
     },
@@ -474,6 +500,16 @@ qx.Theme.define("ville.wax.theme.Appearance",
       WAX TABVIEW
     ---------------------------------------------------------------------------
     */
+    "tabview" :
+    {
+      style : function(states)
+      {
+        return {
+          dynamicMarkEnabled : true
+        };
+      }
+    },
+
     "tabview/bar" :
     {
       style : function(states)
