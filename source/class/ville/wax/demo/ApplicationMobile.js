@@ -32,7 +32,7 @@
  * @asset(ville/wax/KeyItem.svg)
  * @asset(ville/wax/Yellow_Car_g7.jpg)
  */
-qx.Class.define("ville.wax.demo.Application",
+qx.Class.define("ville.wax.demo.ApplicationMobile",
 {
   extend : qx.application.Standalone,
 
@@ -47,7 +47,7 @@ qx.Class.define("ville.wax.demo.Application",
     demoMode :
     {
       check : ["desktop", "mobile"],
-      init : "desktop"
+      init : "mobile"
     }
   },
 
@@ -93,6 +93,9 @@ qx.Class.define("ville.wax.demo.Application",
       // Enable dynamic bar movement
       qx.Class.include(qx.ui.tabview.TabView, ville.wax.MTabView);
 
+      // Enable stack widget animation
+      //qx.Class.include(qx.ui.container.Stack, ville.wax.MStack); 
+
       // App's Root
       var approot = this.getRoot();
       approot.setBackgroundColor("black");
@@ -108,6 +111,7 @@ qx.Class.define("ville.wax.demo.Application",
 
       // Dock's Center section (Stack) === THE STACK ===
       var centerbox = new qx.ui.container.Stack().set({backgroundColor: "white", padding: 0});
+      //var centerbox = new qx.ui.container.Composite(new qx.ui.layout.Grow()).set({backgroundColor: "white", padding: 0});
 
       var southbox = new qx.ui.container.Composite(new qx.ui.layout.HBox(4)).set({alignY: "middle", padding: [8,4,34,4], decorator: "bottombar"});
 
@@ -121,7 +125,7 @@ qx.Class.define("ville.wax.demo.Application",
       var roundacct = "ville/wax/round-account_circle-24px.svg";
 
       // Top-Left Button
-      var mainmenubtnbutton = new qx.ui.toolbar.Button("MainMenu", menuimage).set({show: "icon"});
+      var mainmenubtnbutton = new qx.ui.toolbar.Button("MainMenu", menuimage).set({appearance: "button", show: "icon"});
 
       // Top-Right MenuButton
       var profilemenubutton = new qx.ui.toolbar.MenuButton("ProfileMenu", roundacct).set({show: "icon", showArrow: false});
@@ -204,7 +208,7 @@ qx.Class.define("ville.wax.demo.Application",
       profilemenu.add(aboutmenubutton1);
       profilemenubutton.setMenu(profilemenu);
 
-      var atmlogocurrentpage = new qx.ui.basic.Atom("Wax").set({font: "hym-app-header", gap: 10, padding: 0, visibility: "hidden"});
+      var atmlogocurrentpage = new qx.ui.basic.Atom("Wax").set({font: "hym-app-header", gap: 0, padding: 0, show: "label"});
       mainmenupart.add(mainmenubtnbutton);
       profilepart.add(profilemenubutton);
       
@@ -379,40 +383,9 @@ qx.Class.define("ville.wax.demo.Application",
 
       var btngobackhome = new qx.ui.form.Button("Go Back Home").set({allowGrowX: false});
       secondstackpage.add(btngobackhome);
-      btngobackhome.addListener("execute", function(e) {
+      /*btngobackhome.addListener("execute", function(e) {
         centerbox.setSelection([firstscrollstackpage]);
-      });
-      
-      // Wax TabView 1 - Oval mark that matches all bounds
-      /*
-      var wtabView1 = new qx.ui.tabview.TabView();
-
-      var page1 = new qx.ui.tabview.Page("Home").set({appearance: "wax-tabview-page"});
-      page1.setLayout(new qx.ui.layout.VBox());
-      page1.add(new qx.ui.basic.Label("Home Page"));
-      wtabView1.add(page1);
-
-      var page2 = new qx.ui.tabview.Page("Next Long").set({appearance: "wax-tabview-page"});
-      page2.setLayout(new qx.ui.layout.VBox());
-      page2.add(new qx.ui.basic.Label("Next Long Page"));
-      wtabView1.add(page2);
-
-      var page3 = new qx.ui.tabview.Page("Last Very Long").set({appearance: "wax-tabview-page"});
-      page3.setLayout(new qx.ui.layout.VBox());
-      page3.add(new qx.ui.basic.Label("Last Very Long Page"));
-      wtabView1.add(page3);
-
-      // secondstackpage.add(wtabView1);
-      firststackpage.add(new qx.ui.basic.Label("TabView").set({font: stackpageheaderfont, padding: [80, 0, 0, 0]}));
-      firststackpage.add(wtabView1);
-
-      wtabView1.setSelection([page2]);
-
-      var tabviewbarmark = new qx.ui.core.Widget().set({width: 40, height: 40, backgroundColor: "blue", zIndex: 5, decorator : "wax-tabview-mark"});
-      wtabView1.setDynamicMarkAnimationDuration(300); 
-      wtabView1.setDynamicMarkAnimationTiming("ease");
-      wtabView1.setDynamicMark(tabviewbarmark);
-      */
+      });*/
 
       // Wax TabView with a line
       var wtabView2 = new qx.ui.tabview.TabView();
@@ -461,6 +434,10 @@ qx.Class.define("ville.wax.demo.Application",
       page3tbv3.setLayout(new qx.ui.layout.VBox());
       page3tbv3.add(new qx.ui.basic.Label("Month"));
       wtabView3.add(page3tbv3);
+
+      wtabView3.addListener("beforeChangeSelection", (e) => {
+        console.log("what what what");
+      })
 
       /*
       page1tbv3.addListener("appear", function() {
@@ -598,16 +575,16 @@ qx.Class.define("ville.wax.demo.Application",
       var btnSwitchtoMobileView = new qx.ui.form.Button("Switch to Mobile View").set({allowGrowX: false});
       firststackpage.add(btnSwitchtoMobileView);
 
-      btnSwitchtoMobileView.addListener("execute", function(e){
-        this.setDemoMode("mobile");
-        northhbox.setVisibility("visible");
-        southbox.setVisibility("visible");
-        profilemenubutton.setVisibility("hidden");
-        mainmenupart.setVisibility("hidden");
-        centerbox.setSelection([menuscrollstackpage]);
-        //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
-        mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
-      }, this);
+      //btnSwitchtoMobileView.addListener("execute", function(e){
+      //this.setDemoMode("mobile");
+      northhbox.setVisibility("visible");
+      //southbox.setVisibility("visible");
+      //profilemenubutton.setVisibility("hidden");
+      //mainmenupart.setVisibility("hidden");
+      //centerbox.setSelection([menuscrollstackpage]);
+      //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
+      //mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
+      //}, this);
 
       // Third Page
       var thirdstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: stackpagepadding});
@@ -615,17 +592,15 @@ qx.Class.define("ville.wax.demo.Application",
       thirdstackpage.add(lblthirdpageheader);
       var btngobackhome3 = new qx.ui.form.Button("Go Back Home").set({allowGrowX: false});
       thirdstackpage.add(btngobackhome3);
-      btngobackhome3.addListener("execute", function(e) {
+      /*btngobackhome3.addListener("execute", function(e) {
         centerbox.setSelection([firstscrollstackpage]);
-      });
+      });*/
 
       firststackpage.add(new qx.ui.basic.Label("The End").set({backgroundColor: "#f3f3f3", font: stackpageheaderfont, textColor: "red", textAlign: "center", allowGrowX: true, padding: [20,0,20,0], margin: [80,0,20,0]}));
 
-
-
       // Menu Page for mobile only
       var bckgcolormain = "#F2F1F6";
-      var bckgcolortopbtm = "#F7F7F7";
+      var bckgcolortopbtm = "white";//"#F7F7F7";
       var bordersouthbox = "#B3B3B3";
       var boxsepcolor = "#C7C7C7";
       var arrowcolor = "#C4C4C4";
@@ -685,10 +660,11 @@ qx.Class.define("ville.wax.demo.Application",
 
       
 
-      northhbox.setBackgroundColor(bckgcolormain);
+      //northhbox.setBackgroundColor(bckgcolormain);
       northtoolbar.setBackgroundColor("transparent");
+      northhbox.set({backgroundColor: bckgcolortopbtm, decorator: "topheader"});
       //decorator : "topheader"
-      atmlogocurrentpage.set({visibility: "visible", label:"Menu", opacity: 0 });
+      atmlogocurrentpage.set({visibility: "visible", label:"Menu", opacity: 1 });
 
       // Scroll feature
       var menuscrollcontentEl = menuscrollstackpage.getChildControl("pane").getContentElement();
@@ -704,13 +680,15 @@ qx.Class.define("ville.wax.demo.Application",
         var menuscrollheight = menuscrollstackpage.getItemBottom(lbltheend);
         
         // top bar
-        if (scrollval >= menulbllocbtm-6) {
-          atmlogocurrentpage.set({ opacity: 1 });
+        /*if (scrollval >= menulbllocbtm-6) {
+          //atmlogocurrentpage.set({ opacity: 1 });
           northhbox.set({backgroundColor: bckgcolortopbtm, decorator: "topheader"});
         } else {
-          atmlogocurrentpage.set({ opacity: 0 });
+          //atmlogocurrentpage.set({ opacity: 0 });
           northhbox.set({backgroundColor: bckgcolormain, decorator: "topheader-blended"});
-        }
+        }*/
+
+        
 
         
         //bottom bar
@@ -774,17 +752,9 @@ qx.Class.define("ville.wax.demo.Application",
         mobilemodalwindow.show();
       }, this);
 
-      /*
-      keyFrames : {
-            0: {top: appheight + "px"},
-            100: {top: "20px"}
-          },
-      */
-
       mobilemodalwindow.addListener("appear", function() {
         var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
         var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
-        //mobilemodalwindow.moveTo(0,appheight);
         mobilemodalwindow.set({width: appwidth, height: appheight - 18});
         var popupup = {
           duration: 400, 
@@ -824,25 +794,102 @@ qx.Class.define("ville.wax.demo.Application",
       mobiledetailscrollstackpage.add(mobiledetailpage);
       var lbldetailscreen = new qx.ui.basic.Label("Detail Screen").set({font: "hym-app-page-header"});
       mobiledetailpage.add(lbldetailscreen);
-      var btnBackButton = new qx.ui.form.Button("na").set({visibility: "hidden"});
+      //var btnBackButton = new qx.ui.form.Button("<").set({opacity: 1});
+      var btnBackButton = new qx.ui.toolbar.Button("<").set({appearance: "button", show: "label", enabled: false, opacity: 0, cursor: "arrow"});
       mainmenupart.add(btnBackButton);
+      //btnBackButton.fadeOut(0);
+
+      var movebtnleft = {
+        duration: 300, 
+        timing: "ease", 
+        keyFrames : {
+          0 : {opacity: 0, translate: ["0px", null]},
+          100 : {opacity: 1, translate: ["-30px", null]}
+        },
+        keep : 100
+      };
+      
+      var moveslightleft = {
+        duration: 300, 
+        timing: "ease", 
+        keyFrames : {
+          0 : {opacity: 1, translate: ["0px", null]},
+          100 : {opacity: 1, translate: ["-60px", null]}
+        },
+        keep : 100
+      };
+
+      var slideleft = {
+        duration: 300, 
+        timing: "ease-out", 
+        keyFrames : {
+          0 : {opacity: 1, translate: ["550px", null]},
+          100 : {opacity: 1, translate: ["0px", null]}
+        },
+        keep : 100
+      };
 
       btnAbout.addListener("execute", function(e) {
-        centerbox.setSelection([mobiledetailscrollstackpage]);
-        btnBackButton.set({ label: "Menu", visibility: "visible" });
-        mainmenupart.setVisibility("visible");
+        btnBackButton.setEnabled(true);
+        mobiledetailscrollstackpage.setZIndex(11);
+        
+        qx.bom.element.AnimationCss.animate(menuscrollstackpage.getContentElement().getDomElement(), moveslightleft);
+        qx.bom.element.AnimationCss.animate(mobiledetailscrollstackpage.getContentElement().getDomElement(), slideleft);
+        
+        //btnBackButton.fadeIn(300);
+        mainmenubtnbutton.fadeOut(300);
+        qx.bom.element.AnimationCss.animate(btnBackButton.getContentElement().getDomElement(), movebtnleft);
       }, this);
+
+      btnBackButton.addListener("execute", function(e) {
+        qx.bom.element.AnimationCss.animateReverse(menuscrollstackpage.getContentElement().getDomElement(), moveslightleft);
+        qx.bom.element.AnimationCss.animateReverse(mobiledetailscrollstackpage.getContentElement().getDomElement(), slideleft).addListener("end", function(){
+          mobiledetailscrollstackpage.setZIndex(10);
+        });
+        
+        mainmenubtnbutton.fadeIn(300);
+        qx.bom.element.AnimationCss.animateReverse(btnBackButton.getContentElement().getDomElement(), movebtnleft).addListener("end", function(){
+          btnBackButton.set({enabled: false});
+        });
+        
+      });
+
+      /*mobiledetailscrollstackpage.addListener("appear", function() {
+        var tbvmarkdom = this.getContentElement().getDomElement();
+        qx.bom.element.AnimationCss.animate(tbvmarkdom,
+          {
+            duration: 300,
+            keyFrames : 
+            {
+              0 : {opacity: 1, translate: ["600px", null]},
+              100 : {opacity: 1, translate: ["0px", null]}
+            },
+            keep : 100,
+            timing: "ease-out"
+          });
+      });*/
+
+      //centerbox.addListener("changeSelection", (e) => {
+       // console.log("when does this happen?");
+        //var oldbounds = e.getOldData()[0].getButton().getBounds();
+        //var newbounds = e.getData()[0].getButton().getBounds();
+      //});
 
     
       // Assemble - THE STACK 
       centerbox.add(firstscrollstackpage);
+      firstscrollstackpage.setVisibility("visible");
       centerbox.add(secondstackpage);
+      secondstackpage.setVisibility("visible");
       centerbox.add(thirdstackpage);
-      centerbox.add(menuscrollstackpage);
+      thirdstackpage.setVisibility("visible");
       centerbox.add(mobiledetailscrollstackpage);
+      mobiledetailscrollstackpage.setVisibility("visible");
+      centerbox.add(menuscrollstackpage);
+      
 
       // Show the default page
-      centerbox.setSelection([firstscrollstackpage]);
+      //centerbox.setSelection([menuscrollstackpage]);
 
       
 
@@ -971,21 +1018,21 @@ qx.Class.define("ville.wax.demo.Application",
       // Turn on all wax.demo.MenuButton listeners
       tbtnfirststackpage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([firstscrollstackpage]);
+          //centerbox.setSelection([firstscrollstackpage]);
           mainmenubuttongroup.setSelection([tbtnmenufirststackpage]);
         }
       }, this);
 
       tbtnSecondPage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([secondstackpage]);
+          //centerbox.setSelection([secondstackpage]);
           mainmenubuttongroup.setSelection([tbtnmenuSecondPage]);
         }
       }, this);
 
       tbtnThirdPage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([thirdstackpage]);
+          //centerbox.setSelection([thirdstackpage]);
           mainmenubuttongroup.setSelection([tbtnmenuThirdPage]);
         }
       }, this);
@@ -993,7 +1040,7 @@ qx.Class.define("ville.wax.demo.Application",
       // Popup menu buttons
       tbtnmenufirststackpage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([firstscrollstackpage]);
+          //centerbox.setSelection([firstscrollstackpage]);
           //westboxbuttongroup.setSelection([tbtnfirststackpage]);
           
           if (mainmenupopup.getVisibility() == "visible"){
@@ -1009,7 +1056,7 @@ qx.Class.define("ville.wax.demo.Application",
 
       tbtnmenuSecondPage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([secondstackpage]);
+          //centerbox.setSelection([secondstackpage]);
           //westboxbuttongroup.setSelection([tbtnSecondPage]);
 
           //firststackpage.setVisibility("excluded");
@@ -1026,7 +1073,7 @@ qx.Class.define("ville.wax.demo.Application",
 
       tbtnmenuThirdPage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          centerbox.setSelection([thirdstackpage]);
+          //centerbox.setSelection([thirdstackpage]);
           //westboxbuttongroup.setSelection([tbtnThirdPage]);
 
           //firststackpage.setVisibility("excluded");
@@ -1071,81 +1118,20 @@ qx.Class.define("ville.wax.demo.Application",
       }, this);
 
       // Demo mode switching to Mobile
-      switchmenubutton1.addListener("execute", function(e){
-        this.setDemoMode("mobile");
-        southbox.setVisibility("visible");
-        //scrollwestbox.setVisibility("excluded");
-        //profilemenubutton.setVisibility("hidden");
-        mainmenupart.setVisibility("hidden");
-        centerbox.setSelection([menuscrollstackpage]);
-        //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
-        mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
-      }, this);
-
-      // Demo mode switching back to desktop
-      btnSwitchBack.addListener("execute", function(e){
-        this.setDemoMode("desktop");
-        southbox.setVisibility("excluded");
-        northhbox.setVisibility("excluded");
-       // profilemenubutton.setVisibility("visible");
-        atmlogocurrentpage.setVisibility("hidden");
-        //mainmenupart.setVisibility("visible");
-        centerbox.setSelection([firstscrollstackpage]);
-        mainmenubuttongroup.setSelection([tbtnmenufirststackpage]);
-        //westboxbuttongroup.setSelection([tbtnfirststackpage]);
-      }, this);
-
-      //westboxbuttongroup.setSelection([tbtnSecondPage]);
+      //switchmenubutton1.addListener("execute", function(e){
+      //this.setDemoMode("mobile");
+      southbox.setVisibility("visible");
+      //scrollwestbox.setVisibility("excluded");
+      //profilemenubutton.setVisibility("hidden");
+      //mainmenupart.setVisibility("hidden");
+      centerbox.setSelection([menuscrollstackpage]);
+      //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
+      mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
+      //}, this);
 
 
       // *** END of Wiring *************************************************************************
 
-      
-      // ====================================
-      // =======  MediaQuery code  ========== 
-      // ====================================
-
-      /*
-      var mq1 = new qx.bom.MediaQuery("screen and (min-width: 1024px)");
-
-      mq1.on("change", function(e){
-        if(mq1.isMatching() && this.getDemoMode()=="desktop"){
-          //scrollwestbox.setVisibility("visible"); 
-          mainmenupart.setVisibility("excluded");
-        }
-        else {
-          scrollwestbox.addListener("appear", function(e) {
-            var domtable = scrollwestbox.getContentElement().getDomElement();
-            qx.bom.element.Animation.animate(domtable, fadeinleft);
-          }, this); 
-          scrollwestbox.setVisibility("excluded");
-          if (this.getDemoMode() == "desktop")
-            mainmenupart.setVisibility("visible");
-        }
-      }, this);
-      if (mq1.isMatching()) {
-        //scrollwestbox.setVisibility("visible"); 
-        mainmenupart.setVisibility("excluded");
-      }
-      else {
-        scrollwestbox.addListener("appear", function(e) {
-          var domtable = scrollwestbox.getContentElement().getDomElement();
-          qx.bom.element.Animation.animate(domtable, fadeinleft);
-        }, this); 
-        scrollwestbox.setVisibility("excluded"); 
-        mainmenupart.setVisibility("visible");
-      }
-
-      var mq2 = new qx.bom.MediaQuery("screen and (min-width: 767px)");
-
-      mq2.on("change", function(e){
-        if(mq2.isMatching()){}
-        else {}
-      });
-
-      if (mq2.isMatching()) {}
-      else {}
-      */
     },
 
     __createDetailWindow : function()

@@ -1,5 +1,10 @@
 qx.Mixin.define("ville.wax.MTabView",
 {  
+
+  events: {
+    /** Fires before the selection was modified */
+    beforeChangeSelection: "qx.event.type.Data"
+  },
   /*
   *****************************************************************************
      PROPERTIES
@@ -48,10 +53,10 @@ qx.Mixin.define("ville.wax.MTabView",
     _applyDynamicMarkEnabled : function(value, old) {
       if (value) {
         var tabviewbarline = new qx.ui.core.Widget().set({
-          height: 0, width: 0, backgroundColor: "blue", zIndex: 5
+          height: 0, width: 0, backgroundColor: "black", zIndex: 5
         });
-        this.setDynamicMarkAnimationDuration(300); 
-        this.setDynamicMarkAnimationTiming("ease");
+        //this.setDynamicMarkAnimationDuration(300); 
+        //this.setDynamicMarkAnimationTiming("ease");
         this.setDynamicMark(tabviewbarline);
       }
     },

@@ -556,7 +556,6 @@ qx.Theme.define("ville.wax.theme.Appearance",
     "wax-tabview-block" : "tabview",
 
     "wax-tabview-block/bar" :
-        
     {
       include : "tabview/bar",
       
@@ -566,7 +565,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
           backgroundColor : "#e3e2e2",
           paddingLeft : 4,
           decorator : "wax-tabview-bar-block",
-          padding : [4,0]
+          padding : 0
         };
       }
     },

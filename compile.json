@@ -15,7 +15,7 @@
 
   "applications": [
     {
-      "class": "ville.wax.demo.Application",
+      "class": "ville.wax.demo.ApplicationMobile",
       "theme": "ville.wax.theme.Theme",
       "name": "ville.wax",
       "title": "ville.Wax",
