@@ -70,7 +70,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
       style : function(states)
       {        
         return {
-          backgroundColor : "blue",
+          backgroundColor : "black",
           textColor : "white",
           padding : [3, 8],
           gap : 16,

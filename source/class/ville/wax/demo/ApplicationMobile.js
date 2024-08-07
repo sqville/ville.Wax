@@ -190,14 +190,14 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       
       // Add Main Menu Popup Listeners
-      mainmenubtnbutton.addListener("execute", function(e)
+      /*mainmenubtnbutton.addListener("execute", function(e)
       {
         if (qx.core.Environment.get("browser.name") != "edge"){
           this._blocker.blockContent(mainmenubtnbutton.getZIndex());
         }
         mainmenupopup.setHeight(parseInt(this.getRoot().getContentElement().getStyle("height")));
         mainmenupopup.show();
-      }, this);
+      }, this);*/
       
 
       // Assemble all base pieces  
@@ -609,7 +609,9 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       southbox.setBackgroundColor(bckgcolortopbtm);
 
       var menuscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
+      var dashboardstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
       var menupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: [10, 20], backgroundColor: bckgcolormain });
+      var dashboardpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: [10, 20], backgroundColor: bckgcolormain });
       var btnAbout = new qx.ui.form.Button("Detail Screen", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       var btnSwitchBack = new qx.ui.form.Button("Switch to Desktop", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       var btnProfile = new qx.ui.form.Button("Modal Popup", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
@@ -618,6 +620,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var btnLastBtn = new qx.ui.form.Button("Last Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-last-button"});
       
       var lblwaxdemo = new qx.ui.basic.Label("Menu").set({font: "hym-app-page-header"});
+      var lbldashboardwelcome = new qx.ui.basic.Label("Welcome back, Dude!").set({font: "hym-app-page-header"});
+      var lbldashboardcont = new qx.ui.basic.Label("Let's continue your journey.").set({padding: 0, margin: [20,0,0,0]});
       
       var firstbtnlistmenupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({padding: [0,0], backgroundColor: "white", decorator: "hym-box-noborder"});
       firstbtnlistmenupage.add(btnSwitchBack);
@@ -632,13 +636,16 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       secondbtnlistmenupage.add(btnAddaction);
 
       var lblAreaHeadergetmore = new qx.ui.basic.Label("Get More From The Menu").set({padding: 0, margin: [20,0,0,0], font: "hym-app-page-section-header"});
-      var thirdblockmenupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(20)).set({margin: [0,0], padding: [16,14], backgroundColor: "white", decorator: "hym-box-noborder"});
-      var thirdblockatom = new qx.ui.basic.Atom("<b>Set Up Your Item</b><br>When needed, your item, propertly setup, can help you in many ways. It can get you what you need done in record time.", "ville/wax/KeyItem.svg").set({rich: true, iconPosition: "top", center: true});
-      thirdblockatom.getChildControl("icon").set({scale: true, width: 84, height: 84});
-      //thirdblockatom.getChildControl("label").set({wrap: true});
-      var btngetstartedaction = new qx.ui.form.Button("Get Started").set({appearance: "wax-form-button", allowGrowX: false, height: 40, width: 160, alignX: "center"});
+      var thirdblockmenupage = new qx.ui.container.Composite(new qx.ui.layout.HBox(20)).set({margin: [0,0], padding: [20, 20], backgroundColor: "white", decorator: "hym-box-noborder"});
+      var thirdblockatom = new qx.ui.basic.Atom("<b>Your Latest Thing</b><br>Second level details<br>Third level details", "ville/wax/KeyItem.svg").set({rich: true, iconPosition: "left", gap: 20, center: true});
+      thirdblockatom.getChildControl("icon").set({scale: true, width: 32, height: 32});
+      var lblarrowright = new qx.ui.basic.Label(">");
+      var btngetstartedaction = new qx.ui.form.Button("Other Action 1").set({appearance: "wax-form-button", allowGrowX: true, height: 40, alignX: "center"});
+      var btnaction2 = new qx.ui.form.Button("Another Action You Can Do").set({appearance: "wax-form-button", allowGrowX: true, height: 40, alignX: "center"});
       thirdblockmenupage.add(thirdblockatom);
-      thirdblockmenupage.add(btngetstartedaction);
+      thirdblockmenupage.add(new qx.ui.core.Spacer(), {flex: 1});
+      thirdblockmenupage.add(lblarrowright);
+      //thirdblockmenupage.add(btngetstartedaction);
 
       var lblAreaHeaderarticles = new qx.ui.basic.Label("Articles").set({padding: 0, margin: [20,0,0,0], font: "hym-app-page-section-header"});
       var articleblockmenupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(20).set({alignY:"bottom"})).set({height: 300, margin: [0,0], padding: [0,0], backgroundColor: "white", decorator: "article"});
@@ -652,11 +659,18 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       menupage.add(firstbtnlistmenupage);
       menupage.add(secondbtnlistmenupage);
       menupage.add(lblAreaHeadergetmore);
-      menupage.add(thirdblockmenupage);
+      //menupage.add(thirdblockmenupage);
       menupage.add(lblAreaHeaderarticles);
       menupage.add(articleblockmenupage);
       menupage.add(lbltheend);
       menuscrollstackpage.add(menupage);
+
+      dashboardpage.add(lbldashboardwelcome);
+      dashboardpage.add(lbldashboardcont);
+      dashboardpage.add(thirdblockmenupage);
+      dashboardpage.add(btngetstartedaction);
+      dashboardpage.add(btnaction2);
+      dashboardstackpage.add(dashboardpage);
 
       
 
@@ -740,10 +754,29 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         keep : 100
       };
 
-      // Test mobile modal window animations
-      var mobilemodalwindow = new qx.ui.window.Window("Detail Window").set({ appearance: "wax-window", allowMaximize : false, allowMinimize : false, modal: true, movable: false, resizable: false });
+      // Mobile modal window using qx.ui.window.Window
+      var mobilemodalwindow = new qx.ui.window.Window().set({ appearance: "wax-window", showClose: false, allowMaximize : false, allowMinimize : false, modal: true, movable: false, resizable: false });
       mobilemodalwindow.setLayout(new qx.ui.layout.VBox(4));
-      mobilemodalwindow.add(new qx.ui.basic.Label("I am a modal window"));
+      var btnclosemodal = new qx.ui.form.Button("X").set({allowGrowX: false});
+      mobilemodalwindow.add(btnclosemodal);
+      mobilemodalwindow.add(new qx.ui.basic.Label("I am a modal detail window"));
+
+      btnclosemodal.addListener("execute", () => {
+        mobilemodalwindow.close();
+      });
+
+      // Mobile modal full window using qx.ui.window.Window
+      var mobilemodalfullwindow = new qx.ui.window.Window().set({ appearance: "wax-window", showClose: false, allowMaximize : false, allowMinimize : false, modal: true, movable: false, resizable: false });
+      mobilemodalfullwindow.setLayout(new qx.ui.layout.VBox(4));
+      var btnclosefullmodal = new qx.ui.form.Button("X").set({allowGrowX: false});
+      mobilemodalfullwindow.add(btnclosefullmodal);
+      mobilemodalfullwindow.add(new qx.ui.basic.Label("<b>Dashboard</b>").set({rich: true, backgroundColor: "#D3D3D3"}));
+      mobilemodalfullwindow.add(new qx.ui.basic.Label("Settings"));
+      mobilemodalfullwindow.add(new qx.ui.basic.Label("Feedback"));
+
+      btnclosefullmodal.addListener("execute", () => {
+        mobilemodalfullwindow.close();
+      });
 
       btnProfile.addListener("execute", function(e) {
         appcompdock.setDecorator("scaledback-box");
@@ -787,6 +820,45 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
           appcompdock.setDecorator("normal-box");
         });
       }, this);
+
+      mobilemodalfullwindow.addListener("appear", function() {
+        var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
+        var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
+        mobilemodalfullwindow.set({width: appwidth, height: appheight});
+        var popupup = {
+          duration: 400, 
+          timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
+          keyFrames : {
+            0: {translate: [null, appheight + "px"]},
+            100: {translate: [null, "0px"]}
+          },
+          keep : 100
+        };
+        qx.bom.element.AnimationCss.animate(mobilemodalfullwindow.getContentElement().getDomElement(), popupup);
+      }, this);
+
+      mobilemodalfullwindow.addListener("beforeClose", function(e) {
+        e.preventDefault();
+        var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
+        var popupdown = {
+          duration: 200, 
+          timing: "ease-in", 
+          keyFrames : {
+            0: {translate: [null, "0px"]},
+            100: {translate: [null, appheight + "px"]}
+          },
+          keep : 100
+        };
+        qx.bom.element.AnimationCss.animate(mobilemodalfullwindow.getContentElement().getDomElement(), popupdown).addListener("end", function() {
+          mobilemodalfullwindow.hide();
+        });
+      }, this);
+
+      // Add Main Menu Popup Listeners
+      mainmenubtnbutton.addListener("execute", function(e)
+      {
+        mobilemodalfullwindow.show();
+      });
 
       // add a mobile detail page
       var mobiledetailscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
@@ -832,8 +904,10 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       btnAbout.addListener("execute", function(e) {
         btnBackButton.setEnabled(true);
         mobiledetailscrollstackpage.setZIndex(11);
-        
         qx.bom.element.AnimationCss.animate(menuscrollstackpage.getContentElement().getDomElement(), moveslightleft);
+        //get width of the screen
+        var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
+        slideleft.keyFrames[0].translate = [appwidth + "px", null];
         qx.bom.element.AnimationCss.animate(mobiledetailscrollstackpage.getContentElement().getDomElement(), slideleft);
         
         //btnBackButton.fadeIn(300);
@@ -886,6 +960,11 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       centerbox.add(mobiledetailscrollstackpage);
       mobiledetailscrollstackpage.setVisibility("visible");
       centerbox.add(menuscrollstackpage);
+      menuscrollstackpage.setVisibility("visible");
+      centerbox.add(dashboardstackpage);
+
+      profilemenubutton.setVisibility("hidden");
+      atmlogocurrentpage.setLabel("Dashboard");
       
 
       // Show the default page
@@ -1005,7 +1084,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       southbox.add(tbtnthirdpagehym, {flex: 1});
       southbox.add(tbtnmenuhym, {flex: 1});
 
-      southbox.setVisibility("excluded");
+      //southbox.setVisibility("excluded");
 
       // Assign all the clones their own RadioGroup
       var mainmenubuttongrouphym = new qx.ui.form.RadioGroup();
@@ -1120,13 +1199,13 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // Demo mode switching to Mobile
       //switchmenubutton1.addListener("execute", function(e){
       //this.setDemoMode("mobile");
-      southbox.setVisibility("visible");
+      southbox.setVisibility("excluded");
       //scrollwestbox.setVisibility("excluded");
       //profilemenubutton.setVisibility("hidden");
       //mainmenupart.setVisibility("hidden");
-      centerbox.setSelection([menuscrollstackpage]);
+      centerbox.setSelection([dashboardstackpage]);
       //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
-      mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
+      //mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
       //}, this);
 
 
