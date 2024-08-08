@@ -82,6 +82,20 @@ qx.Theme.define("ville.wax.theme.Appearance",
       }
     },
 
+    "wax-form-clearbutton" :
+    {
+      include:  "wax-form-button",
+
+      style : function(states)
+      {        
+        return {
+          backgroundColor : "transparent",
+          textColor : "black",
+          decorator : "hym-box-border"
+        }
+      }
+    },
+
      /*
     ---------------------------------------------------------------------------
       wax.demo.Atom
@@ -236,7 +250,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
          if (states.hovered && !states.pressed && !states.checked) {
            textcolor = "gray";
          } else if (states.pressed || states.checked) {
-           textcolor = "blue";
+           textcolor = "black";
            var icon = "ville/wax/wax-icon-24-filled.svg";
          }
        }
@@ -315,6 +329,85 @@ qx.Theme.define("ville.wax.theme.Appearance",
         };
       }
     },*/
+  
+    "hym-mainmenubutton-frame" :
+   {
+     alias : "atom",
+
+     style : function(states)
+     {
+       var decorator = "mainmenubutton-box";
+       var padding = [8, 0, 8, 12];
+       var textcolor = "black";
+       var bgcolor = "white";
+       var opacity = .85;
+       var font = "hym-mainmenubutton";
+
+       if (!states.disabled) {
+         if (states.hovered && !states.pressed && !states.checked) {
+           decorator = "mainmenubutton-box-hovered";
+           opacity = 1;
+           bgcolor = "white";
+         } 
+         else if (states.pressed || states.checked) {
+           decorator = "mainmenubutton-box-pressed";
+           opacity = 1;
+           font = "hym-mainmenubutton-bold";
+           bgcolor = "#F2F1F6";
+         }
+       }
+
+       return {
+         decorator : decorator,
+         padding : padding,
+         cursor: states.disabled ? undefined : "pointer",
+         minWidth: 5,
+         minHeight: 5,
+         textColor: textcolor,
+         backgroundColor: bgcolor,
+         font : font,
+         opacity : 1,
+         textColor : textcolor
+       };
+     }
+   },
+
+   "hym-mainmenubutton-frame/label" : {
+     alias : "atom/label",
+
+     style : function(states)
+     {
+       return {
+         textColor : states.disabled ? "text-disabled" : undefined
+       };
+     }
+   },
+
+   "hym-mainmenubutton" :
+   {
+     alias : "hym-mainmenubutton-frame",
+     include : "hym-mainmenubutton-frame",
+
+     style : function(states)
+     {
+      return {
+        center : false,
+        gap : 0
+      };
+     }
+   },
+
+   "hym-submenubutton" : {
+     
+    include : "hym-mainmenubutton",
+    
+    style : function(states)
+    {
+      return {
+        padding: [8, 0, 8, 28]
+      };
+    }
+    },
 
    "hym-page-button" :
    {
@@ -357,6 +450,43 @@ qx.Theme.define("ville.wax.theme.Appearance",
         margin : [0,0,0,14],
         font : "hym-app-link",
         textColor: "blue"
+      };
+    }
+   },
+
+   "hym-north-basebutton" :
+   {
+    style : function(states)
+    {
+      return {
+        backgroundColor: "transparent",
+        decorator: "hym-box-noborder",
+        gap : 0,
+        margin : 0
+      };
+    }
+   },
+
+   "hym-north-menubutton" :
+   {
+    include : "hym-north-basebutton",
+    
+    style : function(states)
+    {
+      return {
+        padding : [0,0,0,10]
+      };
+    }
+   },
+
+   "hym-north-backbutton" :
+   {
+    include : "hym-north-basebutton",
+    
+    style : function(states)
+    {
+      return {
+        padding : [0,0,0,6]
       };
     }
    },

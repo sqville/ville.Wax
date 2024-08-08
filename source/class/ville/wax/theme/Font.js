@@ -84,6 +84,18 @@ qx.Theme.define("ville.wax.theme.Font",
       size : 21
     },
 
+    "hym-mainmenubutton" :
+    {
+      include : "default",
+      size : 14
+    },
+
+    "hym-mainmenubutton-bold" :
+    {
+      include : "hym-mainmenubutton",
+      bold : true
+    },
+
     "hym-app-header" :
     {
       include : "default",

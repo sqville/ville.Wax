@@ -1,0 +1,4 @@
+<svg class="hymprogress" part="progress" viewBox="0 0 16 16">
+    <circle class="hymcirclebackground" part="background" cx="8px" cy="8px" r="7px"></circle>
+    <circle class="hymindeterminate-indicator-1" part="indeterminate-indicator-1" cx="8px" cy="8px" r="7px"></circle>
+</svg>

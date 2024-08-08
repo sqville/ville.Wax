@@ -244,7 +244,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
 
      style :
      {
-      color : "blue"
+      color : "black"
      }
    },
 
@@ -254,7 +254,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
      {
       radius : 0,
       width : [0,0,0,5], 
-      color : "blue"
+      color : "black"
      }
    },
 
@@ -288,7 +288,18 @@ qx.Theme.define("ville.wax.theme.Decoration",
    {
      style :
      {
-      radius: 8
+      radius: 8,
+      width: 0
+     }
+   },
+
+   "hym-box-border" :
+   {
+     style :
+     {
+      radius: 8,
+      width: 2,
+      color: "black"
      }
    },
 
