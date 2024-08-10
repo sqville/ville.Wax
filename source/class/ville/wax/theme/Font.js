@@ -84,9 +84,15 @@ qx.Theme.define("ville.wax.theme.Font",
       size : 21
     },
 
-    "hym-mainmenubutton" :
+    "hym-default" :
     {
       include : "default",
+      family : ["-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "arial", "Helvetica", "sans-serif"]
+    },
+
+    "hym-mainmenubutton" :
+    {
+      include : "hym-default",
       size : 14
     },
 
@@ -96,37 +102,56 @@ qx.Theme.define("ville.wax.theme.Font",
       bold : true
     },
 
+    "hym-app-page-content-lgr" :
+    {
+      include : "hym-default",
+      size : 16
+    },
+
+    "hym-app-page-content-sechead" :
+    {
+      include : "hym-default",
+      size : 18
+    },
+
     "hym-app-header" :
     {
-      include : "default",
-      family : ["-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "arial", "Helvetica", "sans-serif"],
+      include : "hym-default",
       bold : true,
       size : 16
     },
 
     "hym-app-page-header" :
     {
-      family : ["-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "arial", "Helvetica", "sans-serif"],
+      include : "hym-default",
       bold : true,
       size : 24
     },
 
+    "hym-app-page-bigmsg" :
+    {
+      include : "hym-default",
+      bold : true,
+      size : 42,
+      letterSpacing : 1
+    },
+
     "hym-app-page-section-header" :
     {
-      family : ["-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "arial", "Helvetica", "sans-serif"],
+      include : "hym-default",
       bold : true,
       size : 16
     },
 
     "hym-app-link" :
     {
-      family : ["-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "arial", "Helvetica", "sans-serif"],
+      include : "hym-default",
       size : 14
     },
 
     "hym-form-button" :
     {
-      family : ["-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "arial", "Helvetica", "sans-serif"],
+      include : "hym-default",
       size : 14,
       bold : true
     }

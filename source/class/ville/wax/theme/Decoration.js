@@ -451,7 +451,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
       include: "wax-switch",
       style :
       {
-        color: "blue",
+        color: "black",
         backgroundPositionX: "right"
       }
     },
@@ -477,7 +477,7 @@ qx.Theme.define("ville.wax.theme.Decoration",
       include: "wax-switch-lgr",
       style :
       {
-        color: "blue",
+        color: "black",
         backgroundPositionX: "right"
       }
     }

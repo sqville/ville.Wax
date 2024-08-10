@@ -462,7 +462,9 @@ qx.Theme.define("ville.wax.theme.Appearance",
         backgroundColor: "transparent",
         decorator: "hym-box-noborder",
         gap : 0,
-        margin : 0
+        margin : 0,
+        paddingTop: 8,
+        paddingBottom: 8
       };
     }
    },
@@ -474,7 +476,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
     style : function(states)
     {
       return {
-        padding : [0,0,0,10]
+        paddingLeft : 10
       };
     }
    },
@@ -486,7 +488,21 @@ qx.Theme.define("ville.wax.theme.Appearance",
     style : function(states)
     {
       return {
-        padding : [0,0,0,6]
+        paddingLeft : 6,
+        paddingRight : 0
+      };
+    }
+   },
+
+   "hym-north-settingsbutton" :
+   {
+    include : "hym-north-basebutton",
+    
+    style : function(states)
+    {
+      return {
+        paddingLeft : 0,
+        paddingRight : 0
       };
     }
    },
@@ -568,7 +584,6 @@ qx.Theme.define("ville.wax.theme.Appearance",
       {
         return {
           icon: qx.theme.simple.Image.URLS["blank"],
-          //icon: "ville/wax/wax-switch-knob.svg",
           gap: 6
         };
       }
@@ -583,7 +598,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
 
         // Checked
         if (states.checked) {
-          bgcolor = "blue";
+          bgcolor = "black";
           decorator = "wax-switch-checked"
         } 
 
@@ -610,7 +625,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
         // Checked
         if (states.checked) {
           //TODOs - grab color from color theme
-          bgcolor = "blue";
+          bgcolor = "black";
           decorator = "wax-switch-lgr-checked"
         } 
 

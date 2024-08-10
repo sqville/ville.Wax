@@ -35,6 +35,9 @@
  * @asset(ville/wax/settings.svg)
  * @asset(ville/wax/ioschevronright.svg)
  * @asset(ville/wax/chevronleft.svg)
+ * @asset(ville/wax/calendarinfo.svg)
+ * @asset(ville/wax/chevrondown.svg)
+ * @asset(ville/wax/chevronup.svg)
  */
 qx.Class.define("ville.wax.demo.ApplicationMobile",
 {
@@ -104,7 +107,11 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       qx.Class.include(qx.ui.basic.Image, ville.wax.MImage); 
 
       // Menu Page for mobile only
-      var bckgcolormain = "#F2F1F6";
+      var bckgcolormain = "#f8f9f9"; // old "#F2F1F6";
+      var bckgcolorinside = "#f2f3f4";
+      //#f8f9f9 //very lite gray
+      //#f2f3f4 // medium lite gray
+      //#e5e7e9 // darker gray
       var bckgcolortopbtm = "white";
 
       var svgimgcontent = `<svg class="hymprogress" viewBox="0 0 16 16">
@@ -162,7 +169,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var mainmenubtnbutton = new qx.ui.toolbar.Button("MainMenu", menuimage).set({appearance: "hym-north-menubutton", show: "icon"});
 
       // Top-Right MenuButton
-      var profilemenubutton = new qx.ui.toolbar.MenuButton("ProfileMenu", roundacct).set({show: "icon", showArrow: false});
+      var profilemenubutton = new qx.ui.toolbar.Button("ProfileMenu", roundacct).set({appearance: "hym-north-settingsbutton", marginRight: 20, show: "icon"});
       
       // Main Menu Popup (VBox)
       var mainmenupopup = new qx.ui.popup.Popup().set(
@@ -175,53 +182,11 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       mainmenupopup.setLayout(new qx.ui.layout.VBox(0));
 
       // Profile and Settings Menu and Menu Buttons
-      var profilemenu = new qx.ui.menu.Menu().set({spacingX: 12});
-      var switchmenubutton1 = new qx.ui.menu.Button("Switch to Mobile", "ville/wax/wireframe-image-sm.png").set({padding: 10});
+      //var profilemenu = new qx.ui.menu.Menu().set({spacingX: 12});
+      //var switchmenubutton1 = new qx.ui.menu.Button("Switch to Mobile", "ville/wax/wireframe-image-sm.png").set({padding: 10});
       //switchmenubutton1.getChildControl("icon").set({ width: 24, height: 24 });
-      var aboutmenubutton1 = new qx.ui.menu.Button("About Wax", "ville/wax/wireframe-image-sm.png").set({padding: 10});
+      //var aboutmenubutton1 = new qx.ui.menu.Button("About Wax", "ville/wax/wireframe-image-sm.png").set({padding: 10});
       //aboutmenubutton1.getChildControl("icon").set({ width: 24, height: 24 });
-
-      //create About Wax popup window
-      var winAboutWax = this.__createDetailWindow();
-
-      winAboutWax.getLayout().set({spacing: 20});
-      winAboutWax.set({caption: "About Wax", contentPadding: 0, status: "Github repo coming soon"});
-      var txtaboutwax = "Wax aims to be a rapid application development and prototyping tool/system. There's a spectrum of rapid-app-dev tools (or low-code tools) - Outsystems, Appian and Ionic on the high-end, Foundation, Gatsbyjs and SemanticUI on the other. Wax is currently not yet on this spectrum, but it does have an approach and supporting assets to begin the process of becoming a highly effective and useful app-dev/app-prototyping asset.<br><br><br>";
-      txtaboutwax += "<span style='font-size: 16px;'>THE APPROACH (so far):</span><br><br>";
-      txtaboutwax += "<b>Build Qooxdoo skeletons (and lots of them) that function on multiple devices or use case scenarios.</b> A typical use case - After meeting with the client and gathering initial requirements, the prototype developer generates an application using a skeleton (chosen from a long list of skeletons) that best meets the initial requirements. Just like website templates found on the web, Qooxdoo skeletons would encompass enough functionality to help produce a high fidelity prototype in a matter of a few days. There is the potential that a skeleton could also include mock data (json) and non-Qooxdoo scripts to set up a cloud backend (not yet proven out). Skeletons could even include non-Qooxdoo templates for native mobile frameworks such as React Native, Flutter and Felgo (easy to do since skeleton templates are just static files with mustache-like tags).<br><br>";
-      txtaboutwax += "<b>Cut and paste components from a well-stocked and possibly specially-tailored demo browser application.</b> Just as we do today, we cut and paste code from examples into our apps. Properly constructed skeletons and documented demos could facilitate the rapid integration of components into any application (not yet proven out). Wax skeletons, and resulting applications would be divided out logically into three areas: Scaffolding, Wiring and Appearance. Scaffolding includes object creation, placement and initial configuration. Wiring involves application flow (mostly via event listener creation and assignment). Appearance is simple look and feel via theming and animations. Skeletons would include an appropriate amount of Appearance and animation code, but when the goal is to rapidly produce a high fidelity prototype Scaffolding and Wiring would be the top focus.<br><br>";
-      txtaboutwax += "<b>Use other frameworks for native mobile applications, and sync changes made in the main Qooxdoo app with the produced (from a skeleton) native mobile framework project.</b> Converting Qooxdoo produced code to React Native code, for example, is relatively easy. Object hierarchy is taken from getObjectRegistry method of the Application (taken from Inspector application). UI objects and their properties can be easily mapped and organized (proven out to a small degree). The difficult part is how to best get the changes to (and from) the native mobile project. Using qooxdoo compiler would be ideal, but the compiler does not have access to the apps object hierarchy. The approach Wax would take is to mimic the manual means of producing code. The manual means goes something like this: Include InspectorModel.js file in a project. Add a control (Button) to execute the reading of the ObjectRegistry and translation to the target framework. Write the translation to the console (or a TextArea object). Cut and paste resulting code to the other project.  A more automated approach would be to include an Electronjs project/app in the skeleton for the user to run at any given time. Electronjs would then sync the resulting translation to the target native mobile project. This Electronjs, automated approach has not yet been proven out.<br><br><br>";
-      txtaboutwax += "<span style='font-size: 16px;'>CONCLUSION:</span><br><br>";
-      txtaboutwax += "Is Wax, or even the concept of Wax, a worthwhile endeavor? Can the needed productivity gains be met in order to call itself a rapid app-dev tool? Is the noted approach the right way forward? It completely leaves out any type of changes being made, or needed, to qooxdoo compiler. Red flag, or just using the simplest approach is the best approach, approach? This is all a head-scratcher for sure. Too many unknowns without enough time. Welcome to software solution development :-)<br><br><br>";
-      txtaboutwax += "<span style='font-size: 16px;'>SPECIAL NOTE:</span><br><br>";
-      txtaboutwax += "Skeletons and the demo browser are not new concepts to Qooxdoo. These features have been around since the beginning. The purpose of this writeup is to convey good-intent, thoughts and ideas on how to improve peoples work lives, and not meant to be critical or take credit for anything in anyway. The past and current qooxdoo core team have done, and are doing, phenomenal work. My thanks go out to them for making me look better than I really am - Cheers.";
-      //var aboutbox = new qx.ui.container.Composite(new qx.ui.layout.VBox(10));
-      //var aboutscroll = new qx.ui.container.Scroll().set({ allowStretchY: true, padding: 0, margin: 0, contentPadding: [0,24,0,24]});
-      var aboutscroll = new ville.wax.scroll.Scroll().set({ allowStretchY: true, padding: 0, margin: 0, contentPadding: [0,24,0,24]});
-      var waxatom = new qx.ui.basic.Atom(txtaboutwax,"ville/wax/ville_Wax.png").set({rich: true, iconPosition: "top", gap: 30, paddingTop: 30});
-      waxatom.getChildControl("icon").set({scale: true, width: 300, height: 106});
-      waxatom.getChildControl("label").set({wrap: true});
-      aboutscroll.add(waxatom);
-
-      winAboutWax.add(aboutscroll, {flex:1});
-      var btnClosewinAbout = new qx.ui.form.Button("Close Window").set({marginBottom: 18, maxWidth: 300, alignX: "center", alignY: "middle"});
-      winAboutWax.add(btnClosewinAbout);
-
-      btnClosewinAbout.addListener("execute", function(e) {
-        winAboutWax.close();
-      }, this);
-
-      approot.addListener("resize", function(e){
-        winAboutWax.center();
-      }, this);
-
-      aboutmenubutton1.addListener("execute", function(e) {
-        winAboutWax.restore();
-        winAboutWax.maximize();
-        winAboutWax.center(); 
-        winAboutWax.show();
-      }, this);
-
       
       // Add Main Menu Popup Listeners
       /*mainmenubtnbutton.addListener("execute", function(e)
@@ -238,9 +203,9 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       appcompdock.add(northhbox, {edge:"north"});
       appcompdock.add(centerbox, {edge:"center"});
       approot.add(appcompdock, {edge: 0});
-      profilemenu.add(switchmenubutton1);
-      profilemenu.add(aboutmenubutton1);
-      profilemenubutton.setMenu(profilemenu);
+      //profilemenu.add(switchmenubutton1);
+      //profilemenu.add(aboutmenubutton1);
+      //profilemenubutton.setMenu(profilemenu);
 
       var atmlogocurrentpage = new qx.ui.basic.Atom("Wax").set({font: "hym-app-header", gap: 0, padding: 0, show: "label"});
       mainmenupart.add(mainmenubtnbutton);
@@ -291,101 +256,44 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var stackpageheaderfont = "control-header";
       var stackpagevboxspacing = 20;
 
-      var firstpagehbox = new qx.ui.container.Composite(new qx.ui.layout.HBox(0));
-      firstpagehbox.add(new qx.ui.core.Spacer(), {flex: 1});
+      //var firstpagehbox = new qx.ui.container.Composite(new qx.ui.layout.HBox(0));
+      //firstpagehbox.add(new qx.ui.core.Spacer(), {flex: 1});
+
 
       // First/Home Page
-      var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing).set({alignY: "middle"})).set({ padding : stackpagepadding, maxWidth: 700});  
-      // add the pages independent scroll area
+      //var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing).set({alignY: "middle"})).set({ padding : stackpagepadding, maxWidth: 700});  
+      var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({ padding: 0, margin: 0, backgroundColor: bckgcolormain });
 
-      firstpagehbox.add(firststackpage, {flex: 2});
-      firstpagehbox.add(new qx.ui.core.Spacer(), {flex: 1});
+      //firstpagehbox.add(firststackpage, {flex: 2});
+      //firstpagehbox.add(new qx.ui.core.Spacer(), {flex: 1});
 
       var firstscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
+      firstscrollstackpage.add(firststackpage);
 
-      firstscrollstackpage.add(firstpagehbox);
+      // TOP FLAT BOX
+      var topdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16).set({alignX: "center"})).set({ padding: 20, margin: [20,0,0,0], backgroundColor: "white" });
+      var atmtopmsg = new qx.ui.basic.Atom("This is a top message", "ville/wax/calendarinfo.svg").set({font: "hym-default", padding: [8,10], gap: 8, alignX: "center", center: true, allowGrowX: false, backgroundColor: bckgcolorinside});
+      atmtopmsg.getChildControl("icon").set({scale: true, width: 18, height: 18});
+      var atmtopmsgnumbers = new qx.ui.basic.Atom("$5,234").set({font: "hym-app-page-bigmsg", padding: [8,10], show: "label", alignX: "center", center: true, allowGrowX: false});
+      var atmnumbersmsg = new qx.ui.basic.Atom("This number is as of the last date.").set({font: "hym-app-page-content-lgr", padding: [0,0,8,0], show: "label", alignX: "center", center: true, allowGrowX: false});
+      var btnnumberdetails = new qx.ui.form.ToggleButton("Number Details", "ville/wax/chevrondown.svg").set({iconPosition: "right", alignX: "center", center: true, allowGrowX: false});
+      //gbnumberdetails.getChildControl("legend").set({font: "hym-app-page-content-sechead", center: true, iconPosition: "right"});
+      var bottomdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16).set({alignX: "center"})).set({ padding: 20, margin: [20,0,0,0], backgroundColor: "white" });
+      var btncurrentthingaction1 = new qx.ui.form.Button("Do An Action 1").set({appearance: "wax-form-button", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
+      var btncurrentthingmanage = new qx.ui.form.Button("Manage Something").set({appearance: "wax-form-clearbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
+      var btncurrentthingviewsched = new qx.ui.form.Button("View Scheduled Things").set({appearance: "wax-form-clearbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
+      topdetailarea.add(atmtopmsg);
+      topdetailarea.add(atmtopmsgnumbers);
+      topdetailarea.add(atmnumbersmsg);
+
+      bottomdetailarea.add(btnnumberdetails);
+      bottomdetailarea.add(btncurrentthingaction1);
+      bottomdetailarea.add(btncurrentthingmanage);
+      bottomdetailarea.add(btncurrentthingviewsched);
+      firststackpage.add(topdetailarea);
+      //firststackpage.add(topdetailarea);
+      firststackpage.add(bottomdetailarea);
       
-      var atmfirstpageheader = new qx.ui.basic.Atom("Control Showcase", "ville/wax/Wax_demo_logo.png").set({appearance: "control-header-atom", anonymous: true, focusable: false, selectable: false });
-      var atmscrolldownmsg = new qx.ui.basic.Atom("Scroll down", "ville/wax/arrow-down-outline.svg").set({center: true, padding: 0});
-      atmscrolldownmsg.getChildControl("icon").set({ scale : true, width: 24, height: 24 });
-      var hboxheaderstuff = new qx.ui.container.Composite(new qx.ui.layout.VBox(0));
-      hboxheaderstuff.add(atmfirstpageheader);
-      hboxheaderstuff.add(atmscrolldownmsg);
-      firststackpage.add(hboxheaderstuff);
-
-      var bounceloopanima = {duration: 3500, keep: 100, keyFrames : {
-        0 : {translate: [null, "0px"]},
-        20 : {translate: [null, "0px"]},
-        40 : {translate: [null, "0px"]},
-        50 : {translate: [null, "0px"]},
-        75 : {translate: [null, "0px"]},
-        80 : {translate: [null, "-5px"]},
-        85 : {translate: [null, "4px"]},
-        90 : {translate: [null, "-1px"]},
-        100 : {translate: [null, "0px"]}
-        },
-        delay : 1000,
-        repeat : 4
-      };
-
-      atmscrolldownmsg.addListener("appear", function(e) {
-        var icondom = this.getChildControl("icon").getContentElement().getDomElement();
-        qx.bom.element.AnimationCss.animate(icondom, bounceloopanima);
-      });
-
-      // DONUTCHARTBOOLEAN
-      firststackpage.add(new qx.ui.basic.Label("Donut Chart Boolean").set({font: stackpageheaderfont, padding: [60, 0, 0, 0]}));
-      firststackpage.add(new qx.ui.basic.Label("https://spectrum.adobe.com/page/donut-chart/#Boolean").set({rich: true, wrap: true}));
-
-      var donutcontainer = new qx.ui.container.Composite(new qx.ui.layout.Canvas()).set({maxWidth: 200, width: 200, height: 200});
-      
-      var donutdec = new qx.ui.decoration.Decorator().set({
-        radius : 100
-      });
-      
-      var DonutChartBoolean = new qx.ui.core.Widget().set({
-        backgroundColor: "blue",
-        decorator: donutdec
-      });
-
-      var internalwidget = new qx.ui.core.Widget().set({
-        backgroundColor: "white",
-        decorator: donutdec
-      });
-
-      var valuelabel = new qx.ui.basic.Label("<span style='font-size: 3em; font-weight: 300;'>78%</span><br><span style='font-size: 1.2em; font-weight: 800;'>Completion rate</span>").set({ rich: true, alignX: "center", alignY: "middle", textAlign: "center" });
-
-      DonutChartBoolean.addListenerOnce("appear", function() {
-        this.getContentElement().setStyle("background-image", "conic-gradient(white 0 1deg, green 1deg 280deg, white 280deg 281deg, gray 0)");
-        //this.getContentElement().setStyle("border-image", "repeating-linear-gradient(45deg, #f33, #3bf, #f33 30px) 60");
-      });
-
-      donutcontainer.add(DonutChartBoolean, {
-        left: "2%",
-        top: "2%",
-        right: "2%",
-        bottom: "2%",
-        width: "20%",
-        height: "20%",
-      });
-      donutcontainer.add(internalwidget, {
-        left: "10%",
-        top: "10%",
-        right: "10%",
-        bottom: "10%",
-        width: "20%",
-        height: "20%",
-      });
-
-      donutcontainer.add(valuelabel);
-
-      var donutwidget = new ville.wax.indicator.DonutBoolean(82, 100, "Good Rate");
-
-      firststackpage.add(donutwidget);
-
-      //firststackpage.add(donutcontainer);
-
-
       // SWITCH
       firststackpage.add(new qx.ui.basic.Label("Switch").set({font: stackpageheaderfont, padding: [60, 0, 0, 0]}));
       firststackpage.add(new qx.ui.basic.Label("Just a simple qx.ui.form.CheckBox made to look like a switch control via appearance and decorator changes (with help of an SVG file for the white knob).").set({rich: true, wrap: true}));
@@ -395,13 +303,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       firststackpage.add(waxswitch2);
 
       //***  CODE for applying popup fading in and out  ***//
-      /*var fadeinleft = {
-        duration: 300, timing: "ease-out", origin: "left top", keep: 100,
-        keyFrames : {
-          0: {opacity: 0, left: "-300px"},
-          100: {opacity: 1, left: "0px"}
-        }
-      };*/
       var fadeinleft = {
         duration: 300, timing: "ease-out", origin: "left top", keep: 100,
         keyFrames : {
@@ -469,9 +370,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       page3tbv3.add(new qx.ui.basic.Label("Month"));
       wtabView3.add(page3tbv3);
 
-      wtabView3.addListener("beforeChangeSelection", (e) => {
-        console.log("what what what");
-      })
 
       /*
       page1tbv3.addListener("appear", function() {
@@ -531,86 +429,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       //wtabView3.setDynamicMark(tabviewbarblock);
       
 
-      firststackpage.add(new qx.ui.basic.Label("Drawer").set({font: stackpageheaderfont, padding: [80, 0, 0, 0]}));
 
-      var mainmenudrawerbutton = new qx.ui.form.Button("Left side, main menu style", menuimage).set({allowStretchX: false, allowStretchY: false});
-      firststackpage.add(mainmenudrawerbutton);
-
-      // Add Main Menu Popup Listeners
-      mainmenudrawerbutton.addListener("execute", function(e)
-      {
-        if (qx.core.Environment.get("browser.name") != "edge"){
-          this._blocker.blockContent(mainmenudrawerbutton.getZIndex());
-        }
-        mainmenupopup.setHeight(parseInt(this.getRoot().getContentElement().getStyle("height")));
-        mainmenupopup.show();
-      }, this);
-
-      var btnOpenwin = new qx.ui.form.Button("Try the Window based drawer").set({allowGrowX: false});
-      var winDrawer = this.__createDetailWindow();
-      winDrawer.set({height: 500, width: 450});
-      winDrawer.setLayout(new qx.ui.layout.Canvas());
-      
-      var winbtndrawer = new qx.ui.form.Button("Open Window Drawer").set({allowGrowX: false});
-      winDrawer.add(winbtndrawer);
-
-      // tested using popup
-      var winmenupopup = new qx.ui.popup.Popup().set({allowGrowX: false, padding: 10, minWidth: 300});
-      winmenupopup.setLayout(new qx.ui.layout.VBox(0));
-      winmenupopup.setAutoHide(false);
-      winmenupopup.add(new qx.ui.basic.Label("This is a window drawer"));
-      
-      var btnclosewinmenupopup = new qx.ui.form.Button("Close drawer");
-      btnclosewinmenupopup.addListener("execute", function() {
-        var domtable = winmenupopup.getContentElement().getDomElement();
-        qx.bom.element.Animation.animateReverse(domtable, fadeinleft).addListener("end", function() {
-          winDrawer.remove(winmenupopup);
-        });
-      });
-      winmenupopup.add(btnclosewinmenupopup);
-
-      winbtndrawer.addListener("execute", function() {
-        winmenupopup.setHeight(parseInt(winDrawer.getChildControl("pane").getContentElement().getStyle("height")));
-        winDrawer.add(winmenupopup);
-        winmenupopup.setVisibility("visible");
-      });
-
-      winmenupopup.addListener("appear", function() {
-        this.setDomPosition(0,0);
-        var domtable = this.getContentElement().getDomElement();  
-        qx.bom.element.Animation.animate(domtable, fadeinleft);
-      });
-
-      firststackpage.add(btnOpenwin);
-
-      btnOpenwin.addListener("execute", function() {
-        winDrawer.center();
-        winDrawer.fadeIn(200);
-        winDrawer.show();
-      });
-
-      winDrawer.addListener("beforeClose", function(e) {
-        e.preventDefault();
-        winDrawer.fadeOut(200).addListener("end", function() {
-          winDrawer.exclude();
-        });
-      });
-
-      // --Drawer--
-      winDrawer.addListener("resize", function(e) {
-        if (winmenupopup.getVisibility() == "visible" & !winmenupopup.getAutoHide()){
-          winmenupopup.setHeight(e.getData().height);
-        }
-      });
-
-      // --Mobile--
-      firststackpage.add(new qx.ui.basic.Label("Mobile").set({font: stackpageheaderfont, padding: [80, 0, 0, 0]}));
-      firststackpage.add(new qx.ui.basic.Label("Controls and features that you would expect from a mobile app, such as TabBar, modal and non-modal drawers/popups, page transitions and unimpeded scrolling").set({rich: true, wrap: true}));
-      var btnSwitchtoMobileView = new qx.ui.form.Button("Switch to Mobile View").set({allowGrowX: false});
-      firststackpage.add(btnSwitchtoMobileView);
-
-      //btnSwitchtoMobileView.addListener("execute", function(e){
-      //this.setDemoMode("mobile");
       northhbox.setVisibility("visible");
       //southbox.setVisibility("visible");
       //profilemenubutton.setVisibility("hidden");
@@ -618,7 +437,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       //centerbox.setSelection([menuscrollstackpage]);
       //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
       //mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
-      //}, this);
+
 
       // Third Page
       var thirdstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: stackpagepadding});
@@ -670,7 +489,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       var lblAreaHeadergetmore = new qx.ui.basic.Label("Get More From The Menu").set({padding: 0, margin: [20,0,0,0], font: "hym-app-page-section-header"});
       var thirdblockmenupage = new qx.ui.container.Composite(new qx.ui.layout.HBox(20)).set({margin: [0,0], padding: [20, 20], backgroundColor: "white", decorator: "hym-box-noborder"});
-      var thirdblockatom = new qx.ui.basic.Atom("<b>Your Latest Thing</b><br>Second level details<br>Third level details", "ville/wax/KeyItem.svg").set({rich: true, iconPosition: "left", gap: 20, center: true});
+      var thirdblockatom = new qx.ui.basic.Atom("<b>Your Currently Active Thing</b><br>Second level details<br>Third level details", "ville/wax/KeyItem.svg").set({rich: true, iconPosition: "left", gap: 20, center: true});
       thirdblockatom.getChildControl("icon").set({scale: true, width: 32, height: 32});
       var imgarrowright = new qx.ui.basic.Image("ville/wax/ioschevronright.svg").set({scale: true, allowGrowY: true, alignY: "middle"});
       var btngetstartedaction = new qx.ui.form.Button("Other Action 1").set({appearance: "wax-form-button", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
@@ -811,9 +630,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       mobilemodalfullwindow.setLayout(new qx.ui.layout.VBox(4));
       var btnclosefullmodal = new qx.ui.form.Button("X").set({allowGrowX: false});
       mobilemodalfullwindow.add(btnclosefullmodal);
-      //mobilemodalfullwindow.add(new qx.ui.basic.Label("<b>Dashboard</b>").set({rich: true, backgroundColor: "#D3D3D3"}));
-      //mobilemodalfullwindow.add(new qx.ui.basic.Label("Settings"));
-      //mobilemodalfullwindow.add(new qx.ui.basic.Label("Feedback"));
 
       btnclosefullmodal.addListener("execute", () => {
         mobilemodalfullwindow.close();
@@ -992,42 +808,22 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
     
       // Assemble - THE STACK 
-      centerbox.add(firstscrollstackpage);
-      firstscrollstackpage.setVisibility("visible");
       centerbox.add(secondstackpage);
-      secondstackpage.setVisibility("visible");
+      //secondstackpage.setVisibility("visible");
       centerbox.add(thirdstackpage);
-      thirdstackpage.setVisibility("visible");
+      //thirdstackpage.setVisibility("visible");
       centerbox.add(mobiledetailscrollstackpage);
-      mobiledetailscrollstackpage.setVisibility("visible");
+      //mobiledetailscrollstackpage.setVisibility("visible");
       centerbox.add(menuscrollstackpage);
-      menuscrollstackpage.setVisibility("visible");
+      //menuscrollstackpage.setVisibility("visible");
+      centerbox.add(firstscrollstackpage);
+      //firstscrollstackpage.setVisibility("visible");
       centerbox.add(dashboardstackpage);
 
       profilemenubutton.setVisibility("hidden");
       atmlogocurrentpage.setLabel("Dashboard");
 
-      thirdblockmenupage.addListener("click", (e) => {
-        
-        this._processingblocker.blockContent(thirdblockmenupage.getZIndex());  
-        processingpopup.set({alignX: "center", alignY: "middle"});
-        processingpopup.show();
-
-        qx.event.Timer.once(
-          function (e) {
-            this._processingpopup.setAutoHide(true);
-            this._processingpopup.hide();
-            this._processingblocker.unblock();
-          },
-          this,
-          4000
-        );
       
-        profilemenubutton.setVisibility("visible");
-        atmlogocurrentpage.setLabel("Details");
-        southbox.setVisibility("visible");
-        dashboardstackpage.setZIndex(9);
-      }, this);
       
 
       // Show the default page
@@ -1082,6 +878,30 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       mainmenubuttongroup.add(tbtnmenusubmything, tbtnmenufirststackpage, tbtnmenuSecondPage, tbtnmenuThirdPage);
 
       mainmenubuttongroup.setSelection([tbtnmenufirststackpage]);
+
+      thirdblockmenupage.addListener("click", (e) => {
+        
+        this._processingblocker.blockContent(thirdblockmenupage.getZIndex());  
+        processingpopup.set({alignX: "center", alignY: "middle"});
+        processingpopup.show();
+
+        qx.event.Timer.once(
+          function (e) {
+            this._processingpopup.setAutoHide(true);
+            this._processingpopup.hide();
+            this._processingblocker.unblock();
+          },
+          this,
+          3000
+        );
+      
+        profilemenubutton.setVisibility("visible");
+        atmlogocurrentpage.setLabel("My Current Thing");
+        southbox.setVisibility("visible");
+        //dashboardstackpage.setZIndex(9);
+        centerbox.setSelection([firstscrollstackpage]);
+        mainmenubuttongroup.setSelection([tbtnmenusubmything]);
+      }, this);
 
       // --Drawer--
       // Turn off auto hide so we can animate the closing of the main menu popup
@@ -1139,13 +959,13 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // Create Menu Buttons that will navigate the user through THE STACK Pages ***
 
       // Populate southbox with content
-      var tbtnfirststackpagehym = new ville.wax.demo.MenuButton("Home").set({appearance: "mainmenubutton-hym-home", iconPosition: "top"});
+      var tbtnfirststackpagehym = new ville.wax.demo.MenuButton("Area01").set({appearance: "mainmenubutton-hym", iconPosition: "top"});
       tbtnfirststackpagehym.getChildControl("icon").set({ scale : true, width: 28, height: 28 });
-      var tbtnsecondstackpagehym = new ville.wax.demo.MenuButton("Second").set({appearance: "mainmenubutton-hym", iconPosition: "top"});
+      var tbtnsecondstackpagehym = new ville.wax.demo.MenuButton("Area02").set({appearance: "mainmenubutton-hym", iconPosition: "top"});
       tbtnsecondstackpagehym.getChildControl("icon").set({ scale : true, width: 28, height: 28 });
-      var tbtnthirdpagehym = new ville.wax.demo.MenuButton("Third").set({appearance: "mainmenubutton-hym", iconPosition: "top"});
+      var tbtnthirdpagehym = new ville.wax.demo.MenuButton("Area03").set({appearance: "mainmenubutton-hym", iconPosition: "top"});
       tbtnthirdpagehym.getChildControl("icon").set({ scale : true, width: 28, height: 28 });
-      var tbtnmenuhym = new ville.wax.demo.MenuButton("Menu").set({appearance: "mainmenubutton-hym-menu", iconPosition: "top"});
+      var tbtnmenuhym = new ville.wax.demo.MenuButton("Area04").set({appearance: "mainmenubutton-hym", iconPosition: "top"});
       tbtnmenuhym.getChildControl("icon").set({ scale : true, width: 28, height: 28 });
 
       southbox.add(tbtnfirststackpagehym, {flex: 1});
