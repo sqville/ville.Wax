@@ -507,6 +507,20 @@ qx.Theme.define("ville.wax.theme.Appearance",
     }
    },
 
+   "hym-details-togglebutton" :
+    {
+      include: "hym-north-basebutton",
+
+      style : function(states)
+      {
+        return {
+          //icon : states.checked ? "ville/wax/chevronup.svg" : "ville/wax/chevrondown.svg",
+          icon : "ville/wax/chevrondown.svg",
+          gap: 8
+        };
+      }
+    },
+
    /*
     ---------------------------------------------------------------------------
       DONUT BOOLEAN

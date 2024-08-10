@@ -262,7 +262,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       // First/Home Page
       //var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing).set({alignY: "middle"})).set({ padding : stackpagepadding, maxWidth: 700});  
-      var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({ padding: 0, margin: 0, backgroundColor: bckgcolormain });
+      var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(0).set({alignX: "center"})).set({ padding: 0, margin: 0, backgroundColor: bckgcolormain });
 
       //firstpagehbox.add(firststackpage, {flex: 2});
       //firstpagehbox.add(new qx.ui.core.Spacer(), {flex: 1});
@@ -270,29 +270,107 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var firstscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
       firstscrollstackpage.add(firststackpage);
 
+      //var testscrollhider = new ville.wax.scroll.Scroll().set({height: 0, overflow: ["hidden", "hidden"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
+
+
       // TOP FLAT BOX
       var topdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16).set({alignX: "center"})).set({ padding: 20, margin: [20,0,0,0], backgroundColor: "white" });
       var atmtopmsg = new qx.ui.basic.Atom("This is a top message", "ville/wax/calendarinfo.svg").set({font: "hym-default", padding: [8,10], gap: 8, alignX: "center", center: true, allowGrowX: false, backgroundColor: bckgcolorinside});
       atmtopmsg.getChildControl("icon").set({scale: true, width: 18, height: 18});
-      var atmtopmsgnumbers = new qx.ui.basic.Atom("$5,234").set({font: "hym-app-page-bigmsg", padding: [8,10], show: "label", alignX: "center", center: true, allowGrowX: false});
-      var atmnumbersmsg = new qx.ui.basic.Atom("This number is as of the last date.").set({font: "hym-app-page-content-lgr", padding: [0,0,8,0], show: "label", alignX: "center", center: true, allowGrowX: false});
-      var btnnumberdetails = new qx.ui.form.ToggleButton("Number Details", "ville/wax/chevrondown.svg").set({iconPosition: "right", alignX: "center", center: true, allowGrowX: false});
+      var atmtopmsgnumbers = new qx.ui.basic.Atom("$5,234").set({font: "hym-app-page-bigmsg", padding: [8, 10, 0, 10], show: "label", alignX: "center", center: true, allowGrowX: false});
+      var atmnumbersmsg = new qx.ui.basic.Atom("This number is as of the last date.").set({font: "hym-app-page-content-lgr", padding: [0,0,0,0], show: "label", alignX: "center", center: true, allowGrowX: false});
+      var btnnumberdetails = new qx.ui.form.ToggleButton("Number Details").set({appearance: "hym-details-togglebutton", show: "both", iconPosition: "right", alignX: "center", center: true, allowGrowX: false});
       //gbnumberdetails.getChildControl("legend").set({font: "hym-app-page-content-sechead", center: true, iconPosition: "right"});
-      var bottomdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16).set({alignX: "center"})).set({ padding: 20, margin: [20,0,0,0], backgroundColor: "white" });
+      var middletblgridlayout = new qx.ui.layout.Grid(80, 12);
+      middletblgridlayout.setColumnAlign(1, "right", "middle");
+      var middletablearea = new qx.ui.container.Composite(middletblgridlayout).set({ width: 220, alignX: "center", allowGrowX: false, allowStretchY: true, padding: 16, margin: 0, backgroundColor: bckgcolormain });
+      middletablearea.add(new qx.ui.basic.Label("Amount 1"), {row: 0, column: 0});
+      middletablearea.add(new qx.ui.basic.Label("$1,230"), {row: 0, column: 1});
+      middletablearea.add(new qx.ui.basic.Label("Amount 2"), {row: 1, column: 0});
+      middletablearea.add(new qx.ui.basic.Label("$230"), {row: 1, column: 1});
+      middletablearea.add(new qx.ui.basic.Label("Date of Thing"), {row: 2, column: 0});
+      middletablearea.add(new qx.ui.basic.Label("01/01/2024"), {row: 2, column: 1});
+      middletablearea.add(new qx.ui.basic.Label("Date of Next"), {row: 3, column: 0});
+      middletablearea.add(new qx.ui.basic.Label("02/01/2024"), {row: 3, column: 1});
+
+      //testscrollhider.add(middletablearea);
+
+      var bottomdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16).set({alignX: "center"})).set({ padding: [0,20,20,20], margin: 0, backgroundColor: "white" });
       var btncurrentthingaction1 = new qx.ui.form.Button("Do An Action 1").set({appearance: "wax-form-button", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
       var btncurrentthingmanage = new qx.ui.form.Button("Manage Something").set({appearance: "wax-form-clearbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
       var btncurrentthingviewsched = new qx.ui.form.Button("View Scheduled Things").set({appearance: "wax-form-clearbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
       topdetailarea.add(atmtopmsg);
       topdetailarea.add(atmtopmsgnumbers);
       topdetailarea.add(atmnumbersmsg);
-
       bottomdetailarea.add(btnnumberdetails);
       bottomdetailarea.add(btncurrentthingaction1);
       bottomdetailarea.add(btncurrentthingmanage);
       bottomdetailarea.add(btncurrentthingviewsched);
+      
       firststackpage.add(topdetailarea);
-      //firststackpage.add(topdetailarea);
+      firststackpage.add(middletablearea);
+      //firststackpage.add(testscrollhider);
       firststackpage.add(bottomdetailarea);
+
+      bottomdetailarea.addListenerOnce("appear", () => {
+        qx.bom.element.Transform.translate(bottomdetailarea.getContentElement().getDomElement(), [null, "-140px"]);
+      });
+      
+      var growinline = {
+        duration: 200, 
+        timing: "ease-out", 
+        keyFrames : {
+          0: {translate: [null, "-140px"]},
+          100: {translate: [null, "0px"]}
+        },
+        keep : 100
+      };
+
+      var scaleinline = {
+        duration: 200, 
+        origin: "top center",
+        timing: "ease-out", 
+        keyFrames : {
+          0: {scale: [1, 0.9]},
+          100: {scale: [1, 1]}
+        },
+        keep : 100
+      };
+
+      var rotateinline = {
+        duration: 200, 
+        timing: "ease-out", 
+        keyFrames : {
+          0: {rotate: "0deg"},
+          100: {rotate: "-180deg"}
+        },
+        keep : 100
+      };
+
+      btnnumberdetails.addListener("changeValue", (e) => {
+        var bottomdom = bottomdetailarea.getContentElement().getDomElement();
+        var tabledom = middletablearea.getContentElement().getDomElement();
+        var togglearrowdom = btnnumberdetails.getChildControl("icon").getContentElement().getDomElement();
+        if (e.getData()) {
+          qx.bom.element.AnimationCss.animate(bottomdom, growinline);
+          qx.bom.element.AnimationCss.animate(tabledom, scaleinline);
+          qx.bom.element.AnimationCss.animate(togglearrowdom, rotateinline);
+        }
+        else {
+          qx.bom.element.AnimationCss.animateReverse(bottomdom, growinline);
+          qx.bom.element.AnimationCss.animateReverse(tabledom, scaleinline);
+          qx.bom.element.AnimationCss.animateReverse(togglearrowdom, rotateinline);
+        }
+      });
+      //middletablearea.exclude();
+      //middletablearea.setHeight(0);
+
+      middletablearea.addListenerOnce("appear", () => {
+        var tabledom = middletablearea.getContentElement().getDomElement();
+        qx.bom.element.Transform.scale(tabledom, [1, 0.9]);
+        //growinline.keyFrames[100].height = middletablearea.getHeight();
+        //qx.bom.element.AnimationCss.animate(tabledom, growinline);
+      });
       
       // SWITCH
       firststackpage.add(new qx.ui.basic.Label("Switch").set({font: stackpageheaderfont, padding: [60, 0, 0, 0]}));
