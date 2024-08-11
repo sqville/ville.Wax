@@ -480,6 +480,28 @@ qx.Theme.define("ville.wax.theme.Decoration",
         color: "black",
         backgroundPositionX: "right"
       }
+    },
+
+    "wax-switch-new" :
+    {
+      style :
+      {
+        radius: 70,
+        width : [1,2],
+        color: "#e3e2e2",
+        transitionProperty: ["background-color", "border", "background-position-x"],
+        transitionDuration: "300ms",
+        transitionTimingFunction : "ease"
+      }
+    },
+
+    "wax-switch-new-checked" :
+    {
+      include: "wax-switch-new",
+      style :
+      {
+        color: "black"
+      }
     }
     
   }

@@ -119,6 +119,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
           <circle class="hymindeterminate-indicator-1" cx="8px" cy="8px" r="7px"></circle>
         </svg>`;
 
+      
+
       // App's Root
       var approot = this.getRoot();
       approot.setBackgroundColor("black");
@@ -297,8 +299,24 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       var bottomdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16).set({alignX: "center"})).set({ padding: [0,20,20,20], margin: 0, backgroundColor: "white" });
       var btncurrentthingaction1 = new qx.ui.form.Button("Do An Action 1").set({appearance: "wax-form-button", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
-      var btncurrentthingmanage = new qx.ui.form.Button("Manage Something").set({appearance: "wax-form-clearbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
-      var btncurrentthingviewsched = new qx.ui.form.Button("View Scheduled Things").set({appearance: "wax-form-clearbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
+      var btncurrentthingmanage = new qx.ui.form.Button("Manage Something").set({appearance: "wax-form-clearborderlessbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
+      var btncurrentthingviewsched = new qx.ui.form.Button("View Scheduled Things").set({font: "hym-form-button-underlined", appearance: "wax-form-clearborderlessbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
+      
+      var lblRecentHappenings = new qx.ui.basic.Label("Recent Happenings").set({allowGrowX: true, padding: [0,0,10,16], margin: [0,0,0,0], font: "hym-app-page-section-header"});
+      var btnAbout = new qx.ui.form.Button("Happening 2").set({appearance : "hym-page-button"});
+      var btnSwitchBack = new qx.ui.form.Button("Happening 1").set({appearance : "hym-page-button"});
+      var btnProfile = new qx.ui.form.Button("Modal Popup").set({appearance : "hym-page-button"});
+      //var btnSettings = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
+      //var btnLogout = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
+      var btnLastBtn = new qx.ui.form.Button("View All Happenings").set({appearance : "hym-page-last-button"});
+      var firstbtnlistmenupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({padding: [0,0], margin: [0,16], backgroundColor: "white", decorator: "hym-box-noborder"});
+      firstbtnlistmenupage.add(btnSwitchBack);
+      firstbtnlistmenupage.add(btnAbout);
+      firstbtnlistmenupage.add(btnProfile);
+      //firstbtnlistmenupage.add(btnSettings);
+      //firstbtnlistmenupage.add(btnLogout);
+      firstbtnlistmenupage.add(btnLastBtn);
+      
       topdetailarea.add(atmtopmsg);
       topdetailarea.add(atmtopmsgnumbers);
       topdetailarea.add(atmnumbersmsg);
@@ -311,6 +329,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       firststackpage.add(middletablearea);
       //firststackpage.add(testscrollhider);
       firststackpage.add(bottomdetailarea);
+      firststackpage.add(lblRecentHappenings);
+      firststackpage.add(firstbtnlistmenupage);
 
       /*
       var testwindowfade = this.__createDetailWindow();
@@ -388,6 +408,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       firststackpage.add(waxswitch);
       var waxswitch2 = new qx.ui.form.CheckBox("Larger switch").set({appearance: "wax-switch-larger"});
       firststackpage.add(waxswitch2);
+
 
       //***  CODE for applying popup fading in and out  ***//
       var fadeinleft = {
@@ -550,25 +571,11 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var dashboardstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
       var menupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: [10, 20], backgroundColor: bckgcolormain });
       var dashboardpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: [10, 20], backgroundColor: bckgcolormain });
-      var btnAbout = new qx.ui.form.Button("Detail Screen", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
-      var btnSwitchBack = new qx.ui.form.Button("Switch to Desktop", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
-      var btnProfile = new qx.ui.form.Button("Modal Popup", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
-      //var btnSettings = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
-      //var btnLogout = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
-      var btnLastBtn = new qx.ui.form.Button("Last Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-last-button"});
       
       var lblwaxdemo = new qx.ui.basic.Label("Menu").set({font: "hym-app-page-header"});
       var lbldashboardwelcome = new qx.ui.basic.Label("Welcome back, Buddy!").set({font: "hym-app-page-header", marginTop: 12});
       var lbldashboardcont = new qx.ui.basic.Label("Let's continue your journey.").set({padding: 0, margin: 0});
       var lbldashboardactiveitems = new qx.ui.basic.Label("Your active items").set({font: "hym-app-page-section-header", marginTop: 22});
-      
-      var firstbtnlistmenupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({padding: [0,0], backgroundColor: "white", decorator: "hym-box-noborder"});
-      firstbtnlistmenupage.add(btnSwitchBack);
-      firstbtnlistmenupage.add(btnAbout);
-      firstbtnlistmenupage.add(btnProfile);
-      //firstbtnlistmenupage.add(btnSettings);
-      //firstbtnlistmenupage.add(btnLogout);
-      firstbtnlistmenupage.add(btnLastBtn);
 
       var secondbtnlistmenupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({margin: [10,0], padding: [16,0], backgroundColor: "white", decorator: "hym-box-noborder"});
       var btnAddaction = new qx.ui.form.Button("Add Something").set({appearance : "hym-page-link-last-button"});
@@ -599,7 +606,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var lbltheend = new qx.ui.basic.Label("The End").set({padding: 0, margin: [20,0,0,0]});
 
       menupage.add(lblwaxdemo);
-      menupage.add(firstbtnlistmenupage);
+      //menupage.add(firstbtnlistmenupage);
       menupage.add(secondbtnlistmenupage);
       menupage.add(lblAreaHeadergetmore);
       //menupage.add(thirdblockmenupage);
@@ -846,9 +853,14 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       };
 
       btnAbout.addListener("execute", function(e) {
+        atmlogocurrentpage.fadeOut(300);
+        atmlogocurrentpage.setLabel("Happening 2");
+        atmlogocurrentpage.fadeIn(300);
         btnBackButton.setEnabled(true);
+        profilemenubutton.fadeOut(300);
+        profilemenubutton.setEnabled(false);
         mobiledetailscrollstackpage.setZIndex(11);
-        qx.bom.element.AnimationCss.animate(menuscrollstackpage.getContentElement().getDomElement(), moveslightleft);
+        qx.bom.element.AnimationCss.animate(firststackpage.getContentElement().getDomElement(), moveslightleft);
         //get width of the screen
         var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
         slideleft.keyFrames[0].translate = [appwidth + "px", null];
@@ -860,14 +872,19 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       }, this);
 
       btnBackButton.addListener("execute", function(e) {
-        qx.bom.element.AnimationCss.animateReverse(menuscrollstackpage.getContentElement().getDomElement(), moveslightleft);
+        qx.bom.element.AnimationCss.animateReverse(firststackpage.getContentElement().getDomElement(), moveslightleft);
         qx.bom.element.AnimationCss.animateReverse(mobiledetailscrollstackpage.getContentElement().getDomElement(), slideleft).addListener("end", function(){
           mobiledetailscrollstackpage.setZIndex(10);
         });
         
         mainmenubtnbutton.fadeIn(300);
+        profilemenubutton.fadeIn(300);
+        atmlogocurrentpage.fadeOut(150);
+        atmlogocurrentpage.setLabel("My Current Thing");
+        atmlogocurrentpage.fadeIn(150);
         qx.bom.element.AnimationCss.animateReverse(btnBackButton.getContentElement().getDomElement(), movebtnleft).addListener("end", function(){
           btnBackButton.set({enabled: false});
+          profilemenubutton.setEnabled(true);
         });
         
       });
@@ -900,7 +917,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       centerbox.add(thirdstackpage);
       //thirdstackpage.setVisibility("visible");
       centerbox.add(mobiledetailscrollstackpage);
-      //mobiledetailscrollstackpage.setVisibility("visible");
+      mobiledetailscrollstackpage.setVisibility("visible");
       centerbox.add(menuscrollstackpage);
       //menuscrollstackpage.setVisibility("visible");
       centerbox.add(firstscrollstackpage);

@@ -96,6 +96,18 @@ qx.Theme.define("ville.wax.theme.Appearance",
       }
     },
 
+    "wax-form-clearborderlessbutton" :
+    {
+      include:  "wax-form-clearbutton",
+
+      style : function(states)
+      {        
+        return {
+          decorator : "hym-box-noborder"
+        }
+      }
+    },
+
      /*
     ---------------------------------------------------------------------------
       wax.demo.Atom
@@ -415,11 +427,11 @@ qx.Theme.define("ville.wax.theme.Appearance",
     {
       return {
         center : false,
-        gap : 12,
+        //gap : 12,
         padding : [12,0,11,0],
         margin : [0,0,0,14],
         decorator : "page-button-right",
-        font : "default-bold"
+        font : "hym-default-bold"
       };
     }
    },
@@ -430,11 +442,11 @@ qx.Theme.define("ville.wax.theme.Appearance",
     {
       return {
         center : false,
-        gap : 12,
+        //gap : 12,
         padding : [12,0,12,0],
         margin : [0,0,0,14],
         decorator : "page-button-right-last",
-        font : "default-bold"
+        font : "hym-default-bold"
       };
     }
    },
@@ -597,7 +609,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
       style : function(states)
       {
         return {
-          icon: qx.theme.simple.Image.URLS["blank"],
+          icon: qx.ui.mobile.basic.Image.PLACEHOLDER_IMAGE,
           gap: 6
         };
       }
@@ -648,6 +660,50 @@ qx.Theme.define("ville.wax.theme.Appearance",
           scale : true,
           width: 48,
           height: 28,
+          backgroundColor : bgcolor,
+          cursor: "pointer"
+        };
+      }
+    },
+
+    "wax-switch-new":
+    {
+
+      style : function(states)
+      {
+        return {
+          //icon: qx.theme.simple.Image.URLS["blank"],
+          //icon : "data:image/svg+xml,%3Csvg height='20' width='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8' fill='white' /%3E%3C/svg%3C",
+          icon : qx.ui.mobile.basic.Image.PLACEHOLDER_IMAGE,
+          backgroundColor: "transparent",
+          decorator: "hym-box-noborder",
+          gap : 20,
+          margin : 0,
+          paddingTop: 8,
+          paddingBottom: 8
+        };
+      }
+    },
+
+
+    "wax-switch-new/icon" : {
+      style : function(states)
+      {
+        var decorator = "wax-switch-new";
+        var bgcolor = "#e3e2e2";
+
+        // Checked
+        if (states.checked) {
+          bgcolor = "black";
+          decorator = "wax-switch-new-checked"
+        } 
+
+        return {
+          html: `<svg height="20" width="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="white" /></svg>`,
+          decorator : decorator,
+          scale : true,
+          width: 48,
+          height: 24,
           backgroundColor : bgcolor,
           cursor: "pointer"
         };

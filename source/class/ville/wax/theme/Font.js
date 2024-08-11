@@ -90,6 +90,12 @@ qx.Theme.define("ville.wax.theme.Font",
       family : ["-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "arial", "Helvetica", "sans-serif"]
     },
 
+    "hym-default-bold" :
+    {
+      include : "default",
+      bold : true
+    },
+
     "hym-mainmenubutton" :
     {
       include : "hym-default",
@@ -154,6 +160,14 @@ qx.Theme.define("ville.wax.theme.Font",
       include : "hym-default",
       size : 14,
       bold : true
+    },
+
+    "hym-form-button-underlined" :
+    {
+      include : "hym-default",
+      size : 14,
+      bold : true,
+      decoration : "underline"
     }
   }
 });
