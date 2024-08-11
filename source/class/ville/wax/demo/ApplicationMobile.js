@@ -312,6 +312,15 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       //firststackpage.add(testscrollhider);
       firststackpage.add(bottomdetailarea);
 
+      /*
+      var testwindowfade = this.__createDetailWindow();
+      btncurrentthingaction1.addListener("click", () => {
+        testwindowfade.fadeIn(1000);
+        testwindowfade.center();
+        testwindowfade.open();
+      })
+        */
+
       bottomdetailarea.addListenerOnce("appear", () => {
         qx.bom.element.Transform.translate(bottomdetailarea.getContentElement().getDomElement(), [null, "-140px"]);
       });
@@ -544,8 +553,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var btnAbout = new qx.ui.form.Button("Detail Screen", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       var btnSwitchBack = new qx.ui.form.Button("Switch to Desktop", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       var btnProfile = new qx.ui.form.Button("Modal Popup", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
-      var btnSettings = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
-      var btnLogout = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
+      //var btnSettings = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
+      //var btnLogout = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       var btnLastBtn = new qx.ui.form.Button("Last Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-last-button"});
       
       var lblwaxdemo = new qx.ui.basic.Label("Menu").set({font: "hym-app-page-header"});
@@ -557,8 +566,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       firstbtnlistmenupage.add(btnSwitchBack);
       firstbtnlistmenupage.add(btnAbout);
       firstbtnlistmenupage.add(btnProfile);
-      firstbtnlistmenupage.add(btnSettings);
-      firstbtnlistmenupage.add(btnLogout);
+      //firstbtnlistmenupage.add(btnSettings);
+      //firstbtnlistmenupage.add(btnLogout);
       firstbtnlistmenupage.add(btnLastBtn);
 
       var secondbtnlistmenupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({margin: [10,0], padding: [16,0], backgroundColor: "white", decorator: "hym-box-noborder"});
@@ -901,9 +910,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       profilemenubutton.setVisibility("hidden");
       atmlogocurrentpage.setLabel("Dashboard");
 
-      
-      
-
+  
       // Show the default page
       //centerbox.setSelection([menuscrollstackpage]);
 
@@ -930,12 +937,9 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       atmmenuleftnavheader.getChildControl("icon").set({ scale : true });
       var tbtnmenuheaderMyStuff = new ville.wax.demo.MenuButton("My Stuff").set({appearance: "hym-mainmenubutton", anonymous: true, marginTop: 20});
       var tbtnmenusubmything = new ville.wax.demo.MenuButton("My Currently Active Thing").set({appearance: "hym-submenubutton"});
-      var tbtnmenufirststackpage = tbtnfirststackpage.clone();
-      tbtnmenufirststackpage.set({appearance: "hym-submenubutton", label: "Dashboard"});
-      var tbtnmenuSecondPage = tbtnSecondPage.clone();
-      tbtnmenuSecondPage.set({appearance: "hym-mainmenubutton", label: "Settings"});
-      var tbtnmenuThirdPage = tbtnThirdPage.clone();
-      tbtnmenuThirdPage.set({appearance: "hym-mainmenubutton", label: "Feedback"});
+      var tbtnmenufirststackpage = new ville.wax.demo.MenuButton("Dashboard").set({appearance: "hym-submenubutton"});
+      var tbtnmenuSecondPage = new ville.wax.demo.MenuButton("Settings").set({appearance: "hym-mainmenubutton"});
+      var tbtnmenuThirdPage = new ville.wax.demo.MenuButton("Feedback").set({appearance: "hym-mainmenubutton"});
 
       // Add the clones to the Main Menu Popup
       /*mainmenupopup.add(atmmenuleftnavheader);
@@ -970,7 +974,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
             this._processingblocker.unblock();
           },
           this,
-          3000
+          1000
         );
       
         profilemenubutton.setVisibility("visible");
@@ -1083,20 +1087,28 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         }
       }, this);
 
-      // Popup menu buttons
+      // Popup menu buttons  tbtnmenufirststackpage
       tbtnmenufirststackpage.addListener("changeValue", function(e) {
         if (e.getData()) {
-          //centerbox.setSelection([firstscrollstackpage]);
-          //westboxbuttongroup.setSelection([tbtnfirststackpage]);
-          
-          if (mainmenupopup.getVisibility() == "visible"){
-            this._blocker.unblock();
-            var domtable = mainmenupopup.getContentElement().getDomElement();
-            qx.bom.element.Animation.animateReverse(domtable, fadeinleft).addListener("end", function() {
-              mainmenupopup.hide();
-
-            });
-          }
+          this._processingblocker.block(); 
+          mobilemodalfullwindow.hide(); 
+          mobilemodalfullwindow.close();
+          processingpopup.set({alignX: "center", alignY: "middle"});
+          processingpopup.show();
+  
+          qx.event.Timer.once(
+            function (e) {
+              this._processingpopup.setAutoHide(true);
+              this._processingpopup.hide();
+              this._processingblocker.unblock();
+            },
+            this,
+            2000
+          );
+          profilemenubutton.setVisibility("hidden");
+          atmlogocurrentpage.setLabel("Dashboard");
+          centerbox.setSelection([dashboardstackpage]);
+          southbox.exclude();
         }
       }, this);
 
