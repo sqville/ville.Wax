@@ -276,6 +276,25 @@ qx.Theme.define("ville.wax.theme.Decoration",
      }
    },
 
+   "mainmenutogglebutton-box" :
+   {
+     style :
+     {
+       radius : 0,
+       width : [0,0,0,5],
+       color : "white",
+       backgroundPositionX: ['right']
+     }
+   },
+
+   "mainmenutogglebutton-icon" :
+   {
+     style :
+     {
+       backgroundPositionX: ['right']
+     }
+   },
+
    "window-captionbar-default" :
    {
      style :

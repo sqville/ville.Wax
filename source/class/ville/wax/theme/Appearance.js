@@ -14,6 +14,24 @@ qx.Theme.define("ville.wax.theme.Appearance",
 
   appearances :
   {
+    // override
+    label: {
+      style(states) {
+        return {
+          textColor: states.disabled ? undefined : undefined
+        };
+      }
+    },
+
+    // override
+    image: {
+      style(states) {
+        return {
+          opacity: !states.replacement && states.disabled ? undefined : undefined
+        };
+      }
+    },
+    
     "header-atom" :
     {
       alias : "atom",
@@ -352,18 +370,15 @@ qx.Theme.define("ville.wax.theme.Appearance",
        var padding = [8, 0, 8, 12];
        var textcolor = "black";
        var bgcolor = "white";
-       var opacity = .85;
        var font = "hym-mainmenubutton";
 
        if (!states.disabled) {
          if (states.hovered && !states.pressed && !states.checked) {
            decorator = "mainmenubutton-box-hovered";
-           opacity = 1;
            bgcolor = "white";
          } 
          else if (states.pressed || states.checked) {
            decorator = "mainmenubutton-box-pressed";
-           opacity = 1;
            font = "hym-mainmenubutton-bold";
            bgcolor = "#F2F1F6";
          }
@@ -373,13 +388,10 @@ qx.Theme.define("ville.wax.theme.Appearance",
          decorator : decorator,
          padding : padding,
          cursor: states.disabled ? undefined : "pointer",
-         minWidth: 5,
-         minHeight: 5,
          textColor: textcolor,
          backgroundColor: bgcolor,
          font : font,
-         opacity : 1,
-         textColor : textcolor
+         opacity : 1
        };
      }
    },
@@ -406,6 +418,44 @@ qx.Theme.define("ville.wax.theme.Appearance",
         center : false,
         gap : 0
       };
+     }
+   },
+
+   "hym-mainmenutogglebutton" :
+   {
+     alias : "atom",
+
+     style : function(states)
+     {
+       return {
+         decorator : "mainmenutogglebutton-box",
+         padding : [8, 0, 8, 12],
+         cursor: states.disabled ? undefined : "pointer",
+         textColor: "black",
+         backgroundColor: "white",
+         font : "hym-mainmenubutton"
+       };
+     }
+   },
+
+   "hym-mainmenutogglebutton/icon" :
+   {
+     style : function(states)
+     {
+       return {
+         decorator : "mainmenutogglebutton-icon"
+       };
+     }
+   },
+
+   "hym-mainmenutogglebutton/label" : {
+     alias : "atom/label",
+
+     style : function(states)
+     {
+       return {
+         textColor : states.disabled ? "text-disabled" : undefined
+       };
      }
    },
 
