@@ -106,6 +106,9 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // Enable stack widget animation
       qx.Class.include(qx.ui.basic.Image, ville.wax.MImage); 
 
+      // Enable the ability to load svg uri images
+      qx.Class.patch(qx.io.ImageLoader, ville.wax.MImageLoader); 
+
       // Menu Page for mobile only
       var bckgcolormain = "#f8f9f9"; // old "#F2F1F6";
       var bckgcolorinside = "#f2f3f4";
@@ -447,7 +450,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var secpageareabox01 = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({padding: [0,0], margin: [0,16], backgroundColor: "white", decorator: "hym-box-noborder"});
       var lblsecpageareabox01header = new qx.ui.basic.Label("Your thing analysis is available now.").set({font: "hym-app-page-content-sechead", allowGrowX: true, textAlign: "left"});
       var lblsecpageareabox01msg = new qx.ui.basic.Label("Use this area for all sorts of things such as blah, blah and blah. You can also use this area to figure out this, that and the other thing. Be sure to review this information before leaving.").set({font: "hym-app-page-content-lgr", rich: true, wrap: true, textAlign: "left"});
-      var btnviewthinganalysis = new qx.ui.form.Button("View Thing Analysis").set({appearance : "hym-page-last-button"});
+      var btnviewthinganalysis = new qx.ui.form.Button("View Thing Analysis").set({appearance : "hym-page-last-button", decorator: "page-button-right-last-solo"});
       secpageareabox01.add(lblsecpageareabox01header);
       secpageareabox01.add(lblsecpageareabox01msg);
       secpageareabox01.add(btnviewthinganalysis);
@@ -1029,7 +1032,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       centerbox.add(thirdstackpage);
       //thirdstackpage.setVisibility("visible");
       centerbox.add(mobiledetailscrollstackpage);
-      mobiledetailscrollstackpage.setVisibility("visible");
+      mobiledetailscrollstackpage.set({visibility: "visible", zIndex: 9});
       centerbox.add(menuscrollstackpage);
       //menuscrollstackpage.setVisibility("visible");
       centerbox.add(firstscrollstackpage);

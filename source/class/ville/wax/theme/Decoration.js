@@ -103,6 +103,16 @@ qx.Theme.define("ville.wax.theme.Decoration",
       }
     },
 
+    "page-button-right-last-solo" :
+    {
+      include: "page-button-right-last",
+      
+      style :
+      {
+        widthTop: 1
+      }
+    },
+
     "white-box" :
     {
       style :
