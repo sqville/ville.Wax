@@ -86,10 +86,18 @@ qx.Theme.define("ville.wax.theme.Decoration",
       {
         width: [0,0,1,0],
         color: "#C7C7C7",
-        backgroundImage: "ville/wax/chevron_right-24px.svg",
+        //waxBackgroundImage: 'data:image/svg+xml,<svg fill="black" width="40px" height="24px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7.73 4.2a.75.75 0 0 1 1.06.03l5 5.25c.28.3.28.75 0 1.04l-5 5.25a.75.75 0 1 1-1.08-1.04L12.2 10l-4.5-4.73a.75.75 0 0 1 .02-1.06Z" fill="black"></path></svg>',
+        //waxBackgroundRepeat: "no-repeat",
+        //waxBackgroundPositionX: "right",
+        //waxBackgroundPositionY: "center"
+        backgroundImage: 'data:image/svg+xml,<svg fill="black" width="40px" height="24px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7.73 4.2a.75.75 0 0 1 1.06.03l5 5.25c.28.3.28.75 0 1.04l-5 5.25a.75.75 0 1 1-1.08-1.04L12.2 10l-4.5-4.73a.75.75 0 0 1 .02-1.06Z" fill="black"></path></svg>',
         backgroundRepeat: "no-repeat",
         backgroundPositionX: "right",
         backgroundPositionY: "center"
+        //backgroundImage: "ville/wax/chevron_right-24px.svg",
+        //backgroundRepeat: "no-repeat",
+        //backgroundPositionX: "right",
+        //backgroundPositionY: "center"
       }
     },
 
@@ -466,7 +474,9 @@ qx.Theme.define("ville.wax.theme.Decoration",
         radius: 70,
         width : [1,2],
         color: "#e3e2e2",
-        backgroundImage: "ville/wax/wax-switch-knob.svg",
+        //backgroundImage: "ville/wax/wax-switch-knob.svg",
+        backgroundImage: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="white" /></svg>',
+        backgroundRepeat: "no-repeat",
         backgroundPositionX: "left",
         backgroundPositionY: "center",
         transitionProperty: ["background-color", "border", "background-position-x"],

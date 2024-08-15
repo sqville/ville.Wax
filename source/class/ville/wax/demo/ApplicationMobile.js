@@ -107,10 +107,13 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       qx.Class.include(qx.ui.basic.Image, ville.wax.MImage); 
 
       // Enable the ability to load svg uri images
-      qx.Class.patch(qx.io.ImageLoader, ville.wax.MImageLoader); 
+      //qx.Class.include(qx.ui.decoration.Decorator, ville.wax.MBackgroundImage); 
+      qx.Class.patch(qx.ui.decoration.Decorator, ville.wax.MBackgroundImg);
+
+      //console.log(qx.io.ImageLoader.__dataUrlRegExp); = /^data:image\/(png|gif|jpg|jpeg|bmp|svg+xml)\b/i;
 
       // Menu Page for mobile only
-      var bckgcolormain = "#f8f9f9"; // old "#F2F1F6";
+      var bckgcolormain = "#f2f3f4"; // old "#F2F1F6";
       var bckgcolorinside = "#f2f3f4";
       //#f8f9f9 //very lite gray
       //#f2f3f4 // medium lite gray
@@ -424,8 +427,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // SWITCH
       //firststackpage.add(new qx.ui.basic.Label("Switch").set({font: stackpageheaderfont, padding: [60, 0, 0, 0]}));
       //firststackpage.add(new qx.ui.basic.Label("Just a simple qx.ui.form.CheckBox made to look like a switch control via appearance and decorator changes (with help of an SVG file for the white knob).").set({rich: true, wrap: true}));
-      var waxswitch = new qx.ui.form.CheckBox("Default switch").set({appearance: "wax-switch"});
-      //firststackpage.add(waxswitch);
+      var waxswitch = new qx.ui.form.CheckBox("Default switch NEW").set({appearance: "wax-switch"});
+      firststackpage.add(waxswitch);
       var waxswitch2 = new qx.ui.form.CheckBox("Larger switch").set({appearance: "wax-switch-larger"});
       //firststackpage.add(waxswitch2);
 
@@ -440,16 +443,16 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       };
 
       // Second Page 
-      var secondstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: 0, backgroundColor: bckgcolormain});
+      var secondstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({padding: 0, backgroundColor: bckgcolormain});
       var secpagetopdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16)).set({ padding: 20, margin: [0,0,0,0], backgroundColor: "white" });
       var lblsecondpageheader = new qx.ui.basic.Label("Area 02").set({font: "hym-app-page-header", allowGrowX: true, textAlign: "left"});
       var lblsecondpageheadermsg = new qx.ui.basic.Label("Use this area for all sorts of things such as blah, blah and blah. You can also use this area to figure out this, that and the other thing. Be sure to review this information before leaving.").set({font: "hym-app-page-content-lgr", rich: true, wrap: true, textAlign: "left"});
       var svgchannelshare = `<svg fill="currentColor" viewBox="0 0 20 20"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h5A2.5 2.5 0 0 1 13 5.5a.5.5 0 0 1-1 0c0-.83-.67-1.5-1.5-1.5h-5C4.67 4 4 4.67 4 5.5v5c0 .83.67 1.5 1.5 1.5h4.51a2.25 2.25 0 1 1 .12 1H5.5A2.5 2.5 0 0 1 3 10.5v-5ZM7.5 14a.5.5 0 0 0-.5.5A2.5 2.5 0 0 0 9.5 17h5a2.5 2.5 0 0 0 2.5-2.5v-5A2.5 2.5 0 0 0 14.5 7H9.87A2.25 2.25 0 1 0 10 8h4.51c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5h-5A1.5 1.5 0 0 1 8 14.5a.5.5 0 0 0-.5-.5Z" fill="currentColor"></path></svg>`;
       var imgtopheaderSecPage = new qx.ui.basic.Image().set({html: svgchannelshare, scale: true, width: 80, height: 80});
-      var lblAreaboxheader = new qx.ui.basic.Label("Area 02 Overview").set({allowGrowX: true, padding: [0,0,10,16], margin: [20,0,0,0], font: "hym-app-page-section-header"});
+      var lblAreaboxheader = new qx.ui.basic.Label("Area 02 Overview").set({allowGrowX: true, padding: [0,0,0,20], margin: [20,0,0,0], font: "hym-app-page-section-header"});
       var secpageareabox01 = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({padding: [0,0], margin: [0,16], backgroundColor: "white", decorator: "hym-box-noborder"});
-      var lblsecpageareabox01header = new qx.ui.basic.Label("Your thing analysis is available now.").set({font: "hym-app-page-content-sechead", allowGrowX: true, textAlign: "left"});
-      var lblsecpageareabox01msg = new qx.ui.basic.Label("Use this area for all sorts of things such as blah, blah and blah. You can also use this area to figure out this, that and the other thing. Be sure to review this information before leaving.").set({font: "hym-app-page-content-lgr", rich: true, wrap: true, textAlign: "left"});
+      var lblsecpageareabox01header = new qx.ui.basic.Label("Your thing analysis is available now.").set({padding: 12, font: "hym-app-page-content-sechead", allowGrowX: true, textAlign: "left"});
+      var lblsecpageareabox01msg = new qx.ui.basic.Label("Use this area for all sorts of things such as blah, blah and blah. You can also use this area to figure out this, that and the other thing. Be sure to review this information before leaving.").set({padding: 12, font: "hym-app-page-content-lgr", rich: true, wrap: true, textAlign: "left"});
       var btnviewthinganalysis = new qx.ui.form.Button("View Thing Analysis").set({appearance : "hym-page-last-button", decorator: "page-button-right-last-solo"});
       secpageareabox01.add(lblsecpageareabox01header);
       secpageareabox01.add(lblsecpageareabox01msg);
@@ -587,11 +590,17 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
 
       // Third Page
-      var thirdstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: stackpagepadding});
-      var lblthirdpageheader = new qx.ui.basic.Label("Third Page").set({font: stackpageheaderfont});     
-      thirdstackpage.add(lblthirdpageheader);
-      var btngobackhome3 = new qx.ui.form.Button("Go Back Home").set({allowGrowX: false});
-      thirdstackpage.add(btngobackhome3);
+      var thirdstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: 0, backgroundColor: bckgcolormain});   
+    
+      var thirdpagetopdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16)).set({ padding: 20, margin: [0,0,0,0], backgroundColor: "white" });
+      var lblthirdpageheader = new qx.ui.basic.Label("Area 03").set({font: "hym-app-page-header", allowGrowX: true, textAlign: "left"});
+      var lblthirdpageheadermsg = new qx.ui.basic.Label("Use this area for all sorts of things such as blah, blah and blah. You can also use this area to figure out this, that and the other thing. Be sure to review this information before leaving.").set({font: "hym-app-page-content-lgr", rich: true, wrap: true, textAlign: "left"});
+      var svgspace3d = `<svg fill="currentColor" viewBox="0 0 20 20"><path d="M3 6a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v6.5h-.71L14.86 10H16V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4h1.14L3.7 12.5H3V6Zm0 8v-.5h4.34l-.82 2.86-.2.64H6a3 3 0 0 1-3-3Zm4.48 2.64.9-3.14h3.24l.9 3.13.1.37H7.37l.1-.36h.01Zm1.18-4.14h2.68l-.72-2.5H9.38l-.72 2.5Zm4.82 3.86-.82-2.86H17v.5a3 3 0 0 1-3 3h-.35l-.17-.63Zm-1.1-3.86h2.76L13.7 10h-2.05l.72 2.5Zm-7.52 0h2.76l.72-2.5H6.29l-1.43 2.5Z" fill="currentColor"></path></svg>`;
+      var imgtopheaderThirdPage = new qx.ui.basic.Image().set({html: svgspace3d, scale: true, width: 80, height: 80});
+      thirdpagetopdetailarea.add(imgtopheaderThirdPage);
+      thirdpagetopdetailarea.add(lblthirdpageheader);
+      thirdpagetopdetailarea.add(lblthirdpageheadermsg);
+      thirdstackpage.add(thirdpagetopdetailarea);
       /*btngobackhome3.addListener("execute", function(e) {
         centerbox.setSelection([firstscrollstackpage]);
       });*/
@@ -608,7 +617,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       var menuscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
       var dashboardstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
-      var menupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: [10, 20], backgroundColor: bckgcolormain });
+      var menupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: 0, backgroundColor: bckgcolormain });
       var dashboardpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: [10, 20], backgroundColor: bckgcolormain });
       
       var lblwaxdemo = new qx.ui.basic.Label("Menu").set({font: "hym-app-page-header"});
@@ -636,6 +645,16 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       thirdblockmenupage.add(imgarrowright);
       //thirdblockmenupage.add(btngetstartedaction);
 
+      var fourthpagetopdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16)).set({ padding: 20, margin: [0,0,0,0], backgroundColor: "white" });
+      var lblfourthpageheader = new qx.ui.basic.Label("Area 04").set({font: "hym-app-page-header", allowGrowX: true, textAlign: "left"});
+      var lblfourthpageheadermsg = new qx.ui.basic.Label("Use this area for all sorts of things such as blah, blah and blah. You can also use this area to figure out this, that and the other thing. Be sure to review this information before leaving.").set({font: "hym-app-page-content-lgr", rich: true, wrap: true, textAlign: "left"});
+      var svgvideobckgrd = `<svg fill="currentColor" viewBox="0 0 20 20"><path d="M6.2 4 2 8.2V6.8L4.8 4h1.4Zm7 0-1.46 1.46a3.48 3.48 0 0 0-1.02-.39L11.79 4h1.42Zm-1.08 3.17a2.51 2.51 0 0 0-2.34-1.16 2.5 2.5 0 1 0 2.34 1.16Zm.72-.72c.2.29.37.6.48.94L16.69 4 16.5 4h-1.2l-2.46 2.45ZM7.5 12c-.08 0-.15 0-.22.02A1.5 1.5 0 0 0 6 13.5V16h8v-2.5a1.5 1.5 0 0 0-1.5-1.5h-5Zm5-1c.22 0 .43.03.63.08L18 6.2V5.5c0-.2-.04-.4-.12-.59l-4.5 4.5a3.5 3.5 0 0 1-.93 1.59h.05Zm1.9.88c.23.27.4.58.5.93L18 9.7V8.29l-3.6 3.6ZM15 16v-1.2l3-3v1.4L15.2 16H15Zm-10-.3v-1.4l-1.7 1.69.2.01h1.2l.3-.3Zm1.57-6.48c.08.36.21.7.4 1.02L2.11 15.1A1.5 1.5 0 0 1 2 14.5v-.7l4.57-4.58ZM9.71 4 2 11.7v-1.4L8.3 4h1.4Z" fill="currentColor"></path></svg>`;
+      var imgtopheaderFourthPage = new qx.ui.basic.Image().set({html: svgvideobckgrd, scale: true, width: 80, height: 80});
+      fourthpagetopdetailarea.add(imgtopheaderFourthPage);
+      fourthpagetopdetailarea.add(lblfourthpageheader);
+      fourthpagetopdetailarea.add(lblfourthpageheadermsg);
+      
+
       var lblAreaHeaderarticles = new qx.ui.basic.Label("Articles").set({padding: 0, margin: [20,0,0,0], font: "hym-app-page-section-header"});
       var articleblockmenupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(20).set({alignY:"bottom"})).set({height: 300, margin: [0,0], padding: [0,0], backgroundColor: "white", decorator: "article"});
       var articleblockatom = new qx.ui.basic.Atom("<b>Do Bright Colors Make for Faster Cars</b><br>We explor the connection between form and function. Does color help with speed or this this jibberish in order to take up space.").set({padding: 14, backgroundColor: "white", rich: true, center: true});
@@ -644,8 +663,11 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       var lbltheend = new qx.ui.basic.Label("The End").set({padding: 0, margin: [20,0,0,0]});
 
-      menupage.add(lblwaxdemo);
+      //menupage.add(lblwaxdemo);
       //menupage.add(firstbtnlistmenupage);
+      menupage.add(fourthpagetopdetailarea);
+
+
       menupage.add(secondbtnlistmenupage);
       menupage.add(lblAreaHeadergetmore);
       //menupage.add(thirdblockmenupage);
@@ -674,6 +696,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       atmlogocurrentpage.set({visibility: "visible", label:"Menu", opacity: 1 });
 
       // Scroll feature
+      /*
       var menuscrollcontentEl = menuscrollstackpage.getChildControl("pane").getContentElement();
       menuscrollcontentEl.addListener("scroll", function(e) {
         var menulblloctop = menuscrollstackpage.getItemTop(lblwaxdemo);
@@ -685,6 +708,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         var lblwdopac = lblwaxdemo.getOpacity();
 
         var menuscrollheight = menuscrollstackpage.getItemBottom(lbltheend);
+        */
         
         // top bar
         /*if (scrollval >= menulbllocbtm-6) {
@@ -695,19 +719,16 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
           northhbox.set({backgroundColor: bckgcolormain, decorator: "topheader-blended"});
         }*/
 
-        
-
-        
         //bottom bar
-        var menuscrolldom = menuscrollcontentEl.getDomElement();
+        //var menuscrolldom = menuscrollcontentEl.getDomElement();
 
         //console.log("offsetheight: " + menuscrolldom.offsetHeight + " scrollTop: " + menuscrolldom.scrollTop + " scrollheight: " + menuscrolldom.scrollHeight);
 
-        if (menuscrolldom.offsetHeight + menuscrolldom.scrollTop >= menuscrolldom.scrollHeight - 1) {
+        /*if (menuscrolldom.offsetHeight + menuscrolldom.scrollTop >= menuscrolldom.scrollHeight - 1) {
           southbox.set({backgroundColor: bckgcolormain, decorator: "bottombar-blended"});
         } else {
           southbox.set({backgroundColor: bckgcolortopbtm, decorator: "bottombar"});
-        }
+        }*/
         
         /*
         if (scrollval > menulblloctop) {
@@ -734,7 +755,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
           northhbox.set({decorator: null});
         }*/
           
-      });
+      //});
 
       //***  CODE for applying popup fading in and out  ***//
       var scaleback = {
@@ -876,10 +897,18 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       // add a mobile detail page
       var mobiledetailscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
-      var mobiledetailpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: [10, 20], backgroundColor: bckgcolormain });
+      var mobiledetailpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: 0, backgroundColor: bckgcolormain });
       mobiledetailscrollstackpage.add(mobiledetailpage);
-      var lbldetailscreen = new qx.ui.basic.Label("Detail Screen").set({font: "hym-app-page-header"});
-      mobiledetailpage.add(lbldetailscreen);
+
+      var detailpagetopdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16).set({alignX: "center"})).set({ padding: [20,0], margin: [0,0,0,0], backgroundColor: "white" });
+      var lbldetailpageheader = new qx.ui.basic.Label("Detail").set({font: "hym-app-page-header", allowGrowX: true, textAlign: "center"});
+      //var lbldetailpageheadermsg = new qx.ui.basic.Label("Use this area for all sorts of things such as blah, blah and blah. You can also use this area to figure out this, that and the other thing. Be sure to review this information before leaving.").set({font: "hym-app-page-content-lgr", rich: true, wrap: true, textAlign: "left"});
+      var svgdetailbeach = `<svg fill="currentColor" viewBox="0 0 20 20"><path d="M8.26 4.6a5.21 5.21 0 0 1 9.03 5.22l-.2.34a.5.5 0 0 1-.67.19l-3.47-2-1.93 3.38c1.34.4 2.5 1.33 3.31 2.52h-.09c-.34 0-.66.11-.92.31A4.9 4.9 0 0 0 9.5 12.5a4.9 4.9 0 0 0-3.82 2.06 1.5 1.5 0 0 0-1.01-.3 5.94 5.94 0 0 1 5.31-2.74l2.1-3.68-3.83-2.2a.5.5 0 0 1-.18-.7l.2-.33Zm.92.42 1.7.98.02-.02a8.08 8.08 0 0 1 3.27-2.74 4.22 4.22 0 0 0-4.99 1.78ZM14 7.8c.47-.82.7-1.46.77-2.09a5.8 5.8 0 0 0-.06-1.62 6.96 6.96 0 0 0-2.95 2.41L14 7.8Zm.87.5 1.61.93a4.22 4.22 0 0 0-.74-5.02c.07.56.09 1.1.02 1.63-.1.79-.38 1.56-.89 2.46Zm-9.63 7.3a.5.5 0 0 0-.96.03c-.17.7-.5 1.08-.86 1.3-.38.23-.87.32-1.42.32a.5.5 0 0 0 0 1c.64 0 1.33-.1 1.94-.47.34-.2.64-.5.88-.87a2.96 2.96 0 0 0 4.68-.01 2.96 2.96 0 0 0 4.74-.06c.64.9 1.7 1.41 2.76 1.41a.5.5 0 1 0 0-1c-.98 0-1.96-.64-2.29-1.65a.5.5 0 0 0-.95 0 1.98 1.98 0 0 1-3.79.07.5.5 0 0 0-.94 0 1.98 1.98 0 0 1-3.8-.08Z" fill="currentColor"></path></svg>`;
+      var imgtopheaderDetailPage = new qx.ui.basic.Image().set({html: svgdetailbeach, scale: true, width: 70, height: 70});
+      detailpagetopdetailarea.add(imgtopheaderDetailPage);
+      detailpagetopdetailarea.add(lbldetailpageheader);
+      mobiledetailpage.add(detailpagetopdetailarea);
+
       //var btnBackButton = new qx.ui.form.Button("<").set({opacity: 1});
       var btnBackButton = new qx.ui.toolbar.Button("back", "ville/wax/chevronleft.svg").set({appearance: "hym-north-backbutton", show: "icon", enabled: false, opacity: 0, cursor: "arrow"});
       mainmenupart.add(btnBackButton);
