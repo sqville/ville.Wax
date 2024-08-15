@@ -722,9 +722,7 @@ qx.Theme.define("ville.wax.theme.Appearance",
       style : function(states)
       {
         return {
-          //icon: qx.theme.simple.Image.URLS["blank"],
-          //icon : "data:image/svg+xml,%3Csvg height='20' width='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8' fill='white' /%3E%3C/svg%3C",
-          icon : qx.ui.mobile.basic.Image.PLACEHOLDER_IMAGE,
+          icon : qx.ui.basic.Image.PLACEHOLDER_IMAGE,
           backgroundColor: "transparent",
           decorator: "hym-box-noborder",
           gap : 20,
