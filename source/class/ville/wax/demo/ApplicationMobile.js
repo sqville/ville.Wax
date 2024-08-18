@@ -38,6 +38,7 @@
  * @asset(ville/wax/calendarinfo.svg)
  * @asset(ville/wax/chevrondown.svg)
  * @asset(ville/wax/chevronup.svg)
+ * @asset(ville/wax/dismiss_24.svg)
  */
 qx.Class.define("ville.wax.demo.ApplicationMobile",
 {
@@ -81,7 +82,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
      * 
      * @lint ignoreDeprecated(alert)
      */
-    main : function()
+    main ()
     {
       // Call super class
       this.base(arguments);
@@ -106,11 +107,10 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // Enable stack widget animation
       qx.Class.include(qx.ui.basic.Image, ville.wax.MImage); 
 
-      // Enable the ability to load svg uri images
-      //qx.Class.include(qx.ui.decoration.Decorator, ville.wax.MBackgroundImage); 
-      qx.Class.patch(qx.ui.decoration.Decorator, ville.wax.MBackgroundImg);
-
-      //console.log(qx.io.ImageLoader.__dataUrlRegExp); = /^data:image\/(png|gif|jpg|jpeg|bmp|svg+xml)\b/i;
+      // Enable the ability to load svg uri images either by including new properties
+      // or by patching the existing mixin.
+      // qx.Class.include(qx.ui.decoration.Decorator, ville.wax.MBackgroundImg); 
+      qx.Class.patch(qx.ui.decoration.Decorator, ville.wax.MBackgroundImage);
 
       // Menu Page for mobile only
       var bckgcolormain = "#f2f3f4"; // old "#F2F1F6";
@@ -290,36 +290,36 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var topdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16).set({alignX: "center"})).set({ padding: 20, margin: [20,0,0,0], backgroundColor: "white" });
       var atmtopmsg = new qx.ui.basic.Atom("This is a top message", "ville/wax/calendarinfo.svg").set({font: "hym-default", padding: [8,10], gap: 8, alignX: "center", center: true, allowGrowX: false, backgroundColor: bckgcolorinside});
       atmtopmsg.getChildControl("icon").set({scale: true, width: 18, height: 18});
-      var atmtopmsgnumbers = new qx.ui.basic.Atom("$5,234").set({font: "hym-app-page-bigmsg", padding: [8, 10, 0, 10], show: "label", alignX: "center", center: true, allowGrowX: false});
-      var atmnumbersmsg = new qx.ui.basic.Atom("This number is as of the last date.").set({font: "hym-app-page-content-lgr", padding: [0,0,0,0], show: "label", alignX: "center", center: true, allowGrowX: false});
-      var btnnumberdetails = new qx.ui.form.ToggleButton("Number Details").set({appearance: "hym-details-togglebutton", show: "both", iconPosition: "right", alignX: "center", center: true, allowGrowX: false});
+      var atmtopmsgnumbers = new qx.ui.basic.Atom("$1,234").set({font: "hym-app-page-bigmsg", padding: [8, 10, 0, 10], show: "label", alignX: "center", center: true, allowGrowX: false});
+      var atmnumbersmsg = new qx.ui.basic.Atom("Larger message area.").set({font: "hym-app-page-content-lgr", padding: [0,0,0,0], show: "label", alignX: "center", center: true, allowGrowX: false});
+      var btnnumberdetails = new qx.ui.form.ToggleButton("Details Dropdown").set({appearance: "hym-details-togglebutton", show: "both", iconPosition: "right", alignX: "center", center: true, allowGrowX: false});
       //gbnumberdetails.getChildControl("legend").set({font: "hym-app-page-content-sechead", center: true, iconPosition: "right"});
       var middletblgridlayout = new qx.ui.layout.Grid(80, 12);
       middletblgridlayout.setColumnAlign(1, "right", "middle");
       var middletablearea = new qx.ui.container.Composite(middletblgridlayout).set({ width: 220, alignX: "center", allowGrowX: false, allowStretchY: true, padding: 16, margin: 0, backgroundColor: bckgcolormain });
-      middletablearea.add(new qx.ui.basic.Label("Amount 1"), {row: 0, column: 0});
-      middletablearea.add(new qx.ui.basic.Label("$1,230"), {row: 0, column: 1});
-      middletablearea.add(new qx.ui.basic.Label("Amount 2"), {row: 1, column: 0});
+      middletablearea.add(new qx.ui.basic.Label("Amount"), {row: 0, column: 0});
+      middletablearea.add(new qx.ui.basic.Label("$1,000"), {row: 0, column: 1});
+      middletablearea.add(new qx.ui.basic.Label("Amount"), {row: 1, column: 0});
       middletablearea.add(new qx.ui.basic.Label("$230"), {row: 1, column: 1});
-      middletablearea.add(new qx.ui.basic.Label("Date of Thing"), {row: 2, column: 0});
+      middletablearea.add(new qx.ui.basic.Label("Date"), {row: 2, column: 0});
       middletablearea.add(new qx.ui.basic.Label("01/01/2024"), {row: 2, column: 1});
-      middletablearea.add(new qx.ui.basic.Label("Date of Next"), {row: 3, column: 0});
+      middletablearea.add(new qx.ui.basic.Label("Date"), {row: 3, column: 0});
       middletablearea.add(new qx.ui.basic.Label("02/01/2024"), {row: 3, column: 1});
 
       //testscrollhider.add(middletablearea);
 
       var bottomdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16).set({alignX: "center"})).set({ padding: [0,20,20,20], margin: 0, backgroundColor: "white" });
-      var btncurrentthingaction1 = new qx.ui.form.Button("Do An Action 1").set({appearance: "wax-form-button", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
-      var btncurrentthingmanage = new qx.ui.form.Button("Manage Something").set({appearance: "wax-form-clearborderlessbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
-      var btncurrentthingviewsched = new qx.ui.form.Button("View Scheduled Things").set({font: "hym-form-button-underlined", appearance: "wax-form-clearborderlessbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
+      var btncurrentthingaction1 = new qx.ui.form.Button("Action Button").set({appearance: "wax-form-button", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
+      var btncurrentthingmanage = new qx.ui.form.Button("Action Button").set({appearance: "wax-form-clearborderlessbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
+      var btncurrentthingviewsched = new qx.ui.form.Button("Action Button Underlined").set({font: "hym-form-button-underlined", appearance: "wax-form-clearborderlessbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
       
-      var lblRecentHappenings = new qx.ui.basic.Label("Recent Happenings").set({allowGrowX: true, padding: [0,0,10,16], margin: [20,0,0,0], font: "hym-app-page-section-header"});
-      var btnAbout = new qx.ui.form.Button("Happening 2").set({appearance : "hym-page-button"});
-      var btnSwitchBack = new qx.ui.form.Button("Happening 1").set({appearance : "hym-page-button"});
-      var btnProfile = new qx.ui.form.Button("Happening 3").set({appearance : "hym-page-button"});
+      var lblRecentHappenings = new qx.ui.basic.Label("Area 01 Section 01").set({allowGrowX: true, padding: [0,0,10,16], margin: [20,0,0,0], font: "hym-app-page-section-header"});
+      var btnAbout = new qx.ui.form.Button("Item 02").set({appearance : "hym-page-button"});
+      var btnSwitchBack = new qx.ui.form.Button("Item 01").set({appearance : "hym-page-button"});
+      var btnProfile = new qx.ui.form.Button("Item 03").set({appearance : "hym-page-button"});
       //var btnSettings = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       //var btnLogout = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
-      var btnLastBtn = new qx.ui.form.Button("View All Happenings").set({appearance : "hym-page-last-button"});
+      var btnLastBtn = new qx.ui.form.Button("List of All Items").set({appearance : "hym-page-last-button"});
       var firstbtnlistmenupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({padding: [0,0], margin: [0,16], backgroundColor: "white", decorator: "hym-box-noborder"});
       firstbtnlistmenupage.add(btnSwitchBack);
       firstbtnlistmenupage.add(btnAbout);
@@ -427,8 +427,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // SWITCH
       //firststackpage.add(new qx.ui.basic.Label("Switch").set({font: stackpageheaderfont, padding: [60, 0, 0, 0]}));
       //firststackpage.add(new qx.ui.basic.Label("Just a simple qx.ui.form.CheckBox made to look like a switch control via appearance and decorator changes (with help of an SVG file for the white knob).").set({rich: true, wrap: true}));
-      var waxswitch = new qx.ui.form.CheckBox("Default switch NEW").set({appearance: "wax-switch"});
-      firststackpage.add(waxswitch);
+      
       var waxswitch2 = new qx.ui.form.CheckBox("Larger switch").set({appearance: "wax-switch-larger"});
       //firststackpage.add(waxswitch2);
 
@@ -605,7 +604,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         centerbox.setSelection([firstscrollstackpage]);
       });*/
 
-      firststackpage.add(new qx.ui.basic.Label("The End").set({backgroundColor: "#f3f3f3", font: stackpageheaderfont, textColor: "red", textAlign: "center", allowGrowX: true, padding: [20,0,20,0], margin: [80,0,20,0]}));
+      //firststackpage.add(new qx.ui.basic.Label("The End").set({backgroundColor: "#f3f3f3", font: stackpageheaderfont, textColor: "red", textAlign: "center", allowGrowX: true, padding: [20,0,20,0], margin: [80,0,20,0]}));
 
       
       var bordersouthbox = "#B3B3B3";
@@ -621,9 +620,9 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var dashboardpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({ padding: [10, 20], backgroundColor: bckgcolormain });
       
       var lblwaxdemo = new qx.ui.basic.Label("Menu").set({font: "hym-app-page-header"});
-      var lbldashboardwelcome = new qx.ui.basic.Label("Welcome back, Buddy!").set({font: "hym-app-page-header", marginTop: 12});
-      var lbldashboardcont = new qx.ui.basic.Label("Let's continue your journey.").set({padding: 0, margin: 0});
-      var lbldashboardactiveitems = new qx.ui.basic.Label("Your active items").set({font: "hym-app-page-section-header", marginTop: 22});
+      var lbldashboardwelcome = new qx.ui.basic.Label("Main Dashboard Message").set({font: "hym-app-page-header", marginTop: 12});
+      var lbldashboardcont = new qx.ui.basic.Label("Sub main dashboard message.").set({font: "hym-default", padding: 0, margin: 0});
+      var lbldashboardactiveitems = new qx.ui.basic.Label("Dashboard Section Header").set({font: "hym-app-page-section-header", marginTop: 22});
 
       var secondbtnlistmenupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({margin: [10,0], padding: [16,0], backgroundColor: "white", decorator: "hym-box-noborder"});
       var btnAddaction = new qx.ui.form.Button("Add Something").set({appearance : "hym-page-link-last-button"});
@@ -631,15 +630,15 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       var lblAreaHeadergetmore = new qx.ui.basic.Label("Get More From The Menu").set({padding: 0, margin: [20,0,0,0], font: "hym-app-page-section-header"});
       var thirdblockmenupage = new qx.ui.container.Composite(new qx.ui.layout.HBox(20)).set({margin: [0,0], padding: [20, 20], backgroundColor: "white", decorator: "hym-box-noborder"});
-      var thirdblockatom = new qx.ui.basic.Atom("<b>Your Currently Active Thing</b><br>Second level details<br>Third level details", "ville/wax/KeyItem.svg").set({rich: true, iconPosition: "left", gap: 20, center: true});
+      var thirdblockatom = new qx.ui.basic.Atom("<b>Area 01 Item 01</b><br>Second level details<br><em>Third level details</em>", "ville/wax/KeyItem.svg").set({font: "hym-default", rich: true, iconPosition: "left", gap: 20, center: true});
       thirdblockatom.getChildControl("icon").set({scale: true, width: 32, height: 32});
       var imgarrowright = new qx.ui.basic.Image("ville/wax/ioschevronright.svg").set({scale: true, allowGrowY: true, alignY: "middle"});
-      var btngetstartedaction = new qx.ui.form.Button("Other Action 1").set({appearance: "wax-form-button", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
-      var btnaction2 = new qx.ui.form.Button("Another Action You Can Do").set({appearance: "wax-form-button", allowGrowX: true, height: 40, alignX: "center"});
-      var atmfeedback = new qx.ui.basic.Atom("How are we doing?", "ville/wax/personfeedback.svg").set({font: "hym-app-page-section-header", iconPosition: "top", allowGrowX: true, alignX: "center"});
+      var btngetstartedaction = new qx.ui.form.Button("Action Button").set({appearance: "wax-form-button", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
+      var btnaction2 = new qx.ui.form.Button("Another Action Button").set({appearance: "wax-form-button", allowGrowX: true, height: 40, alignX: "center"});
+      var atmfeedback = new qx.ui.basic.Atom("Message asking a question?", "ville/wax/personfeedback.svg").set({font: "hym-app-page-section-header", iconPosition: "top", allowGrowX: true, alignX: "center"});
       atmfeedback.getChildControl("icon").set({scale: true, width: 80, height: 80});
-      var lbllookingforfeedback = new qx.ui.basic.Label("We're always looking for ways to improve, so please share your thoughts with us.").set({allowGrowX: true, rich: true, wrap: true, textAlign: "center"});
-      var btnleavefeedback = new qx.ui.form.Button("Leave Feedback").set({appearance: "wax-form-clearbutton", allowGrowX: true, height: 40, alignX: "center"});
+      var lbllookingforfeedback = new qx.ui.basic.Label("Sub message telling user what to do next.").set({font: "hym-default", allowGrowX: true, rich: true, wrap: true, textAlign: "center"});
+      var btnleavefeedback = new qx.ui.form.Button("Action Button").set({appearance: "wax-form-clearbutton", allowGrowX: true, height: 40, alignX: "center"});
       thirdblockmenupage.add(thirdblockatom);
       thirdblockmenupage.add(new qx.ui.core.Spacer(), {flex: 1});
       thirdblockmenupage.add(imgarrowright);
@@ -806,7 +805,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // Mobile modal full window using qx.ui.window.Window
       var mobilemodalfullwindow = new qx.ui.window.Window().set({ appearance: "wax-window", showClose: false, allowMaximize : false, allowMinimize : false, modal: true, movable: false, resizable: false });
       mobilemodalfullwindow.setLayout(new qx.ui.layout.VBox(4));
-      var btnclosefullmodal = new qx.ui.form.Button("X").set({allowGrowX: false});
+      var btnclosefullmodal = new qx.ui.form.Button("dismiss", "ville/wax/dismiss_24.svg").set({appearance: "hym-north-menubutton", show: "icon", allowGrowX: false});
       mobilemodalfullwindow.add(btnclosefullmodal);
 
       btnclosefullmodal.addListener("execute", () => {
@@ -967,7 +966,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       btnAbout.addListener("execute", function(e) {
         profilemenubutton.setEnabled(false);
         mainmenubtnbutton.setEnabled(false);
-        atmlogonextpage.setLabel("Happening 2");
+        atmlogonextpage.setLabel("A01 Sec01 Item 02");
         profilemenubutton.fadeOut(300);
         mainmenubtnbutton.fadeOut(300);
 
@@ -992,7 +991,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       btnSwitchBack.addListener("execute", function(e) {
         profilemenubutton.setEnabled(false);
         mainmenubtnbutton.setEnabled(false);
-        atmlogonextpage.setLabel("Happening 1");
+        atmlogonextpage.setLabel("A01 Sec01 Item 01");
         profilemenubutton.fadeOut(300);
         mainmenubtnbutton.fadeOut(300);
 
@@ -1054,8 +1053,40 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         //var newbounds = e.getData()[0].getButton().getBounds();
       //});
 
+      // Settings Page
+      var settingsstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({padding: 0, backgroundColor: bckgcolormain});   
+      var lblsettingsheader1 = new qx.ui.basic.Label("Settings Group 01").set({opacity: 0.7, font: "hym-default", padding: [10,0,0,20]});
+      var btnsettings1 = new qx.ui.form.Button("Setting 01").set({backgroundColor: "white", appearance : "hym-page-settings-button"});
+      var lblsettingsheader2 = new qx.ui.basic.Label("Settings Group 02").set({opacity: 0.7, font: "hym-default", padding: [0,0,0,20]});
+      var settingsbuttongroup02 = new qx.ui.container.Composite(new qx.ui.layout.VBox(4, "middle", "settings-separator-vertical")).set({padding: 0, margin: 0, backgroundColor: "white", alignX: "left", allowGrowX: true});
+      var btnsettings2 = new qx.ui.form.Button("Setting 02").set({appearance : "hym-page-settings-button"});
+      var settingsbtnswitchbox = new qx.ui.container.Composite(new qx.ui.layout.HBox()).set({padding : [12,0,12,20], margin: 0, backgroundColor: "white", alignX: "left", allowGrowX: true});
+      var lblswitchlabel = new qx.ui.basic.Label("Setting 03").set({font: "hym-default-bold"});
+      var waxswitch = new qx.ui.form.CheckBox("switch").set({paddingRight: 20, alignX: "right", show: "icon", appearance: "wax-switch"});
+      settingsbtnswitchbox.add(lblswitchlabel);
+      settingsbtnswitchbox.add(new qx.ui.core.Spacer(), {flex: 1});
+      settingsbtnswitchbox.add(waxswitch);
+      var btnsettings4 = new qx.ui.form.Button("Setting 04").set({appearance : "hym-page-settings-button"});
+      settingsbuttongroup02.add(btnsettings2);
+      settingsbuttongroup02.add(settingsbtnswitchbox);
+      settingsbuttongroup02.add(btnsettings4);
+      var lblsettingsheader3 = new qx.ui.basic.Label("Settings Group 03").set({opacity: 0.7, font: "hym-default", padding: [0,0,0,20]});
+      var settingsbuttongroup03 = new qx.ui.container.Composite(new qx.ui.layout.VBox(4, "middle", "settings-separator-vertical")).set({padding: 0, margin: 0, backgroundColor: "white", alignX: "left", allowGrowX: true});
+      var btnsettings5 = new qx.ui.form.Button("Setting 05").set({appearance : "hym-page-settings-button"});
+      var btnsettings6 = new qx.ui.form.Button("Setting 06").set({appearance : "hym-page-settings-button"});
+      settingsbuttongroup03.add(btnsettings5);
+      settingsbuttongroup03.add(btnsettings6);
+      settingsstackpage.add(lblsettingsheader1);
+      settingsstackpage.add(lblsettingsheader1);
+      settingsstackpage.add(btnsettings1);
+      settingsstackpage.add(lblsettingsheader2);
+      settingsstackpage.add(settingsbuttongroup02);
+      settingsstackpage.add(lblsettingsheader3);
+      settingsstackpage.add(settingsbuttongroup03);
+
     
       // Assemble - THE STACK 
+      centerbox.add(settingsstackpage);
       centerbox.add(secondstackpage);
       //secondstackpage.setVisibility("visible");
       centerbox.add(thirdstackpage);
@@ -1070,7 +1101,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       profilemenubutton.setVisibility("hidden");
       atmlogocurrentpage.setLabel("Dashboard");
-      atmlogonextpage.set({label: "Happening 2", opacity: 0});
+      atmlogonextpage.set({label: "A01 Sec01 Item 02", opacity: 0});
 
   
       // Show the default page
@@ -1097,10 +1128,10 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // CLONE the above controls
       //var atmmenuleftnavheader = atmleftnavheader.clone();
       //atmmenuleftnavheader.getChildControl("icon").set({ scale : true });
-      //var tbtnmenuheaderMyStuff = new ville.wax.demo.MenuButton("My Stuff").set({appearance: "hym-mainmenubutton", anonymous: true, marginTop: 20});
-      var tbtnmenuheaderMyStuff = new qx.ui.form.ToggleButton("My Stuff", "ville/wax/chevronup.svg").set({appearance: "hym-mainmenutogglebutton", gap: 20, marginTop: 20, show: "both", iconPosition: "right", allowGrowX: true, allowShrinkX: true});
+      //var tbtnmenuheaderMyStuff = new ville.wax.demo.MenuButton("Specific Areas").set({appearance: "hym-mainmenubutton", anonymous: true, marginTop: 20});
+      var tbtnmenuheaderMyStuff = new qx.ui.form.ToggleButton("Specific Areas", "ville/wax/chevronup.svg").set({appearance: "hym-mainmenutogglebutton", gap: 20, marginTop: 20, show: "both", iconPosition: "right", allowGrowX: true, allowShrinkX: true});
       //tbtnmenuheaderMyStuff.getChildControl("icon").set({allowGrowX: true, alignX: "right"});
-      var tbtnmenusubmything = new ville.wax.demo.MenuButton("My Currently Active Thing").set({appearance: "hym-submenubutton"});
+      var tbtnmenusubmything = new ville.wax.demo.MenuButton("Area 01 Item 01").set({appearance: "hym-submenubutton"});
       var tbtnmenufirststackpage = new ville.wax.demo.MenuButton("Dashboard").set({appearance: "hym-submenubutton"});
       var tbtnmenuSecondPage = new ville.wax.demo.MenuButton("Settings").set({appearance: "hym-mainmenubutton"});
       var tbtnmenuThirdPage = new ville.wax.demo.MenuButton("Feedback").set({appearance: "hym-mainmenubutton"});
@@ -1164,7 +1195,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         );
       
         profilemenubutton.setVisibility("visible");
-        atmlogocurrentpage.setLabel("My Current Thing");
+        atmlogocurrentpage.setLabel("Area 01 Item 01");
         southbox.setVisibility("visible");
         //dashboardstackpage.setZIndex(9);
         centerbox.setSelection([firstscrollstackpage]);
@@ -1300,6 +1331,16 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       tbtnmenuSecondPage.addListener("changeValue", function(e) {
         if (e.getData()) {
+          southbox.exclude();
+          mobilemodalfullwindow.close();
+          profilemenubutton.setVisibility("hidden");
+          atmlogocurrentpage.setLabel("Settings");
+          centerbox.setSelection([settingsstackpage]); 
+        }
+      }, this);
+
+      tbtnmenuSecondPage.addListener("changeValue", function(e) {
+        if (e.getData()) {
           //centerbox.setSelection([secondstackpage]);
           //westboxbuttongroup.setSelection([tbtnSecondPage]);
 
@@ -1336,7 +1377,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       tbtnfirststackpagehym.addListener("changeValue", function(e) {
         if (e.getData()) {
           centerbox.setSelection([firstscrollstackpage]);
-          atmlogocurrentpage.set({label:"My Current Thing"});
+          atmlogocurrentpage.set({label:"Area 01 Item 01"});
           profilemenubutton.show();
         }
       }, this);
@@ -1380,7 +1421,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
     },
 
-    __createDetailWindow : function()
+    __createDetailWindow ()
     {
       // Create the Window
       var win = new qx.ui.window.Window("Detail Window").set({ appearance: "wax-window", allowMaximize : true, allowMinimize : false, modal: true, movable: true });

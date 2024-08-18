@@ -121,6 +121,16 @@ qx.Theme.define("ville.wax.theme.Decoration",
       }
     },
 
+    "settings-separator-vertical" :
+    {
+      include: "separator-vertical",
+      
+      style :
+      {
+        color : "#e5e7e9"
+      }
+    },
+
     "white-box" :
     {
       style :

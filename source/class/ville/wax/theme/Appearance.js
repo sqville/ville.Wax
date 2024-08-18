@@ -501,6 +501,20 @@ qx.Theme.define("ville.wax.theme.Appearance",
     }
    },
 
+   "hym-page-settings-button" :
+   {
+    style : function(states)
+    {
+      return {
+        center : false,
+        padding : [12,0,12,20],
+        margin : 0,
+        decorator : "page-button-right-last",
+        font : "hym-default-bold"
+      };
+    }
+   },
+
    "hym-page-link-last-button" :
    {
     style : function(states)
