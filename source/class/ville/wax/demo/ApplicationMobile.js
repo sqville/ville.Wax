@@ -237,10 +237,15 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // *** END of Base Scaffolding **************************************
 
       // Add some simple ease in animation to the app's blocker
-      var fadeinb = {duration: 300, timing: "ease-out", keyFrames : {
-        0: {opacity: 0},
-        100: {opacity: .07}
-        }};
+      var fadeinb = {
+        duration: 300, 
+        timing: "ease", 
+        keyFrames : {
+          0: {opacity: 0},
+          100: {opacity: .06}
+        },
+        keep: 100
+      };
 
       this._blocker.addListener("blocked", function(e) {
         var domtable;
@@ -316,7 +321,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var lblRecentHappenings = new qx.ui.basic.Label("Area 01 Section 01").set({allowGrowX: true, padding: [0,0,10,16], margin: [20,0,0,0], font: "hym-app-page-section-header"});
       var btnAbout = new qx.ui.form.Button("Item 02").set({appearance : "hym-page-button"});
       var btnSwitchBack = new qx.ui.form.Button("Item 01").set({appearance : "hym-page-button"});
-      var btnProfile = new qx.ui.form.Button("Item 03").set({appearance : "hym-page-button"});
+      var btnProfile = new qx.ui.form.Button("Item 03").set({appearance : "hym-page-info-button"});
       //var btnSettings = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       //var btnLogout = new qx.ui.form.Button("Next Item", "ville/wax/wax-icon-24-outline.svg").set({appearance : "hym-page-button"});
       var btnLastBtn = new qx.ui.form.Button("List of All Items").set({appearance : "hym-page-last-button"});
@@ -1032,6 +1037,52 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         qx.bom.element.AnimationCss.animateReverse(btnBackButton.getContentElement().getDomElement(), movebtnleft);
       });
 
+      // Info mobile modal window using qx.ui.window.Window
+      var infomobilemodalwindow = new qx.ui.window.Window("Item 03 Info").set({ appearance: "wax-window", showClose: true, allowMaximize : false, allowMinimize : false, modal: true, movable: false, resizable: false });
+      infomobilemodalwindow.setLayout(new qx.ui.layout.VBox(20));
+      infomobilemodalwindow.getChildControl("title").set({font: "hym-app-header", textAlign: "center"});
+
+      btnProfile.addListener("execute", (e) => {
+        this._blocker.blockContent(btnProfile.getZIndex()); 
+        infomobilemodalwindow.open();
+      });
+
+      // INFO POPUP btnProfile
+      infomobilemodalwindow.addListener("appear", function() {
+        var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
+        var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
+        infomobilemodalwindow.set({width: appwidth, height: appheight - 318});
+        var smpopupup = {
+          duration: 300, 
+          timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
+          keyFrames : {
+            0: {translate: [null, appheight + "px"]},
+            100: {translate: [null, "318px"]}
+          },
+          keep : 100
+        };
+        
+        qx.bom.element.AnimationCss.animate(infomobilemodalwindow.getContentElement().getDomElement(), smpopupup);
+      }, this);
+
+      infomobilemodalwindow.addListener("beforeClose", function(e) {
+        e.preventDefault();
+        this._blocker.unblock();
+        var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
+        var infopopupdown = {
+          duration: 300, 
+          timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
+          keyFrames : {
+            0: {translate: [null, "318px"]},
+            100: {translate: [null, appheight + "px"]}
+          },
+          keep : 100
+        };
+        qx.bom.element.AnimationCss.animate(infomobilemodalwindow.getContentElement().getDomElement(), infopopupdown).addListener("end", function() {
+          infomobilemodalwindow.hide();
+        });
+      }, this);
+
       /*mobiledetailscrollstackpage.addListener("appear", function() {
         var tbvmarkdom = this.getContentElement().getDomElement();
         qx.bom.element.AnimationCss.animate(tbvmarkdom,
@@ -1083,7 +1134,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       settingsstackpage.add(settingsbuttongroup02);
       settingsstackpage.add(lblsettingsheader3);
       settingsstackpage.add(settingsbuttongroup03);
-
     
       // Assemble - THE STACK 
       centerbox.add(settingsstackpage);
@@ -1102,10 +1152,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       profilemenubutton.setVisibility("hidden");
       atmlogocurrentpage.setLabel("Dashboard");
       atmlogonextpage.set({label: "A01 Sec01 Item 02", opacity: 0});
-
-  
-      // Show the default page
-      //centerbox.setSelection([menuscrollstackpage]);
 
       
 
@@ -1202,56 +1248,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         mainmenubuttongroup.setSelection([tbtnmenusubmything]);
       }, this);
 
-      // --Drawer--
-      // Turn off auto hide so we can animate the closing of the main menu popup
-      mainmenupopup.setAutoHide(false);
-
-      // --Drawer--
-      if (!mainmenupopup.getAutoHide()) {
-        mainmenupopup.addListenerOnce("appear", function(e) {
-          var domtable = mainmenupopup.getContentElement().getDomElement();
-          qx.event.Registration.addListener(document.documentElement, "pointerdown",function(e){
-            var target = qx.ui.core.Widget.getWidgetByElement(e.getTarget());
-            if (mainmenupopup.isVisible() & target != mainmenupopup & !qx.ui.popup.Manager.getInstance().getContainsFunction()(mainmenupopup, target)) {
-              this._blocker.unblock();
-              qx.bom.element.Animation.animateReverse(domtable, fadeinleft).addListener("end", function() {
-                mainmenupopup.exclude();
-              });
-            }
-          }, this, true);
-          
-        }, this);
-      }
-
-      // --Drawer--
-      mainmenupopup.addListener("appear", function(e) {
-        var domtable = mainmenupopup.getContentElement().getDomElement();  
-        qx.bom.element.Animation.animate(domtable, fadeinleft);
-      }, this);
-
-      // Hide all popups on window blur --Drawer--
-      qx.bom.Element.addListener(window, "blur", function() {
-        if (mainmenupopup.getVisibility() == "visible"){
-          this._blocker.unblock();
-          var domtable = mainmenupopup.getContentElement().getDomElement();
-          qx.bom.element.Animation.animateReverse(domtable, fadeinleft).addListener("end", function() {
-            mainmenupopup.hide();
-          });
-        }
-      }, this);
-
-      // --Drawer--
-      approot.addListener("resize", function(e) {
-        if (mainmenupopup.getVisibility() == "visible" & !mainmenupopup.getAutoHide()){
-          mainmenupopup.setHeight(e.getData().height);
-        }
-      });
-
-
-
-
-
-
       // *** END of Main Menu and Main Menu Popup **********************************
     
       // *** Populate the Hybrid Mobile (hym) Main Menu  content *******************
@@ -1326,6 +1322,30 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
           atmlogocurrentpage.setLabel("Dashboard");
           centerbox.setSelection([dashboardstackpage]);
           southbox.exclude();
+        }
+      }, this);
+
+      tbtnmenusubmything.addListener("changeValue", function(e) {
+        if (e.getData()) {
+          this._processingblocker.block(); 
+          mobilemodalfullwindow.hide(); 
+          mobilemodalfullwindow.close();
+          processingpopup.set({alignX: "center", alignY: "middle"});
+          processingpopup.show();
+  
+          qx.event.Timer.once(
+            function (e) {
+              this._processingpopup.setAutoHide(true);
+              this._processingpopup.hide();
+              this._processingblocker.unblock();
+            },
+            this,
+            2000
+          );
+          centerbox.setSelection([firstscrollstackpage]);
+          southbox.show();
+          atmlogocurrentpage.set({label:"Area 01 Item 01"});
+          profilemenubutton.show();
         }
       }, this);
 

@@ -486,6 +486,17 @@ qx.Theme.define("ville.wax.theme.Appearance",
     }
    },
 
+   "hym-page-info-button" :
+   {
+    include : "hym-page-button",
+    style : function(states)
+    {
+      return {
+        decorator : "page-button-right-info"
+      };
+    }
+   },
+
    "hym-page-last-button" :
    {
     style : function(states)
