@@ -337,7 +337,8 @@ qx.Theme.define("ville.wax.theme.Decoration",
    {
      style :
      {
-      width: 0
+      width: [0,0,1,0],
+      color: "#e5e7e9"
      }
    },
 
