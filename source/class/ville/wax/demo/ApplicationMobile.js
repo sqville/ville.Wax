@@ -812,6 +812,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // Mobile modal window using qx.ui.window.Window
       var mobilemodalwindow = new qx.ui.window.Window().set({ appearance: "wax-window", showClose: false, allowMaximize : false, allowMinimize : false, modal: true, movable: false, resizable: false });
       mobilemodalwindow.setLayout(new qx.ui.layout.VBox(20));
+      mobilemodalwindow.getChildControl("captionbar").exclude();
       var topbuttonarea = new qx.ui.container.Composite(new qx.ui.layout.HBox()).set({padding: [0,0,10,0], decorator: "window-captionbar-default", allowGrowX: true});
       var btncancelmodal = new qx.ui.form.Button("Cancel").set({allowGrowX: false});
       var btnsaveemodal = new qx.ui.form.Button("Save").set({allowGrowX: false});
@@ -849,6 +850,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       mobilemodalfullwindow.setLayout(new qx.ui.layout.VBox(4));
       var btnclosefullmodal = new qx.ui.form.Button("dismiss", "ville/wax/dismiss_24.svg").set({appearance: "hym-north-menubutton", show: "icon", allowGrowX: false});
       mobilemodalfullwindow.add(btnclosefullmodal);
+      mobilemodalfullwindow.getChildControl("captionbar").exclude();
 
       btnclosefullmodal.addListener("execute", () => {
         mobilemodalfullwindow.close();
