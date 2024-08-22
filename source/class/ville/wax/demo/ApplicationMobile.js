@@ -125,8 +125,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
           <circle class="hymindeterminate-indicator-1" cx="8px" cy="8px" r="7px"></circle>
         </svg>`;
 
-      
-
       // App's Root
       var approot = this.getRoot();
       approot.setBackgroundColor("black");
@@ -135,6 +133,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       this._blocker = new qx.ui.core.Blocker(approot).set({color: "black", opacity: .08});
       this._processingblocker = new qx.ui.core.Blocker(approot).set({color: bckgcolormain, opacity: 1});
 
+      
+       
       // Processing Blocker Popup
       var processingpopup = this._processingpopup = new qx.ui.popup.Popup(new qx.ui.layout.VBox(0)).set({
         padding: 10, 
@@ -149,7 +149,16 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         height: 50,
         html: svgimgcontent
       });
-      processingpopup.add(processingimg);
+     // processingpopup.add(processingimg);
+
+      var svgelem = new qx.html.Element();
+      svgelem.useMarkup(svgimgcontent);
+      
+      this._processingblocker.addListenerOnce("blocked", () => {
+        var blkrelem = this._processingblocker.getBlockerElement();
+        blkrelem.setStyle("display", "flex", true);
+        blkrelem.add(svgelem);
+      });
       
       // App's main Container (Composite) with Dock Layout 
       var appcompdock = new qx.ui.container.Composite(new qx.ui.layout.Dock(0, 0)).set({backgroundColor: "white"});
@@ -456,7 +465,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var lblsecondpageheadermsg = new qx.ui.basic.Label("Use this area for all sorts of things such as blah, blah and blah. You can also use this area to figure out this, that and the other thing. Be sure to review this information before leaving.").set({font: "hym-app-page-content-lgr", rich: true, wrap: true, textAlign: "left"});
       var svgchannelshare = `<svg fill="currentColor" viewBox="0 0 20 20"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h5A2.5 2.5 0 0 1 13 5.5a.5.5 0 0 1-1 0c0-.83-.67-1.5-1.5-1.5h-5C4.67 4 4 4.67 4 5.5v5c0 .83.67 1.5 1.5 1.5h4.51a2.25 2.25 0 1 1 .12 1H5.5A2.5 2.5 0 0 1 3 10.5v-5ZM7.5 14a.5.5 0 0 0-.5.5A2.5 2.5 0 0 0 9.5 17h5a2.5 2.5 0 0 0 2.5-2.5v-5A2.5 2.5 0 0 0 14.5 7H9.87A2.25 2.25 0 1 0 10 8h4.51c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5h-5A1.5 1.5 0 0 1 8 14.5a.5.5 0 0 0-.5-.5Z" fill="currentColor"></path></svg>`;
       var imgtopheaderSecPage = new qx.ui.basic.Image().set({html: svgchannelshare, scale: true, width: 80, height: 80});
-      var lblAreaboxheader = new qx.ui.basic.Label("Area 02 Overview").set({opacity: 0.6, allowGrowX: true, padding: [0,0,0,20], margin: [20,0,0,0], font: "hym-app-page-section-header"});
+      var lblAreaboxheader = new qx.ui.basic.Label("Area 02 Overview").set({opacity: 0, allowGrowX: true, padding: [0,0,0,20], margin: [20,0,0,0], font: "hym-app-page-section-header"});
       var secpageareabox01 = new ville.wax.demo.Composite(new qx.ui.layout.VBox(0)).set({padding: [0,0], margin: [0,16], backgroundColor: "white", decorator: "hym-box-noborder", blockerColor: bckgcolormain, blockerOpacity: 1});
       var lblsecpageareabox01header = new qx.ui.basic.Label("Your thing analysis is available now.").set({padding: 12, font: "hym-app-page-content-sechead", allowGrowX: true, textAlign: "left"});
       var lblsecpageareabox01msg = new qx.ui.basic.Label("Use this area for all sorts of things such as blah, blah and blah. You can also use this area to figure out this, that and the other thing. Be sure to review this information before leaving.").set({padding: 12, font: "hym-app-page-content-lgr", rich: true, wrap: true, textAlign: "left"});
@@ -470,17 +479,23 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       secondstackpage.add(secpagetopdetailarea);
       secondstackpage.add(lblAreaboxheader);
       secondstackpage.add(secpageareabox01);
-      secondscrollstackpage.add(secondstackpage);      
+      secondscrollstackpage.add(secondstackpage);  
+
+      var newsvgelem = new qx.html.Element();
+      newsvgelem.useMarkup(svgimgcontent);
+      
+      var secpageareabox01blocker = secpageareabox01.getBlocker();
+      secpageareabox01blocker.addListenerOnce("blocked", () => {
+        var blkrelem = secpageareabox01blocker.getBlockerElement();
+        blkrelem.setStyle("display", "flex", true);
+        blkrelem.add(newsvgelem);
+      });
 
       secpageareabox01.addListenerOnce("appear", () => {
         secpageareabox01.block();
-        processingpopup.setOffsetLeft(100);
-        processingpopup.placeToWidget(lblAreaboxheader);
-        processingpopup.show();
         qx.event.Timer.once(
           function (e) {
             lblAreaboxheader.setOpacity(1);
-            this._processingpopup.hide();
             secpageareabox01.unblock();
           },
           this,
@@ -684,29 +699,24 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       articleblockmenupage.add(articleblockatom);
 
       // Slidebar
-      var slidebar01 = new qx.ui.container.SlideBar().set({width: 300});
-      slidebar01.setLayout(new qx.ui.layout.HBox(12));
-      var sbwidget01 = new qx.ui.core.Widget().set({width: 330, height: 300, backgroundColor: "green"});
-      var sbwidget02 = new qx.ui.core.Widget().set({width: 330, height: 300, backgroundColor: "yellow"});
-      var sbwidget03 = new qx.ui.core.Widget().set({width: 330, height: 300, backgroundColor: "purple"});
+      //var slidebar01 = new qx.ui.container.SlideBar();
+      var slidebar01 = new qx.ui.container.Composite(new qx.ui.layout.HBox(20));
+      var slidebar01scroll = new ville.wax.scroll.Scroll().set({overflow: ["auto", "hidden"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
+      var sbwidget01 = new qx.ui.core.Widget().set({width: 330, height: 300, backgroundColor: "gray"});
+      var sbwidget02 = new qx.ui.core.Widget().set({width: 330, height: 300, backgroundColor: "gray"});
+      var sbwidget03 = new qx.ui.core.Widget().set({width: 330, height: 300, backgroundColor: "gray"});
       slidebar01.add(sbwidget01);
       slidebar01.add(sbwidget02);
       slidebar01.add(sbwidget03);
-
+      slidebar01scroll.add(slidebar01);
 
       var lbltheend = new qx.ui.basic.Label("The End").set({padding: 0, margin: [20,0,0,0]});
 
-      //menupage.add(lblwaxdemo);
-      //menupage.add(firstbtnlistmenupage);
       menupage.add(fourthpagetopdetailarea);
-
-
       menupage.add(secondbtnlistmenupage);
-      //menupage.add(lblAreaHeadergetmore);
-      //menupage.add(thirdblockmenupage);
       menupage.add(lblAreaHeaderarticles);
       menupage.add(articleblockmenupage);
-      menupage.add(slidebar01);
+      menupage.add(slidebar01scroll);
       menupage.add(lbltheend);
       menuscrollstackpage.add(menupage);
 
@@ -722,11 +732,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       dashboardstackpage.add(dashboardpage);
 
       
-
-      //northhbox.setBackgroundColor(bckgcolormain);
       northtoolbar.setBackgroundColor("transparent");
       northhbox.set({backgroundColor: bckgcolortopbtm, decorator: "topheader"});
-      //decorator : "topheader"
       atmlogocurrentpage.set({visibility: "visible", label:"Menu", opacity: 1 });
 
       // Scroll feature
@@ -1262,15 +1269,14 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       mainmenubuttongroup.setSelection([tbtnmenufirststackpage]);
 
       thirdblockmenupage.addListener("click", (e) => {
-        
-        this._processingblocker.blockContent(thirdblockmenupage.getZIndex());  
-        processingpopup.set({alignX: "center", alignY: "middle"});
-        processingpopup.show();
+        this._processingblocker.block();
+        //processingpopup.set({alignX: "center", alignY: "middle"});
+        //processingpopup.show();
 
         qx.event.Timer.once(
           function (e) {
             //this._processingpopup.setAutoHide(false);
-            this._processingpopup.hide();
+            //this._processingpopup.hide();
             this._processingblocker.unblock();
           },
           this,
@@ -1343,13 +1349,13 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
           this._processingblocker.block(); 
           mobilemodalfullwindow.hide(); 
           mobilemodalfullwindow.close();
-          processingpopup.set({alignX: "center", alignY: "middle"});
-          processingpopup.show();
+          //processingpopup.set({alignX: "center", alignY: "middle"});
+          //processingpopup.show();
   
           qx.event.Timer.once(
             function (e) {
               //this._processingpopup.setAutoHide(true);
-              this._processingpopup.hide();
+              //this._processingpopup.hide();
               this._processingblocker.unblock();
             },
             this,
@@ -1367,13 +1373,13 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
           this._processingblocker.block(); 
           mobilemodalfullwindow.hide(); 
           mobilemodalfullwindow.close();
-          processingpopup.set({alignX: "center", alignY: "middle"});
-          processingpopup.show();
+          //processingpopup.set({alignX: "center", alignY: "middle"});
+          //processingpopup.show();
   
           qx.event.Timer.once(
             function (e) {
               //this._processingpopup.setAutoHide(true);
-              this._processingpopup.hide();
+              //this._processingpopup.hide();
               this._processingblocker.unblock();
             },
             this,
