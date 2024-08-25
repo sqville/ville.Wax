@@ -46,21 +46,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
   /*
   *****************************************************************************
-    PROPERTIES
-  *****************************************************************************
-  */
-
-  properties :
-  {
-    demoMode :
-    {
-      check : ["desktop", "mobile"],
-      init : "mobile"
-    }
-  },
-
-  /*
-  *****************************************************************************
      MEMBERS
   *****************************************************************************
   */
@@ -85,7 +70,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
     main ()
     {
       // Call super class
-      this.base(arguments);
+      super(arguments);
 
       // Enable logging in debug variant
       if (qx.core.Environment.get("qx.debug"))
@@ -129,27 +114,9 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var approot = this.getRoot();
       approot.setBackgroundColor("black");
 
-      // Add a Blocker to the application's root for the Main Menu Popup
+      // Add a Blocker to the application's root
       this._blocker = new qx.ui.core.Blocker(approot).set({color: "black", opacity: .08});
       this._processingblocker = new qx.ui.core.Blocker(approot).set({color: bckgcolormain, opacity: 1});
-
-      
-       
-      // Processing Blocker Popup
-      var processingpopup = this._processingpopup = new qx.ui.popup.Popup(new qx.ui.layout.VBox(0)).set({
-        padding: 10, 
-        backgroundColor: "transparent",
-        decorator: "hym-box-noborder",
-        autoHide: false
-      });
-      
-      // Processing Blocker Popup Image
-      var processingimg = new qx.ui.basic.Image().set({
-        width: 50, 
-        height: 50,
-        html: svgimgcontent
-      });
-     // processingpopup.add(processingimg);
 
       var svgelem = new qx.html.Element();
       svgelem.useMarkup(svgimgcontent);
@@ -159,6 +126,21 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         blkrelem.setStyle("display", "flex", true);
         blkrelem.add(svgelem);
       });
+
+      // Processing Blocker Popup
+      /*var processingpopup = this._processingpopup = new qx.ui.popup.Popup(new qx.ui.layout.VBox(0)).set({
+        padding: 10, 
+        backgroundColor: "transparent",
+        decorator: "hym-box-noborder",
+        autoHide: false
+      });*/
+      
+      // Processing Blocker Popup Image
+      /*var processingimg = new qx.ui.basic.Image().set({
+        width: 50, 
+        height: 50,
+        html: svgimgcontent
+      });*/
       
       // App's main Container (Composite) with Dock Layout 
       var appcompdock = new qx.ui.container.Composite(new qx.ui.layout.Dock(0, 0)).set({backgroundColor: "white"});
@@ -171,7 +153,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       //var centerbox = new qx.ui.container.Composite(new qx.ui.layout.Grow()).set({backgroundColor: "white", padding: 0});
 
       // Dock's South section
-      var southbox = new qx.ui.container.Composite(new qx.ui.layout.HBox(4)).set({alignY: "middle", padding: [8,4,34,4], decorator: "bottombar"});
+      var southbox = new qx.ui.container.Composite(new qx.ui.layout.HBox(4)).set({decorator: "bottombar", visibility: "excluded", alignY: "middle", padding: [8,4,34,4]});
 
       // === North Toolbar, Parts and Buttons ===
       var northtoolbar = new qx.ui.toolbar.ToolBar().set({allowGrowX: true});
@@ -189,40 +171,19 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var profilemenubutton = new qx.ui.toolbar.Button("ProfileMenu", roundacct).set({appearance: "hym-north-settingsbutton", marginRight: 20, show: "icon"});
       
       // Main Menu Popup (VBox)
-      var mainmenupopup = new qx.ui.popup.Popup().set(
-        {
-          allowStretchX: true, 
-          allowStretchY: true, 
-          padding: 10, 
-          minWidth: 300
-        });
+      /*var mainmenupopup = new qx.ui.popup.Popup().set({
+        allowStretchX: true, 
+        allowStretchY: true, 
+        padding: 10, 
+        minWidth: 300
+      });
       mainmenupopup.setLayout(new qx.ui.layout.VBox(0));
-
-      // Profile and Settings Menu and Menu Buttons
-      //var profilemenu = new qx.ui.menu.Menu().set({spacingX: 12});
-      //var switchmenubutton1 = new qx.ui.menu.Button("Switch to Mobile", "ville/wax/wireframe-image-sm.png").set({padding: 10});
-      //switchmenubutton1.getChildControl("icon").set({ width: 24, height: 24 });
-      //var aboutmenubutton1 = new qx.ui.menu.Button("About Wax", "ville/wax/wireframe-image-sm.png").set({padding: 10});
-      //aboutmenubutton1.getChildControl("icon").set({ width: 24, height: 24 });
-      
-      // Add Main Menu Popup Listeners
-      /*mainmenubtnbutton.addListener("execute", function(e)
-      {
-        if (qx.core.Environment.get("browser.name") != "edge"){
-          this._blocker.blockContent(mainmenubtnbutton.getZIndex());
-        }
-        mainmenupopup.setHeight(parseInt(this.getRoot().getContentElement().getStyle("height")));
-        mainmenupopup.show();
-      }, this);*/
-      
+      */
 
       // Assemble all base pieces  
       appcompdock.add(northhbox, {edge:"north"});
       appcompdock.add(centerbox, {edge:"center"});
       approot.add(appcompdock, {edge: 0});
-      //profilemenu.add(switchmenubutton1);
-      //profilemenu.add(aboutmenubutton1);
-      //profilemenubutton.setMenu(profilemenu);
 
       var atmlogocurrentpage = new qx.ui.basic.Atom("current").set({font: "hym-app-header", allowGrowX: true, center: true, gap: 0, padding: 0, show: "label"});
       var atmlogonextpage = new qx.ui.basic.Atom("next").set({font: "hym-app-header", allowGrowX: true, center: true, gap: 0, padding: 0, show: "label"});
@@ -234,7 +195,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       
       northtoolbar.add(mainmenupart);
       northtoolbar.addSpacer();
-      //northtoolbar.add(atmlogocurrentpage);
       northtoolbar.add(northbaratmstack);
       northtoolbar.addSpacer();
       northtoolbar.add(profilepart);
@@ -247,23 +207,21 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       // Add some simple ease in animation to the app's blocker
       var fadeinb = {
-        duration: 300, 
-        timing: "ease", 
+        duration: 300, timing: "ease", keep: 100,
         keyFrames : {
           0: {opacity: 0},
           100: {opacity: .06}
-        },
-        keep: 100
+        }
       };
 
-      this._blocker.addListener("blocked", function(e) {
+      this._blocker.addListener("blocked", (e) => {
         var domtable;
         if (domtable = this._blocker.getBlockerElement().getDomElement()) {
           qx.bom.element.Animation.animate(domtable, fadeinb);
         }
       }, this);
 
-      this._blocker.addListener("unblocked", function(e) {
+      this._blocker.addListener("unblocked", (e) => {
         var domtable;
         if (domtable = this._blocker.getBlockerElement().getDomElement()) {
           qx.bom.element.Animation.animateReverse(domtable, fadeinb);
@@ -279,38 +237,27 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // **********************************************************************
       
       // common stack page styling
-      var stackpagepadding = [20, 30];
-      var stackpageheaderfont = "control-header";
+      //var stackpagepadding = [20, 30];
+      //var stackpageheaderfont = "control-header";
       var stackpagevboxspacing = 20;
-
-      //var firstpagehbox = new qx.ui.container.Composite(new qx.ui.layout.HBox(0));
-      //firstpagehbox.add(new qx.ui.core.Spacer(), {flex: 1});
-
 
       // First/Home Page
       //var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing).set({alignY: "middle"})).set({ padding : stackpagepadding, maxWidth: 700});  
-      var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(0).set({alignX: "center"})).set({ padding: 0, margin: 0, backgroundColor: bckgcolormain });
-
-      //firstpagehbox.add(firststackpage, {flex: 2});
-      //firstpagehbox.add(new qx.ui.core.Spacer(), {flex: 1});
+      var firststackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(0).set({alignX: "center"})).set({backgroundColor: bckgcolormain, padding: 0, margin: 0 });
 
       var firstscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
       firstscrollstackpage.add(firststackpage);
 
-      //var testscrollhider = new ville.wax.scroll.Scroll().set({height: 0, overflow: ["hidden", "hidden"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
-
-
       // TOP FLAT BOX
       var topdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16).set({alignX: "center"})).set({ padding: 20, margin: [20,0,0,0], backgroundColor: "white" });
-      var atmtopmsg = new qx.ui.basic.Atom("This is a top message", "ville/wax/calendarinfo.svg").set({font: "hym-default", padding: [8,10], gap: 8, alignX: "center", center: true, allowGrowX: false, backgroundColor: bckgcolorinside});
+      var atmtopmsg = new qx.ui.basic.Atom("This is a top message", "ville/wax/calendarinfo.svg").set({font: "hym-default", backgroundColor: bckgcolorinside, padding: [8,10], gap: 8, alignX: "center", center: true, allowGrowX: false});
       atmtopmsg.getChildControl("icon").set({scale: true, width: 18, height: 18});
       var atmtopmsgnumbers = new qx.ui.basic.Atom("$1,234").set({font: "hym-app-page-bigmsg", padding: [8, 10, 0, 10], show: "label", alignX: "center", center: true, allowGrowX: false});
       var atmnumbersmsg = new qx.ui.basic.Atom("Larger message area.").set({font: "hym-app-page-content-lgr", padding: [0,0,0,0], show: "label", alignX: "center", center: true, allowGrowX: false});
       var btnnumberdetails = new qx.ui.form.ToggleButton("Details Dropdown").set({appearance: "hym-details-togglebutton", show: "both", iconPosition: "right", alignX: "center", center: true, allowGrowX: false});
-      //gbnumberdetails.getChildControl("legend").set({font: "hym-app-page-content-sechead", center: true, iconPosition: "right"});
       var middletblgridlayout = new qx.ui.layout.Grid(80, 12);
       middletblgridlayout.setColumnAlign(1, "right", "middle");
-      var middletablearea = new qx.ui.container.Composite(middletblgridlayout).set({ width: 220, alignX: "center", allowGrowX: false, allowStretchY: true, padding: 16, margin: 0, backgroundColor: bckgcolormain });
+      var middletablearea = new qx.ui.container.Composite(middletblgridlayout).set({ backgroundColor: bckgcolormain, width: 220, alignX: "center", allowGrowX: false, allowStretchY: true, padding: 16, margin: 0 });
       middletablearea.add(new qx.ui.basic.Label("Amount"), {row: 0, column: 0});
       middletablearea.add(new qx.ui.basic.Label("$1,000"), {row: 0, column: 1});
       middletablearea.add(new qx.ui.basic.Label("Amount"), {row: 1, column: 0});
@@ -320,28 +267,26 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       middletablearea.add(new qx.ui.basic.Label("Date"), {row: 3, column: 0});
       middletablearea.add(new qx.ui.basic.Label("02/01/2024"), {row: 3, column: 1});
 
-      //testscrollhider.add(middletablearea);
-
       var bottomdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16).set({alignX: "center"})).set({ padding: [0,20,20,20], margin: 0, backgroundColor: "white" });
       var btncurrentthingaction1 = new qx.ui.form.Button("Action Button").set({appearance: "wax-form-button", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
       var btncurrentthingmanage = new qx.ui.form.Button("Action Button").set({appearance: "wax-form-clearborderlessbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
-      var btncurrentthingviewsched = new qx.ui.form.Button("Action Button Underlined").set({font: "hym-form-button-underlined", appearance: "wax-form-clearborderlessbutton", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
+      var btncurrentthingviewsched = new qx.ui.form.Button("Action Button Underlined").set({appearance: "wax-form-clearborderlessbutton", font: "hym-form-button-underlined", marginTop: 20, allowGrowX: true, height: 40, alignX: "center"});
       
-      var lblRecentHappenings = new qx.ui.basic.Label("Area 01 Section 01").set({allowGrowX: true, padding: [0,0,10,16], margin: [20,0,0,0], font: "hym-app-page-section-header"});
+      var lblRecentHappenings = new qx.ui.basic.Label("Area 01 Section 01").set({font: "hym-app-page-section-header", allowGrowX: true, padding: [0,0,10,16], margin: [20,0,0,0]});
       var btnAbout = new qx.ui.form.Button("Item 02").set({appearance : "hym-page-button"});
       var btnSwitchBack = new qx.ui.form.Button("Item 01").set({appearance : "hym-page-button"});
       var btnProfile = new qx.ui.form.Button("Item 03").set({appearance : "hym-page-info-button"});
       var btnLastBtn = new qx.ui.form.Button("List of All Items").set({appearance : "hym-page-last-button"});
-      var firstbtnlistmenupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({padding: [0,0], margin: [0,16], backgroundColor: "white", decorator: "hym-box-noborder"});
+      var firstbtnlistmenupage = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({decorator: "hym-box-noborder", padding: [0,0], margin: [0,16], backgroundColor: "white"});
       firstbtnlistmenupage.add(btnSwitchBack);
       firstbtnlistmenupage.add(btnAbout);
       firstbtnlistmenupage.add(btnProfile);
       firstbtnlistmenupage.add(btnLastBtn);
 
-      var lblsectionboxheader = new qx.ui.basic.Label("Area 01 Section 02").set({allowGrowX: true, padding: [0,0,10,16], margin: [20,0,0,0], font: "hym-app-page-section-header"});
-      var firstpagesection02 = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({padding: [0,0], margin: [0,16], backgroundColor: "white", decorator: "hym-box-noborder"});
-      var lblsection02header = new qx.ui.basic.Label("Section message header.").set({padding: 12, font: "hym-app-page-content-sechead", allowGrowX: true, textAlign: "left"});
-      var lblsection02msg = new qx.ui.basic.Label("Use this area for all sorts of blah, blah and blah. You can also use this area to figure out this, that and the other thing. Be sure to review this information before leaving.").set({padding: 12, font: "hym-app-page-content-lgr", rich: true, wrap: true, textAlign: "left"});
+      var lblsectionboxheader = new qx.ui.basic.Label("Area 01 Section 02").set({font: "hym-app-page-section-header", allowGrowX: true, padding: [0,0,10,16], margin: [20,0,0,0]});
+      var firstpagesection02 = new qx.ui.container.Composite(new qx.ui.layout.VBox(0)).set({decorator: "hym-box-noborder", padding: [0,0], margin: [0,16], backgroundColor: "white"});
+      var lblsection02header = new qx.ui.basic.Label("Section message header.").set({font: "hym-app-page-content-sechead", padding: 12, allowGrowX: true, textAlign: "left"});
+      var lblsection02msg = new qx.ui.basic.Label("Use this area for all sorts of blah, blah and blah. You can also use this area to figure out this, that and the other thing. Be sure to review this information before leaving.").set({font: "hym-app-page-content-lgr", padding: 12, rich: true, wrap: true, textAlign: "left"});
       var btnsection02 = new qx.ui.form.Button("View Section").set({appearance : "hym-page-last-button", decorator: "page-button-right-last-solo"});
       firstpagesection02.add(lblsection02header);
       firstpagesection02.add(lblsection02msg);
@@ -381,34 +326,27 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       });
       
       var growinline = {
-        duration: 200, 
-        timing: "ease-out", 
+        duration: 200, timing: "ease-out", keep: 100,
         keyFrames : {
           0: {translate: [null, "-140px"]},
           100: {translate: [null, "0px"]}
-        },
-        keep : 100
+        }
       };
 
       var scaleinline = {
-        duration: 200, 
-        origin: "top center",
-        timing: "ease-out", 
+        duration: 200, origin: "top center", timing: "ease-out", keep: 100,
         keyFrames : {
           0: {scale: [1, 0.9]},
           100: {scale: [1, 1]}
-        },
-        keep : 100
+        }
       };
 
       var rotateinline = {
-        duration: 200, 
-        timing: "ease-out", 
+        duration: 200, timing: "ease-out", keep: 100,
         keyFrames : {
           0: {rotate: "0deg"},
           100: {rotate: "-180deg"}
-        },
-        keep : 100
+        }
       };
 
       btnnumberdetails.addListener("changeValue", (e) => {
@@ -445,17 +383,16 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       });
       
       // SWITCH
-      var waxswitch2 = new qx.ui.form.CheckBox("Larger switch").set({appearance: "wax-switch-larger"});
-
+      // var waxswitch2 = new qx.ui.form.CheckBox("Larger switch").set({appearance: "wax-switch-larger"});
 
       //***  CODE for applying popup fading in and out  ***//
-      var fadeinleft = {
+      /*var fadeinleft = {
         duration: 300, timing: "ease-out", origin: "left top", keep: 100,
         keyFrames : {
           0: {translate: "-300px"},
           100: {translate: "0px"}
         }
-      };
+      };*/
 
       // Second Page 
       var secondscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
@@ -493,24 +430,21 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       secpageareabox01.addListenerOnce("appear", () => {
         secpageareabox01.block();
-        qx.event.Timer.once(
-          function (e) {
+        qx.event.Timer.once((e) => {
             lblAreaboxheader.setOpacity(1);
             secpageareabox01.unblock();
-          },
-          this,
-          3000
+          }, this, 3000
         );
       });
-      
 
       //var btngobackhome = new qx.ui.form.Button("Go Back Home").set({allowGrowX: false});
       //secondstackpage.add(btngobackhome);
-      /*btngobackhome.addListener("execute", function(e) {
+      /*btngobackhome.addListener("execute", (e) => {
         centerbox.setSelection([firstscrollstackpage]);
       });*/
 
       // Wax TabView with a line
+      /*
       var wtabView2 = new qx.ui.tabview.TabView();
 
       var page1tbv2 = new qx.ui.tabview.Page("Home").set({appearance: "wax-tabview-page-line"});
@@ -527,11 +461,12 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       page3tbv2.setLayout(new qx.ui.layout.VBox());
       page3tbv2.add(new qx.ui.basic.Label("Last Very Long Page"));
       wtabView2.add(page3tbv2);
+      */
 
       // secondstackpage.add(wtabView2);
       //firststackpage.add(wtabView2);
 
-      wtabView2.setSelection([page2tbv2]);
+      //wtabView2.setSelection([page2tbv2]);
 
       /*var tabviewbarline = new qx.ui.core.Widget().set({height: 4, backgroundColor: "blue", zIndex: 5, decorator : "wax-tabview-line"});
       wtabView2.setDynamicMarkAnimationDuration(300); 
@@ -541,6 +476,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       // Wax TabView - gray bar with white block
       
+      /*
       var wtabView3 = new qx.ui.tabview.TabView().set({appearance: "wax-tabview-block"});
 
       var page1tbv3 = new qx.ui.tabview.Page("Day").set({appearance: "wax-tabview-page-block"});
@@ -557,10 +493,11 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       page3tbv3.setLayout(new qx.ui.layout.VBox());
       page3tbv3.add(new qx.ui.basic.Label("Month"));
       wtabView3.add(page3tbv3);
+      */
 
 
       /*
-      page1tbv3.addListener("appear", function() {
+      page1tbv3.addListener("appear", () => {
         var tbvmarkdom = this.getContentElement().getDomElement();
         qx.bom.element.AnimationCss.animate(tbvmarkdom,
           {
@@ -575,7 +512,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
           });
       });
 
-      page2tbv3.addListener("appear", function() {
+      page2tbv3.addListener("appear", () => {
         var tbvmarkdom = this.getContentElement().getDomElement();
         qx.bom.element.AnimationCss.animate(tbvmarkdom,
           {
@@ -590,7 +527,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
           });
       });
       
-      page3tbv3.addListener("appear", function() {
+      page3tbv3.addListener("appear", () => {
         var tbvmarkdom = this.getContentElement().getDomElement();
         qx.bom.element.AnimationCss.animate(tbvmarkdom,
           {
@@ -610,23 +547,14 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // secondstackpage.add(wtabView3);
       //firststackpage.add(wtabView3);
 
-      wtabView3.setSelection([page2tbv3]);
+      //wtabView3.setSelection([page2tbv3]);
 
       //var tabviewbarblock = new qx.ui.core.Widget().set({ width: 40, height: 40, backgroundColor: "white", zIndex: 5, decorator : "wax-tabview-block"});
       //wtabView3.setDynamicMarkAnimationDuration(300); 
       //wtabView3.setDynamicMarkAnimationTiming("ease");
       //wtabView3.setDynamicMark(tabviewbarblock);
-      
-
 
       northhbox.setVisibility("visible");
-      //southbox.setVisibility("visible");
-      //profilemenubutton.setVisibility("hidden");
-      //mainmenupart.setVisibility("hidden");
-      //centerbox.setSelection([menuscrollstackpage]);
-      //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
-      //mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
-
 
       // Third Page
       var thirdstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(stackpagevboxspacing)).set({padding: 0, backgroundColor: bckgcolormain});   
@@ -640,17 +568,14 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       thirdpagetopdetailarea.add(lblthirdpageheader);
       thirdpagetopdetailarea.add(lblthirdpageheadermsg);
       thirdstackpage.add(thirdpagetopdetailarea);
-      /*btngobackhome3.addListener("execute", function(e) {
-        centerbox.setSelection([firstscrollstackpage]);
-      });*/
 
       //firststackpage.add(new qx.ui.basic.Label("The End").set({backgroundColor: "#f3f3f3", font: stackpageheaderfont, textColor: "red", textAlign: "center", allowGrowX: true, padding: [20,0,20,0], margin: [80,0,20,0]}));
 
       
-      var bordersouthbox = "#B3B3B3";
-      var boxsepcolor = "#C7C7C7";
-      var arrowcolor = "#C4C4C4";
-      var searchboxcolor = "#E4E3E9";
+      //var bordersouthbox = "#B3B3B3";
+      //var boxsepcolor = "#C7C7C7";
+      //var arrowcolor = "#C4C4C4";
+      //var searchboxcolor = "#E4E3E9";
 
       southbox.setBackgroundColor(bckgcolortopbtm);
 
@@ -713,7 +638,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var lbltheend = new qx.ui.basic.Label("The End").set({padding: 0, margin: [20,0,0,0]});
 
       menupage.add(fourthpagetopdetailarea);
-      menupage.add(secondbtnlistmenupage);
+      //menupage.add(secondbtnlistmenupage);
       menupage.add(lblAreaHeaderarticles);
       menupage.add(articleblockmenupage);
       menupage.add(slidebar01scroll);
@@ -731,7 +656,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       dashboardpage.add(btnleavefeedback);
       dashboardstackpage.add(dashboardpage);
 
-      
       northtoolbar.setBackgroundColor("transparent");
       northhbox.set({backgroundColor: bckgcolortopbtm, decorator: "topheader"});
       atmlogocurrentpage.set({visibility: "visible", label:"Menu", opacity: 1 });
@@ -739,7 +663,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // Scroll feature
       /*
       var menuscrollcontentEl = menuscrollstackpage.getChildControl("pane").getContentElement();
-      menuscrollcontentEl.addListener("scroll", function(e) {
+      menuscrollcontentEl.addListener("scroll", (e) => {
         var menulblloctop = menuscrollstackpage.getItemTop(lblwaxdemo);
         var menulbllocbtm = menuscrollstackpage.getItemBottom(lblwaxdemo);
         var scrollval = menuscrollcontentEl.getScrollY();
@@ -800,13 +724,11 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       //***  CODE for applying popup fading in and out  ***//
       var scaleback = {
-        duration: 400, 
-        timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
+        duration: 400, timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", keep: 100,
         keyFrames : {
           0: {scale: 1},
           100: {scale: .96}
-        },
-        keep : 100
+        }
       };
 
       // Mobile modal window using qx.ui.window.Window
@@ -856,85 +778,76 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         mobilemodalfullwindow.close();
       });
 
-      profilemenubutton.addListener("execute", function(e) {
+      profilemenubutton.addListener("execute", (e) => {
         appcompdock.setDecorator("scaledback-box");
         var appdockdom = appcompdock.getContentElement().getDomElement();
         qx.bom.element.AnimationCss.animate(appdockdom, scaleback);
         mobilemodalwindow.show();
       }, this);
 
-      mobilemodalwindow.addListener("appear", function() {
+      mobilemodalwindow.addListener("appear", () => {
         var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
         var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
         mobilemodalwindow.set({width: appwidth, height: appheight - 18});
         var popupup = {
-          duration: 400, 
-          timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
+          duration: 400, timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", keep: 100,
           keyFrames : {
             0: {translate: [null, appheight + "px"]},
             100: {translate: [null, "20px"]}
-          },
-          keep : 100
+          }
         };
         qx.bom.element.AnimationCss.animate(mobilemodalwindow.getContentElement().getDomElement(), popupup);
       }, this);
 
-      mobilemodalwindow.addListener("beforeClose", function(e) {
+      mobilemodalwindow.addListener("beforeClose", (e) => {
         e.preventDefault();
         var appdockdom = appcompdock.getContentElement().getDomElement();
         var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
         qx.bom.element.AnimationCss.animateReverse(appdockdom, scaleback);
         var popupdown = {
-          duration: 200, 
-          timing: "ease-in", 
+          duration: 200, timing: "ease-in", keep: 100,
           keyFrames : {
             0: {translate: [null, "20px"]},
             100: {translate: [null, appheight + "px"]}
-          },
-          keep : 100
+          }
         };
-        qx.bom.element.AnimationCss.animate(mobilemodalwindow.getContentElement().getDomElement(), popupdown).addListener("end", function() {
+        qx.bom.element.AnimationCss.animate(mobilemodalwindow.getContentElement().getDomElement(), popupdown).addListener("end", () => {
           mobilemodalwindow.hide();
           appcompdock.setDecorator("normal-box");
         });
       }, this);
 
-      mobilemodalfullwindow.addListener("appear", function() {
+      mobilemodalfullwindow.addListener("appear", () => {
         var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
         var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
         mobilemodalfullwindow.set({width: appwidth, height: appheight});
         var popupup = {
-          duration: 400, 
-          timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
+          duration: 400, timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", keep: 100,
           keyFrames : {
             0: {translate: [null, appheight + "px"]},
             100: {translate: [null, "0px"]}
-          },
-          keep : 100
+          }
         };
         qx.bom.element.AnimationCss.animate(mobilemodalfullwindow.getContentElement().getDomElement(), popupup);
       }, this);
 
-      mobilemodalfullwindow.addListener("beforeClose", function(e) {
+      mobilemodalfullwindow.addListener("beforeClose", (e) => {
         e.preventDefault();
         var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
         var popupdown = {
-          duration: 200, 
-          timing: "ease-in", 
+          duration: 200, timing: "ease-in", keep: 100,
           keyFrames : {
             0: {translate: [null, "0px"]},
             100: {translate: [null, appheight + "px"]}
-          },
-          keep : 100
+          }
         };
-        qx.bom.element.AnimationCss.animate(mobilemodalfullwindow.getContentElement().getDomElement(), popupdown).addListener("end", function() {
+        qx.bom.element.AnimationCss.animate(mobilemodalfullwindow.getContentElement().getDomElement(), popupdown).addListener("end", () => {
           mobilemodalfullwindow.hide();
         });
       }, this);
 
       // Add Main Menu Popup Listeners
-      mainmenubtnbutton.addListener("execute", function(e)
-      {
+      mainmenubtnbutton.addListener("execute", (e) => {
         mobilemodalfullwindow.show();
       });
 
@@ -945,84 +858,69 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       var detailpagetopdetailarea = new qx.ui.container.Composite(new qx.ui.layout.VBox(16).set({alignX: "center"})).set({ padding: [20,0], margin: [0,0,0,0], backgroundColor: "white" });
       var lbldetailpageheader = new qx.ui.basic.Label("Detail").set({font: "hym-app-page-header", allowGrowX: true, textAlign: "center"});
-      //var lbldetailpageheadermsg = new qx.ui.basic.Label("Use this area for all sorts of things such as blah, blah and blah. You can also use this area to figure out this, that and the other thing. Be sure to review this information before leaving.").set({font: "hym-app-page-content-lgr", rich: true, wrap: true, textAlign: "left"});
       var svgdetailbeach = `<svg fill="currentColor" viewBox="0 0 20 20"><path d="M8.26 4.6a5.21 5.21 0 0 1 9.03 5.22l-.2.34a.5.5 0 0 1-.67.19l-3.47-2-1.93 3.38c1.34.4 2.5 1.33 3.31 2.52h-.09c-.34 0-.66.11-.92.31A4.9 4.9 0 0 0 9.5 12.5a4.9 4.9 0 0 0-3.82 2.06 1.5 1.5 0 0 0-1.01-.3 5.94 5.94 0 0 1 5.31-2.74l2.1-3.68-3.83-2.2a.5.5 0 0 1-.18-.7l.2-.33Zm.92.42 1.7.98.02-.02a8.08 8.08 0 0 1 3.27-2.74 4.22 4.22 0 0 0-4.99 1.78ZM14 7.8c.47-.82.7-1.46.77-2.09a5.8 5.8 0 0 0-.06-1.62 6.96 6.96 0 0 0-2.95 2.41L14 7.8Zm.87.5 1.61.93a4.22 4.22 0 0 0-.74-5.02c.07.56.09 1.1.02 1.63-.1.79-.38 1.56-.89 2.46Zm-9.63 7.3a.5.5 0 0 0-.96.03c-.17.7-.5 1.08-.86 1.3-.38.23-.87.32-1.42.32a.5.5 0 0 0 0 1c.64 0 1.33-.1 1.94-.47.34-.2.64-.5.88-.87a2.96 2.96 0 0 0 4.68-.01 2.96 2.96 0 0 0 4.74-.06c.64.9 1.7 1.41 2.76 1.41a.5.5 0 1 0 0-1c-.98 0-1.96-.64-2.29-1.65a.5.5 0 0 0-.95 0 1.98 1.98 0 0 1-3.79.07.5.5 0 0 0-.94 0 1.98 1.98 0 0 1-3.8-.08Z" fill="currentColor"></path></svg>`;
+      var svgdetailmountain = `<svg fill="currentColor" viewBox="0 0 20 20"><path d="M15.48 17H4a2 2 0 0 1-2-2v-4.5a3 3 0 0 1 .82-2.07L8.2 2.78a2.5 2.5 0 0 1 3.62 0l5.37 5.65A3 3 0 0 1 18 10.5V15a2 2 0 0 1-2 2h-.52ZM9.1 3.31a1.75 1.75 0 0 0-.56.86c-.04.2-.01.4.1.6.23.46.8.92 1.56 1.43l.8.5c.5.32 1.03.64 1.43.96.33.24.63.52.83.83.22.32.34.7.24 1.13-.1.41-.41.7-.73.88-.33.2-.73.33-1.16.44-.68.17-1.52.3-2.35.42l-.6.09c-1.04.16-2 .33-2.7.61-.72.3-.95.6-.95.94 0 .01.01.12.28.33.25.2.63.4 1.13.6.99.4 2.33.77 3.7 1.08a67.33 67.33 0 0 0 5.34.98l.08.01H16a1 1 0 0 0 1-1v-4.5a2 2 0 0 0-.55-1.38L11.1 3.47a1.5 1.5 0 0 0-2-.16ZM7.6 4.87 3.55 9.12A2 2 0 0 0 3 10.5V15a1 1 0 0 0 1 1h5.94l-.05-.01c-1.38-.32-2.8-.7-3.86-1.14a5.99 5.99 0 0 1-1.36-.73C4.33 13.86 4 13.49 4 13c0-.98.77-1.54 1.58-1.86.82-.34 1.9-.52 2.92-.68l.63-.1c.82-.12 1.6-.23 2.22-.4.4-.1.7-.2.9-.32.2-.12.25-.21.26-.26.02-.08.02-.18-.09-.34a2.7 2.7 0 0 0-.6-.6c-.38-.28-.82-.55-1.3-.85l-.88-.56a5.45 5.45 0 0 1-1.9-1.8 2.1 2.1 0 0 1-.15-.36Z" fill="currentColor"></path></svg>`;
       var imgtopheaderDetailPage = new qx.ui.basic.Image().set({html: svgdetailbeach, scale: true, width: 70, height: 70});
       detailpagetopdetailarea.add(imgtopheaderDetailPage);
       detailpagetopdetailarea.add(lbldetailpageheader);
       mobiledetailpage.add(detailpagetopdetailarea);
 
-      //var btnBackButton = new qx.ui.form.Button("<").set({opacity: 1});
       var btnBackButton = new qx.ui.toolbar.Button("back", "ville/wax/chevronleft.svg").set({appearance: "hym-north-backbutton", show: "icon", enabled: false, opacity: 0, cursor: "arrow"});
       mainmenupart.add(btnBackButton);
-      //btnBackButton.fadeOut(0);
 
       var movebtnleft = {
-        duration: 300, 
-        timing: "ease", 
+        duration: 300, timing: "ease", keep: 100,
         keyFrames : {
           0 : {opacity: 0, translate: ["0px", null]},
           100 : {opacity: 1, translate: ["-30px", null]}
-        },
-        keep : 100
+        }
       };
 
       var moveatmleftin = {
-        duration: 300, 
-        timing: "ease", 
+        duration: 300, timing: "ease", keep: 100,
         keyFrames : {
           0 : {opacity: 0, translate: ["60px", null]},
           100 : {opacity: 1, translate: ["0px", null]}
-        },
-        keep : 100
+        }
       };
 
-      var moveatmleftout = {
-        duration: 300, 
-        timing: "ease", 
+      /*var moveatmleftout = {
+        duration: 300, timing: "ease", keep: 100,
         keyFrames : {
           0 : {opacity: 1, translate: ["0px", null]},
           100 : {opacity: 0, translate: ["-60px", null]}
-        },
-        keep : 100
-      };
+        }
+      };*/
 
       var moveslightleft = {
-        duration: 300, 
-        timing: "ease", 
+        duration: 300, timing: "ease", keep: 100,
         keyFrames : {
           0 : {opacity: 1, translate: ["0px", null]},
           100 : {opacity: 1, translate: ["-60px", null]}
-        },
-        keep : 100
+        }
       };
 
       var slideleft = {
-        duration: 300, 
-        timing: "ease-out", 
+        duration: 300, timing: "ease-out", keep: 100,
         keyFrames : {
           0 : {opacity: 1, translate: ["550px", null]},
           100 : {opacity: 1, translate: ["0px", null]}
-        },
-        keep : 100
+        }
       };
 
-      btnAbout.addListener("execute", function(e) {
-        profilemenubutton.setEnabled(false);
+      btnAbout.addListener("execute", (e) => {
+        this._northBox.addState("area01level02");
         mainmenubtnbutton.setEnabled(false);
+        mainmenubtnbutton.fadeOut(300);
+        atmlogocurrentpage.fadeOut(300);
         atmlogonextpage.setLabel("A01 Sec01 Item 02");
-        profilemenubutton.fadeOut(300);
-        mainmenubtnbutton.fadeOut(300);
-
-        //qx.bom.element.AnimationCss.animate(atmlogocurrentpage.getContentElement().getDomElement(), moveatmleftout);
         qx.bom.element.AnimationCss.animate(atmlogonextpage.getContentElement().getDomElement(), moveatmleftin);
-        atmlogocurrentpage.fadeOut(300);
-        //atmlogocurrentpage.setLabel("Happening 2");
-        //atmlogocurrentpage.fadeIn(150);
-           
+        profilemenubutton.hide();
+  
         qx.bom.element.AnimationCss.animate(firststackpage.getContentElement().getDomElement(), moveslightleft);
-
+        // SQSLTEST
         mobiledetailscrollstackpage.setZIndex(11);
+
         var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
         slideleft.keyFrames[0].translate = [appwidth + "px", null];
         qx.bom.element.AnimationCss.animate(mobiledetailscrollstackpage.getContentElement().getDomElement(), slideleft);
@@ -1032,47 +930,42 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         });
       }, this);
 
-      btnSwitchBack.addListener("execute", function(e) {
-        profilemenubutton.setEnabled(false);
+      btnSwitchBack.addListener("execute", (e) => {
+        this._northBox.addState("area01level02");
         mainmenubtnbutton.setEnabled(false);
+        mainmenubtnbutton.fadeOut(300).addListener("end",() => {mainmenubtnbutton.addState("fadedout")});
+        btnBackButton.setEnabled(true);
+        qx.bom.element.AnimationCss.animate(btnBackButton.getContentElement().getDomElement(), movebtnleft).addListener("end",() => {
+          btnBackButton.addState("fadedin");
+        });
+        atmlogocurrentpage.fadeOut(300).addListener("end",() => {atmlogocurrentpage.addState("fadedout")});
         atmlogonextpage.setLabel("A01 Sec01 Item 01");
-        profilemenubutton.fadeOut(300);
-        mainmenubtnbutton.fadeOut(300);
-
-        //qx.bom.element.AnimationCss.animate(atmlogocurrentpage.getContentElement().getDomElement(), moveatmleftout);
-        qx.bom.element.AnimationCss.animate(atmlogonextpage.getContentElement().getDomElement(), moveatmleftin);
-        atmlogocurrentpage.fadeOut(300);
-        //atmlogocurrentpage.setLabel("Happening 2");
-        //atmlogocurrentpage.fadeIn(150);
-           
+        qx.bom.element.AnimationCss.animate(atmlogonextpage.getContentElement().getDomElement(), moveatmleftin).addListener("end",() => {
+          atmlogonextpage.addState("fadedin");
+        })
+        profilemenubutton.hide();
         qx.bom.element.AnimationCss.animate(firststackpage.getContentElement().getDomElement(), moveslightleft);
 
+        // SQSLTEST
         mobiledetailscrollstackpage.setZIndex(11);
         var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
         slideleft.keyFrames[0].translate = [appwidth + "px", null];
         qx.bom.element.AnimationCss.animate(mobiledetailscrollstackpage.getContentElement().getDomElement(), slideleft);
-        
-        qx.bom.element.AnimationCss.animate(btnBackButton.getContentElement().getDomElement(), movebtnleft).addListener("end", () => {
-          btnBackButton.setEnabled(true);
-        });
       }, this);
 
-      btnBackButton.addListener("execute", function(e) {
+      btnBackButton.addListener("execute", (e) => {
+        this._northBox.removeState("area01level02");
         btnBackButton.setEnabled(false);
-        
         qx.bom.element.AnimationCss.animateReverse(firststackpage.getContentElement().getDomElement(), moveslightleft);
         qx.bom.element.AnimationCss.animateReverse(mobiledetailscrollstackpage.getContentElement().getDomElement(), slideleft).addListener("end", () => {
           mobiledetailscrollstackpage.setZIndex(10);
         });
         
         mainmenubtnbutton.fadeIn(300).addListener("end", () => {mainmenubtnbutton.setEnabled(true)});
-        profilemenubutton.fadeIn(300).addListener("end", () => {profilemenubutton.setEnabled(true)});
+        profilemenubutton.show();
 
-        //qx.bom.element.AnimationCss.animateReverse(atmlogocurrentpage.getContentElement().getDomElement(), moveatmleftout);
         qx.bom.element.AnimationCss.animateReverse(atmlogonextpage.getContentElement().getDomElement(), moveatmleftin);
-        //atmlogocurrentpage.fadeOut(150);
-        //atmlogocurrentpage.setLabel("My Current Thing");
-        atmlogocurrentpage.fadeIn(300);
+        atmlogocurrentpage.fadeIn(300).addListener("end", () => {atmlogocurrentpage.removeState("fadedout")});
         qx.bom.element.AnimationCss.animateReverse(btnBackButton.getContentElement().getDomElement(), movebtnleft);
       });
 
@@ -1088,61 +981,40 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       infomobilemodalwindow.addListener("swipe", (e) => {
         if (e._native.swipe.axis == "y" && e._native.swipe.direction == "down") {
-          //console.log("swipe down");
           infomobilemodalwindow.close();
         }
       });
 
       // INFO POPUP btnProfile
-      infomobilemodalwindow.addListener("appear", function() {
+      infomobilemodalwindow.addListener("appear", () => {
         var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
         var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
         infomobilemodalwindow.set({width: appwidth, height: appheight - 318});
         var smpopupup = {
-          duration: 300, 
-          timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
+          duration: 300, timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", keep: 100,
           keyFrames : {
             0: {translate: [null, appheight + "px"]},
             100: {translate: [null, "318px"]}
-          },
-          keep : 100
+          }
         };
-        
         qx.bom.element.AnimationCss.animate(infomobilemodalwindow.getContentElement().getDomElement(), smpopupup);
       }, this);
 
-      infomobilemodalwindow.addListener("beforeClose", function(e) {
+      infomobilemodalwindow.addListener("beforeClose", (e) => {
         e.preventDefault();
         this._blocker.unblock();
         var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
         var infopopupdown = {
-          duration: 300, 
-          timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", 
+          duration: 300, timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", keep: 100,
           keyFrames : {
             0: {translate: [null, "318px"]},
             100: {translate: [null, appheight + "px"]}
-          },
-          keep : 100
+          }
         };
-        qx.bom.element.AnimationCss.animate(infomobilemodalwindow.getContentElement().getDomElement(), infopopupdown).addListener("end", function() {
+        qx.bom.element.AnimationCss.animate(infomobilemodalwindow.getContentElement().getDomElement(), infopopupdown).addListener("end", () => {
           infomobilemodalwindow.hide();
         });
       }, this);
-
-      /*mobiledetailscrollstackpage.addListener("appear", function() {
-        var tbvmarkdom = this.getContentElement().getDomElement();
-        qx.bom.element.AnimationCss.animate(tbvmarkdom,
-          {
-            duration: 300,
-            keyFrames : 
-            {
-              0 : {opacity: 1, translate: ["600px", null]},
-              100 : {opacity: 1, translate: ["0px", null]}
-            },
-            keep : 100,
-            timing: "ease-out"
-          });
-      });*/
 
       //centerbox.addListener("changeSelection", (e) => {
        // console.log("when does this happen?");
@@ -1151,15 +1023,15 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       //});
 
       // Settings Page
-      var settingsstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({padding: 0, backgroundColor: bckgcolormain});   
-      var lblsettingsheader1 = new qx.ui.basic.Label("Settings Group 01").set({opacity: 0.7, font: "hym-default", padding: [10,0,0,20]});
-      var btnsettings1 = new qx.ui.form.Button("Setting 01").set({backgroundColor: "white", appearance : "hym-page-settings-button"});
-      var lblsettingsheader2 = new qx.ui.basic.Label("Settings Group 02").set({opacity: 0.7, font: "hym-default", padding: [0,0,0,20]});
+      var settingsstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({backgroundColor: bckgcolormain, padding: 0});   
+      var lblsettingsheader1 = new qx.ui.basic.Label("Settings Group 01").set({font: "hym-default", opacity: 0.7, padding: [10,0,0,20]});
+      var btnsettings1 = new qx.ui.form.Button("Setting 01").set({appearance : "hym-page-settings-button", backgroundColor: "white"});
+      var lblsettingsheader2 = new qx.ui.basic.Label("Settings Group 02").set({font: "hym-default", opacity: 0.7, padding: [0,0,0,20]});
       var settingsbuttongroup02 = new qx.ui.container.Composite(new qx.ui.layout.VBox(4, "middle", "settings-separator-vertical")).set({padding: 0, margin: 0, backgroundColor: "white", alignX: "left", allowGrowX: true});
       var btnsettings2 = new qx.ui.form.Button("Setting 02").set({appearance : "hym-page-settings-button"});
       var settingsbtnswitchbox = new qx.ui.container.Composite(new qx.ui.layout.HBox()).set({padding : [12,0,12,20], margin: 0, backgroundColor: "white", alignX: "left", allowGrowX: true});
       var lblswitchlabel = new qx.ui.basic.Label("Setting 03").set({font: "hym-default-bold"});
-      var waxswitch = new qx.ui.form.CheckBox("switch").set({paddingRight: 20, alignX: "right", show: "icon", appearance: "wax-switch"});
+      var waxswitch = new qx.ui.form.CheckBox("switch").set({appearance: "wax-switch", paddingRight: 20, alignX: "right", show: "icon"});
       settingsbtnswitchbox.add(lblswitchlabel);
       settingsbtnswitchbox.add(new qx.ui.core.Spacer(), {flex: 1});
       settingsbtnswitchbox.add(waxswitch);
@@ -1167,7 +1039,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       settingsbuttongroup02.add(btnsettings2);
       settingsbuttongroup02.add(settingsbtnswitchbox);
       settingsbuttongroup02.add(btnsettings4);
-      var lblsettingsheader3 = new qx.ui.basic.Label("Settings Group 03").set({opacity: 0.7, font: "hym-default", padding: [0,0,0,20]});
+      var lblsettingsheader3 = new qx.ui.basic.Label("Settings Group 03").set({font: "hym-default", opacity: 0.7, padding: [0,0,0,20]});
       var settingsbuttongroup03 = new qx.ui.container.Composite(new qx.ui.layout.VBox(4, "middle", "settings-separator-vertical")).set({padding: 0, margin: 0, backgroundColor: "white", alignX: "left", allowGrowX: true});
       var btnsettings5 = new qx.ui.form.Button("Setting 05").set({appearance : "hym-page-settings-button"});
       var btnsettings6 = new qx.ui.form.Button("Setting 06").set({appearance : "hym-page-settings-button"});
@@ -1180,26 +1052,30 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       settingsstackpage.add(settingsbuttongroup02);
       settingsstackpage.add(lblsettingsheader3);
       settingsstackpage.add(settingsbuttongroup03);
+
+      // Second level stack
+      //var firstsecondlevelstack = new qx.ui.container.Stack().set({backgroundColor: "white", padding: 0});
+      var firstsecondlevelstack = new qx.ui.container.Composite(new qx.ui.layout.Grow()).set({backgroundColor: "white", padding: 0});
+      firstsecondlevelstack.add(mobiledetailscrollstackpage);
+      firstsecondlevelstack.add(firstscrollstackpage);
+      
+      //mobiledetailscrollstackpage.set({visibility: "visible", zIndex: 9});
+      //mobiledetailscrollstackpage.set({visibility: "visible"});
     
       // Assemble - THE STACK 
       centerbox.add(settingsstackpage);
       centerbox.add(secondscrollstackpage);
-      //secondstackpage.setVisibility("visible");
       centerbox.add(thirdstackpage);
-      //thirdstackpage.setVisibility("visible");
-      centerbox.add(mobiledetailscrollstackpage);
-      mobiledetailscrollstackpage.set({visibility: "visible", zIndex: 9});
+      //centerbox.add(mobiledetailscrollstackpage);
+      //mobiledetailscrollstackpage.set({visibility: "visible", zIndex: 9});
       centerbox.add(menuscrollstackpage);
-      //menuscrollstackpage.setVisibility("visible");
-      centerbox.add(firstscrollstackpage);
-      //firstscrollstackpage.setVisibility("visible");
+      //centerbox.add(firstscrollstackpage);
+      centerbox.add(firstsecondlevelstack);
       centerbox.add(dashboardstackpage);
 
       profilemenubutton.setVisibility("hidden");
       atmlogocurrentpage.setLabel("Dashboard");
       atmlogonextpage.set({label: "A01 Sec01 Item 02", opacity: 0});
-
-      
 
       // *** END of THE STACK ******************************************************
       
@@ -1218,11 +1094,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       tbtnThirdPage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
     
       // CLONE the above controls
-      //var atmmenuleftnavheader = atmleftnavheader.clone();
-      //atmmenuleftnavheader.getChildControl("icon").set({ scale : true });
-      //var tbtnmenuheaderMyStuff = new ville.wax.demo.MenuButton("Specific Areas").set({appearance: "hym-mainmenubutton", anonymous: true, marginTop: 20});
       var tbtnmenuheaderMyStuff = new qx.ui.form.ToggleButton("Specific Areas", "ville/wax/chevronup.svg").set({appearance: "hym-mainmenutogglebutton", gap: 20, marginTop: 20, show: "both", iconPosition: "right", allowGrowX: true, allowShrinkX: true});
-      //tbtnmenuheaderMyStuff.getChildControl("icon").set({allowGrowX: true, alignX: "right"});
       var tbtnmenusubmything = new ville.wax.demo.MenuButton("Area 01 Item 01").set({appearance: "hym-submenubutton"});
       var tbtnmenufirststackpage = new ville.wax.demo.MenuButton("Dashboard").set({appearance: "hym-submenubutton"});
       var tbtnmenuSecondPage = new ville.wax.demo.MenuButton("Settings").set({appearance: "hym-mainmenubutton"});
@@ -1235,13 +1107,11 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       mobilemodalfullwindow.add(tbtnmenuThirdPage);
 
       var moveotheroptions = {
-        duration: 300, 
-        timing: "ease", 
+        duration: 300, timing: "ease", keep: 100,
         keyFrames : {
           0 : {translate: [null, "0px"]},
           100 : {translate: [null, "-76px"]}
-        },
-        keep : 100
+        }
       };
 
       tbtnmenuheaderMyStuff.addListener("changeValue", (e) => {
@@ -1272,24 +1142,20 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       thirdblockmenupage.addListener("click", (e) => {
         this._processingblocker.block();
-        //processingpopup.set({alignX: "center", alignY: "middle"});
-        //processingpopup.show();
 
-        qx.event.Timer.once(
-          function (e) {
-            //this._processingpopup.setAutoHide(false);
-            //this._processingpopup.hide();
+        qx.event.Timer.once((e) => {
             this._processingblocker.unblock();
-          },
-          this,
-          2000
+          }, this, 2000
         );
       
         profilemenubutton.setVisibility("visible");
         atmlogocurrentpage.setLabel("Area 01 Item 01");
         southbox.setVisibility("visible");
-        //dashboardstackpage.setZIndex(9);
-        centerbox.setSelection([firstscrollstackpage]);
+
+        // SQSLTEST
+        //centerbox.setSelection([firstscrollstackpage]);
+        centerbox.setSelection([firstsecondlevelstack]);
+
         mainmenubuttongroup.setSelection([tbtnmenusubmything]);
       }, this);
 
@@ -1313,55 +1179,41 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       southbox.add(tbtnthirdpagehym, {flex: 1});
       southbox.add(tbtnmenuhym, {flex: 1});
 
-      //southbox.setVisibility("excluded");
-
       // Assign all the clones their own RadioGroup
       var mainmenubuttongrouphym = new qx.ui.form.RadioGroup();
       mainmenubuttongrouphym.add(tbtnfirststackpagehym, tbtnsecondstackpagehym, tbtnthirdpagehym, tbtnmenuhym);
 
       // *** END of Hybrid Mobil (hym) Main Menu and Main Menu Popup ******************************
 
-
       // *** Wire all the Main Menu Buttons to THE STACK Pages (via Listeners) ********************
       // Turn on all wax.demo.MenuButton listeners
-      tbtnfirststackpage.addListener("changeValue", function(e) {
+      tbtnfirststackpage.addListener("changeValue", (e) => {
         if (e.getData()) {
-          //centerbox.setSelection([firstscrollstackpage]);
           mainmenubuttongroup.setSelection([tbtnmenufirststackpage]);
         }
-      }, this);
+      });
 
-      tbtnSecondPage.addListener("changeValue", function(e) {
+      tbtnSecondPage.addListener("changeValue", (e) => {
         if (e.getData()) {
-          //centerbox.setSelection([secondstackpage]);
           mainmenubuttongroup.setSelection([tbtnmenuSecondPage]);
         }
-      }, this);
+      });
 
-      tbtnThirdPage.addListener("changeValue", function(e) {
+      tbtnThirdPage.addListener("changeValue", (e) => {
         if (e.getData()) {
-          //centerbox.setSelection([thirdstackpage]);
           mainmenubuttongroup.setSelection([tbtnmenuThirdPage]);
         }
-      }, this);
+      });
 
       // Popup menu buttons  tbtnmenufirststackpage
-      tbtnmenufirststackpage.addListener("changeValue", function(e) {
+      tbtnmenufirststackpage.addListener("changeValue", (e) => {
         if (e.getData()) {
           this._processingblocker.block(); 
           mobilemodalfullwindow.hide(); 
           mobilemodalfullwindow.close();
-          //processingpopup.set({alignX: "center", alignY: "middle"});
-          //processingpopup.show();
-  
-          qx.event.Timer.once(
-            function (e) {
-              //this._processingpopup.setAutoHide(true);
-              //this._processingpopup.hide();
+          qx.event.Timer.once((e) => {
               this._processingblocker.unblock();
-            },
-            this,
-            2000
+            }, this, 2000
           );
           profilemenubutton.setVisibility("hidden");
           atmlogocurrentpage.setLabel("Dashboard");
@@ -1370,31 +1222,28 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         }
       }, this);
 
-      tbtnmenusubmything.addListener("changeValue", function(e) {
+      tbtnmenusubmything.addListener("changeValue", (e) => {
         if (e.getData()) {
           this._processingblocker.block(); 
           mobilemodalfullwindow.hide(); 
           mobilemodalfullwindow.close();
-          //processingpopup.set({alignX: "center", alignY: "middle"});
-          //processingpopup.show();
-  
-          qx.event.Timer.once(
-            function (e) {
-              //this._processingpopup.setAutoHide(true);
-              //this._processingpopup.hide();
+          qx.event.Timer.once((e) => {
               this._processingblocker.unblock();
-            },
-            this,
-            2000
+            }, this, 2000
           );
-          centerbox.setSelection([firstscrollstackpage]);
+          if (tbtnfirststackpagehym.getValue()) {
+            atmlogocurrentpage.setLabel("Area 01 Item 01");
+            centerbox.setSelection([firstsecondlevelstack]);
+            profilemenubutton.show();
+          }
+          else {
+            tbtnfirststackpagehym.setValue(true);
+          }
           southbox.show();
-          atmlogocurrentpage.set({label:"Area 01 Item 01"});
-          profilemenubutton.show();
         }
       }, this);
 
-      tbtnmenuSecondPage.addListener("changeValue", function(e) {
+      tbtnmenuSecondPage.addListener("changeValue", (e) => {
         if (e.getData()) {
           southbox.exclude();
           mobilemodalfullwindow.close();
@@ -1402,88 +1251,74 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
           atmlogocurrentpage.setLabel("Settings");
           centerbox.setSelection([settingsstackpage]); 
         }
-      }, this);
-
-      tbtnmenuSecondPage.addListener("changeValue", function(e) {
-        if (e.getData()) {
-          //centerbox.setSelection([secondstackpage]);
-          //westboxbuttongroup.setSelection([tbtnSecondPage]);
-
-          //firststackpage.setVisibility("excluded");
-
-          if (mainmenupopup.getVisibility() == "visible"){
-            this._blocker.unblock();
-            var domtable = mainmenupopup.getContentElement().getDomElement();
-            qx.bom.element.Animation.animateReverse(domtable, fadeinleft).addListener("end", function() {
-              mainmenupopup.hide();
-            });
-          }
-        }
-      }, this);
-
-      tbtnmenuThirdPage.addListener("changeValue", function(e) {
-        if (e.getData()) {
-          //centerbox.setSelection([thirdstackpage]);
-          //westboxbuttongroup.setSelection([tbtnThirdPage]);
-
-          //firststackpage.setVisibility("excluded");
-
-          if (mainmenupopup.getVisibility() == "visible"){
-            this._blocker.unblock();
-            var domtable = mainmenupopup.getContentElement().getDomElement();
-            qx.bom.element.Animation.animateReverse(domtable, fadeinleft).addListener("end", function() {
-              mainmenupopup.hide();
-            });
-          }
-        }
-      }, this);
+      });
 
       // if Hybrid Mobile
-      tbtnfirststackpagehym.addListener("changeValue", function(e) {
+      tbtnfirststackpagehym.addListener("changeValue", (e) => {
         if (e.getData()) {
-          centerbox.setSelection([firstscrollstackpage]);
+          centerbox.setSelection([firstsecondlevelstack]);
+          if (this._northBox.hasState("area01level02")) {
+            mainmenubtnbutton.fadeOut(0);
+            btnBackButton.fadeIn(0);
+            atmlogocurrentpage.fadeOut(0);
+            atmlogonextpage.fadeIn(0);
+          } else {
+            profilemenubutton.show();
+          }
           atmlogocurrentpage.set({label:"Area 01 Item 01"});
-          profilemenubutton.show();
         }
-      }, this);
+      });
 
-      tbtnsecondstackpagehym.addListener("changeValue", function(e) {
+      tbtnsecondstackpagehym.addListener("changeValue", (e) => {
         if (e.getData()) {
           centerbox.setSelection([secondscrollstackpage]);
+          // SQTEST
+          if (this._northBox.hasState("area01level02")) {
+            mainmenubtnbutton.fadeIn(0);
+            mainmenubtnbutton.setEnabled(true);
+            btnBackButton.fadeOut(0);
+            atmlogonextpage.fadeOut(0);
+            atmlogocurrentpage.fadeIn(0);
+          }
           atmlogocurrentpage.set({label:"Area 02"});
           profilemenubutton.hide();
         }
-      }, this);
+      });
 
-      tbtnthirdpagehym.addListener("changeValue", function(e) {
+      tbtnthirdpagehym.addListener("changeValue", (e) => {
         if (e.getData()) {
           centerbox.setSelection([thirdstackpage]);
+          if (this._northBox.hasState("area01level02")) {
+            mainmenubtnbutton.fadeIn(0);
+            mainmenubtnbutton.setEnabled(true);
+            btnBackButton.fadeOut(0);
+            atmlogonextpage.fadeOut(0);
+            atmlogocurrentpage.fadeIn(0);
+          }
           atmlogocurrentpage.set({label:"Area 03"});
+          profilemenubutton.hide();
         }
-      }, this);
+      });
 
-      tbtnmenuhym.addListener("changeValue", function(e) {
+      tbtnmenuhym.addListener("changeValue", (e) => {
         if (e.getData()) {
           centerbox.setSelection([menuscrollstackpage]);
+          if (this._northBox.hasState("area01level02")) {
+            mainmenubtnbutton.fadeIn(0);
+            mainmenubtnbutton.setEnabled(true);
+            btnBackButton.fadeOut(0);
+            atmlogonextpage.fadeOut(0);
+            atmlogocurrentpage.fadeIn(0);
+          }
           atmlogocurrentpage.set({label:"Area 04"});
+          profilemenubutton.hide();
         }
-      }, this);
+      });
 
-      // Demo mode switching to Mobile
-      //switchmenubutton1.addListener("execute", function(e){
-      //this.setDemoMode("mobile");
-      southbox.setVisibility("excluded");
-      //scrollwestbox.setVisibility("excluded");
-      //profilemenubutton.setVisibility("hidden");
-      //mainmenupart.setVisibility("hidden");
+      // Very first page of app
       centerbox.setSelection([dashboardstackpage]);
-      //atmlogocurrentpage.set({visibility: "visible", label:"Menu"});
-      //mainmenubuttongrouphym.setSelection([tbtnmenuhym]);
-      //}, this);
-
 
       // *** END of Wiring *************************************************************************
-
     },
 
     __createDetailWindow ()
