@@ -38,7 +38,10 @@ In progress
 
 <!-- DEMO -->
 ## Demos
-[The Wax Control Showcase](https://sqville.github.io/ville.Wax/published/) 
+
+[Mobile App](https://sqville.github.io/ville.Wax/published/mobileapp/)
+
+[The Wax Control Showcase](https://sqville.github.io/ville.Wax/published/demo1/)
 
 <!-- ROADMAP -->
 ## Roadmap
