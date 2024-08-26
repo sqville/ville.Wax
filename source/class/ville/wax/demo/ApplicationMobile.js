@@ -909,7 +909,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       };
 
       btnAbout.addListener("execute", (e) => {
-        this._northBox.addState("area01level02");
+        this._northBox.addState("details");
+        this._northBox.addState("area01details");
         mainmenubtnbutton.setEnabled(false);
         mainmenubtnbutton.fadeOut(300);
         atmlogocurrentpage.fadeOut(300);
@@ -931,18 +932,15 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       }, this);
 
       btnSwitchBack.addListener("execute", (e) => {
-        this._northBox.addState("area01level02");
+        this._northBox.addState("details");
+        this._northBox.addState("area01details");
         mainmenubtnbutton.setEnabled(false);
-        mainmenubtnbutton.fadeOut(300).addListener("end",() => {mainmenubtnbutton.addState("fadedout")});
+        mainmenubtnbutton.fadeOut(300);
         btnBackButton.setEnabled(true);
-        qx.bom.element.AnimationCss.animate(btnBackButton.getContentElement().getDomElement(), movebtnleft).addListener("end",() => {
-          btnBackButton.addState("fadedin");
-        });
-        atmlogocurrentpage.fadeOut(300).addListener("end",() => {atmlogocurrentpage.addState("fadedout")});
+        qx.bom.element.AnimationCss.animate(btnBackButton.getContentElement().getDomElement(), movebtnleft);
+        atmlogocurrentpage.fadeOut(300);
         atmlogonextpage.setLabel("A01 Sec01 Item 01");
-        qx.bom.element.AnimationCss.animate(atmlogonextpage.getContentElement().getDomElement(), moveatmleftin).addListener("end",() => {
-          atmlogonextpage.addState("fadedin");
-        })
+        qx.bom.element.AnimationCss.animate(atmlogonextpage.getContentElement().getDomElement(), moveatmleftin);
         profilemenubutton.hide();
         qx.bom.element.AnimationCss.animate(firststackpage.getContentElement().getDomElement(), moveslightleft);
 
@@ -954,7 +952,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       }, this);
 
       btnBackButton.addListener("execute", (e) => {
-        this._northBox.removeState("area01level02");
+        this._northBox.removeState("details");
+        this._northBox.removeState("area01details");
         btnBackButton.setEnabled(false);
         qx.bom.element.AnimationCss.animateReverse(firststackpage.getContentElement().getDomElement(), moveslightleft);
         qx.bom.element.AnimationCss.animateReverse(mobiledetailscrollstackpage.getContentElement().getDomElement(), slideleft).addListener("end", () => {
@@ -965,7 +964,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         profilemenubutton.show();
 
         qx.bom.element.AnimationCss.animateReverse(atmlogonextpage.getContentElement().getDomElement(), moveatmleftin);
-        atmlogocurrentpage.fadeIn(300).addListener("end", () => {atmlogocurrentpage.removeState("fadedout")});
+        atmlogocurrentpage.fadeIn(300);
         qx.bom.element.AnimationCss.animateReverse(btnBackButton.getContentElement().getDomElement(), movebtnleft);
       });
 
@@ -989,12 +988,12 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       infomobilemodalwindow.addListener("appear", () => {
         var appheight = parseInt(this.getRoot().getContentElement().getStyle("height"));
         var appwidth = parseInt(this.getRoot().getContentElement().getStyle("width"));
-        infomobilemodalwindow.set({width: appwidth, height: appheight - 318});
+        infomobilemodalwindow.set({width: appwidth, height: appheight - 380});
         var smpopupup = {
           duration: 300, timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", keep: 100,
           keyFrames : {
             0: {translate: [null, appheight + "px"]},
-            100: {translate: [null, "318px"]}
+            100: {translate: [null, "380px"]}
           }
         };
         qx.bom.element.AnimationCss.animate(infomobilemodalwindow.getContentElement().getDomElement(), smpopupup);
@@ -1007,7 +1006,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         var infopopupdown = {
           duration: 300, timing: "cubic-bezier(0.165, 0.84, 0.44, 1)", keep: 100,
           keyFrames : {
-            0: {translate: [null, "318px"]},
+            0: {translate: [null, "380px"]},
             100: {translate: [null, appheight + "px"]}
           }
         };
@@ -1084,6 +1083,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var atmleftnavheader = new qx.ui.basic.Atom("Wax Demo", "ville/wax/Wax_demo_logo.png").set({appearance: "header-atom", anonymous: true, focusable: false, selectable: false });
       atmleftnavheader.getChildControl("icon").set({ scale : true });
 
+      /*
       var tbtnfirststackpage = new ville.wax.demo.MenuButton("Home");
       tbtnfirststackpage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
 
@@ -1092,6 +1092,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       var tbtnThirdPage = new ville.wax.demo.MenuButton("Third Page");
       tbtnThirdPage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
+      */
     
       // CLONE the above controls
       var tbtnmenuheaderMyStuff = new qx.ui.form.ToggleButton("Specific Areas", "ville/wax/chevronup.svg").set({appearance: "hym-mainmenutogglebutton", gap: 20, marginTop: 20, show: "both", iconPosition: "right", allowGrowX: true, allowShrinkX: true});
@@ -1187,6 +1188,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       // *** Wire all the Main Menu Buttons to THE STACK Pages (via Listeners) ********************
       // Turn on all wax.demo.MenuButton listeners
+      /*
       tbtnfirststackpage.addListener("changeValue", (e) => {
         if (e.getData()) {
           mainmenubuttongroup.setSelection([tbtnmenufirststackpage]);
@@ -1204,6 +1206,7 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
           mainmenubuttongroup.setSelection([tbtnmenuThirdPage]);
         }
       });
+      */
 
       // Popup menu buttons  tbtnmenufirststackpage
       tbtnmenufirststackpage.addListener("changeValue", (e) => {
@@ -1247,7 +1250,15 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         if (e.getData()) {
           southbox.exclude();
           mobilemodalfullwindow.close();
-          profilemenubutton.setVisibility("hidden");
+          profilemenubutton.hide();
+          if (this._northBox.hasState("details")) {
+            this._northBox.removeState("details");
+            mainmenubtnbutton.fadeIn(0);
+            mainmenubtnbutton.setEnabled(true);
+            btnBackButton.fadeOut(0);
+            atmlogonextpage.fadeOut(0);
+            atmlogocurrentpage.fadeIn(0);
+          }
           atmlogocurrentpage.setLabel("Settings");
           centerbox.setSelection([settingsstackpage]); 
         }
@@ -1257,7 +1268,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       tbtnfirststackpagehym.addListener("changeValue", (e) => {
         if (e.getData()) {
           centerbox.setSelection([firstsecondlevelstack]);
-          if (this._northBox.hasState("area01level02")) {
+          if (this._northBox.hasState("area01details")) {
+            this._northBox.addState("details")
             mainmenubtnbutton.fadeOut(0);
             btnBackButton.fadeIn(0);
             atmlogocurrentpage.fadeOut(0);
@@ -1273,7 +1285,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         if (e.getData()) {
           centerbox.setSelection([secondscrollstackpage]);
           // SQTEST
-          if (this._northBox.hasState("area01level02")) {
+          if (this._northBox.hasState("details")) {
+            this._northBox.removeState("details")
             mainmenubtnbutton.fadeIn(0);
             mainmenubtnbutton.setEnabled(true);
             btnBackButton.fadeOut(0);
@@ -1288,7 +1301,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       tbtnthirdpagehym.addListener("changeValue", (e) => {
         if (e.getData()) {
           centerbox.setSelection([thirdstackpage]);
-          if (this._northBox.hasState("area01level02")) {
+          if (this._northBox.hasState("details")) {
+            this._northBox.removeState("details")
             mainmenubtnbutton.fadeIn(0);
             mainmenubtnbutton.setEnabled(true);
             btnBackButton.fadeOut(0);
@@ -1303,7 +1317,8 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       tbtnmenuhym.addListener("changeValue", (e) => {
         if (e.getData()) {
           centerbox.setSelection([menuscrollstackpage]);
-          if (this._northBox.hasState("area01level02")) {
+          if (this._northBox.hasState("details")) {
+            this._northBox.removeState("details")
             mainmenubtnbutton.fadeIn(0);
             mainmenubtnbutton.setEnabled(true);
             btnBackButton.fadeOut(0);
