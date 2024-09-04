@@ -169,16 +169,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
 
       // Top-Right MenuButton
       var profilemenubutton = new qx.ui.toolbar.Button("ProfileMenu", roundacct).set({appearance: "hym-north-settingsbutton", marginRight: 20, show: "icon"});
-      
-      // Main Menu Popup (VBox)
-      /*var mainmenupopup = new qx.ui.popup.Popup().set({
-        allowStretchX: true, 
-        allowStretchY: true, 
-        padding: 10, 
-        minWidth: 300
-      });
-      mainmenupopup.setLayout(new qx.ui.layout.VBox(0));
-      */
 
       // Assemble all base pieces  
       appcompdock.add(northhbox, {edge:"north"});
@@ -229,16 +219,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       }, this);
 
       // *** Populate THE STACK ***********************************************
-      // Four page stack EXAMPLE
-       // First Stack Page
-       // Second Stack Page
-       // Third Stack Page
-       // Forth Stack Page (for ios and android only)
-      // **********************************************************************
-      
-      // common stack page styling
-      //var stackpagepadding = [20, 30];
-      //var stackpageheaderfont = "control-header";
       var stackpagevboxspacing = 20;
 
       // First/Home Page
@@ -384,15 +364,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       
       // SWITCH
       // var waxswitch2 = new qx.ui.form.CheckBox("Larger switch").set({appearance: "wax-switch-larger"});
-
-      //***  CODE for applying popup fading in and out  ***//
-      /*var fadeinleft = {
-        duration: 300, timing: "ease-out", origin: "left top", keep: 100,
-        keyFrames : {
-          0: {translate: "-300px"},
-          100: {translate: "0px"}
-        }
-      };*/
 
       // Second Page 
       var secondscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
@@ -569,14 +540,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       thirdpagetopdetailarea.add(lblthirdpageheadermsg);
       thirdstackpage.add(thirdpagetopdetailarea);
 
-      //firststackpage.add(new qx.ui.basic.Label("The End").set({backgroundColor: "#f3f3f3", font: stackpageheaderfont, textColor: "red", textAlign: "center", allowGrowX: true, padding: [20,0,20,0], margin: [80,0,20,0]}));
-
-      
-      //var bordersouthbox = "#B3B3B3";
-      //var boxsepcolor = "#C7C7C7";
-      //var arrowcolor = "#C4C4C4";
-      //var searchboxcolor = "#E4E3E9";
-
       southbox.setBackgroundColor(bckgcolortopbtm);
 
       var menuscrollstackpage = new ville.wax.scroll.Scroll().set({overflow: ["hidden", "auto"], padding: 0, margin: 0, contentPadding: [0,0,0,0]});
@@ -638,7 +601,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var lbltheend = new qx.ui.basic.Label("The End").set({padding: 0, margin: [20,0,0,0]});
 
       menupage.add(fourthpagetopdetailarea);
-      //menupage.add(secondbtnlistmenupage);
       menupage.add(lblAreaHeaderarticles);
       menupage.add(articleblockmenupage);
       menupage.add(slidebar01scroll);
@@ -884,14 +846,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         }
       };
 
-      /*var moveatmleftout = {
-        duration: 300, timing: "ease", keep: 100,
-        keyFrames : {
-          0 : {opacity: 1, translate: ["0px", null]},
-          100 : {opacity: 0, translate: ["-60px", null]}
-        }
-      };*/
-
       var moveslightleft = {
         duration: 300, timing: "ease", keep: 100,
         keyFrames : {
@@ -1015,12 +969,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
         });
       }, this);
 
-      //centerbox.addListener("changeSelection", (e) => {
-       // console.log("when does this happen?");
-        //var oldbounds = e.getOldData()[0].getButton().getBounds();
-        //var newbounds = e.getData()[0].getButton().getBounds();
-      //});
-
       // Settings Page
       var settingsstackpage = new qx.ui.container.Composite(new qx.ui.layout.VBox(10)).set({backgroundColor: bckgcolormain, padding: 0});   
       var lblsettingsheader1 = new qx.ui.basic.Label("Settings Group 01").set({font: "hym-default", opacity: 0.7, padding: [10,0,0,20]});
@@ -1057,18 +1005,12 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       var firstsecondlevelstack = new qx.ui.container.Composite(new qx.ui.layout.Grow()).set({backgroundColor: "white", padding: 0});
       firstsecondlevelstack.add(mobiledetailscrollstackpage);
       firstsecondlevelstack.add(firstscrollstackpage);
-      
-      //mobiledetailscrollstackpage.set({visibility: "visible", zIndex: 9});
-      //mobiledetailscrollstackpage.set({visibility: "visible"});
     
       // Assemble - THE STACK 
       centerbox.add(settingsstackpage);
       centerbox.add(secondscrollstackpage);
       centerbox.add(thirdstackpage);
-      //centerbox.add(mobiledetailscrollstackpage);
-      //mobiledetailscrollstackpage.set({visibility: "visible", zIndex: 9});
       centerbox.add(menuscrollstackpage);
-      //centerbox.add(firstscrollstackpage);
       centerbox.add(firstsecondlevelstack);
       centerbox.add(dashboardstackpage);
 
@@ -1082,17 +1024,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // Create Menu Buttons that will navigate the user through THE STACK Pages ***
       var atmleftnavheader = new qx.ui.basic.Atom("Wax Demo", "ville/wax/Wax_demo_logo.png").set({appearance: "header-atom", anonymous: true, focusable: false, selectable: false });
       atmleftnavheader.getChildControl("icon").set({ scale : true });
-
-      /*
-      var tbtnfirststackpage = new ville.wax.demo.MenuButton("Home");
-      tbtnfirststackpage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
-
-      var tbtnSecondPage = new ville.wax.demo.MenuButton("Second Page");
-      tbtnSecondPage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
-
-      var tbtnThirdPage = new ville.wax.demo.MenuButton("Third Page");
-      tbtnThirdPage.getChildControl("icon").set({ scale : true , width: 28, height: 28});
-      */
     
       // CLONE the above controls
       var tbtnmenuheaderMyStuff = new qx.ui.form.ToggleButton("Specific Areas", "ville/wax/chevronup.svg").set({appearance: "hym-mainmenutogglebutton", gap: 20, marginTop: 20, show: "both", iconPosition: "right", allowGrowX: true, allowShrinkX: true});
@@ -1187,26 +1118,6 @@ qx.Class.define("ville.wax.demo.ApplicationMobile",
       // *** END of Hybrid Mobil (hym) Main Menu and Main Menu Popup ******************************
 
       // *** Wire all the Main Menu Buttons to THE STACK Pages (via Listeners) ********************
-      // Turn on all wax.demo.MenuButton listeners
-      /*
-      tbtnfirststackpage.addListener("changeValue", (e) => {
-        if (e.getData()) {
-          mainmenubuttongroup.setSelection([tbtnmenufirststackpage]);
-        }
-      });
-
-      tbtnSecondPage.addListener("changeValue", (e) => {
-        if (e.getData()) {
-          mainmenubuttongroup.setSelection([tbtnmenuSecondPage]);
-        }
-      });
-
-      tbtnThirdPage.addListener("changeValue", (e) => {
-        if (e.getData()) {
-          mainmenubuttongroup.setSelection([tbtnmenuThirdPage]);
-        }
-      });
-      */
 
       // Popup menu buttons  tbtnmenufirststackpage
       tbtnmenufirststackpage.addListener("changeValue", (e) => {
