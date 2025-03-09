@@ -1,6 +1,5 @@
 {
   "appId": "sqville.ville.wax",
   "appName": "ville.Wax",
-  "webDir": "www",
-  "bundledWebRuntime": false
+  "webDir": "published/mobileapp"
 }

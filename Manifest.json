@@ -21,7 +21,10 @@
     "resource": "source/resource",
     "translation": "source/translation"
   },
+  "externalResources": {
+    "css": ["ville/wax/css/scrollbar.css", "ville/wax/css/loader.css"]
+  },
   "requires": {
-    "@qooxdoo/framework": "^7.6.1"
+    "@qooxdoo/framework": "^7.6.0"
   }
 }

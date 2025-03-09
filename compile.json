@@ -10,6 +10,17 @@
       "outputPath": "compiled/build"
     }
   ],
+  "babel" : {
+    "options" : {
+      "targets" : {
+        "chrome" : "131",
+        "edge" : "131",
+        "safari" : "17",
+        "ios" : "17",
+        "node" : "20"
+      }
+    } 
+  },
   "defaultTarget": "source",
   "locales": ["en"],
 

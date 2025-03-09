@@ -5,5 +5,9 @@
 /node_modules
 /deployed
 /www
+/ios
 .package-cache.json
-.package-lock.json
+package.json
+package-lock.json
+project-summary.md
+capacitor.config.json
